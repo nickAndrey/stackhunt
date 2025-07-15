@@ -10,15 +10,15 @@ const routes = [
 
 function Navigation() {
   const linkStyles = ({ isActive }: { isActive: boolean }) => {
-    return `${isActive ? 'active' : ''}`;
+    return `${isActive ? 'active bg-gray-200' : ''} flex items-center p-2 rounded-lg`;
   };
 
   return (
-    <ul className="flex flex-col">
+    <ul className="flex flex-col overflow-x-hidden px-2 mt-4">
       {routes.map((route) => (
         <li key={route.id}>
           <NavLink to={route.href} className={linkStyles}>
-            <span className="text-sm">{route.label}</span>
+            <span className="truncate text-gray-800">{route.label}</span>
           </NavLink>
         </li>
       ))}
