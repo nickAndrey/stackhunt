@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router';
-import AppLayout from './AppLayout';
+import { AppLayout } from './app-layout';
 
 function RouteGuard() {
   const isLoggedIn = true;

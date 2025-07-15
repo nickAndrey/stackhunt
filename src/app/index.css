@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@import './globals.css';
+
 @theme {
   /* define your project's custom design tokens */
 }
