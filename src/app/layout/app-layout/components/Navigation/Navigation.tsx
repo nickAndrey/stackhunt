@@ -6,6 +6,16 @@ const routes = [
     href: '/dashboard',
     label: 'Dashboard',
   },
+  {
+    id: 1,
+    href: '/alerts',
+    label: 'Alerts',
+  },
+  {
+    id: 2,
+    href: '/settings',
+    label: 'Settings',
+  },
 ];
 
 function Navigation() {

@@ -4,6 +4,8 @@ import AuthLayout from './layout/AuthLayout';
 import RouteGuard from './layout/RouteGuard';
 
 const DashboardPage = lazy(() => import('@/domains/dashboard/Page'));
+const AlertsPage = lazy(() => import('@/domains/alerts/Page'));
+const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 const LoginPage = lazy(() => import('@/domains/login/Page'));
 const RegisterPage = lazy(() => import('@/domains/register/Page'));
 
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: '/alerts',
+        element: <AlertsPage />,
+      },
+      {
+        path: '/settings',
+        element: <SettingsPage />,
       },
     ],
   },
