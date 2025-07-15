@@ -1,6 +1,7 @@
 import { useRef, type ReactNode } from 'react';
 
 import useResizeSideBar from './hooks/useResizeSideBar';
+import useStoreSideBarSize from './hooks/useStoreSideBarSize';
 
 type SideBarProps = {
   children: ReactNode;
@@ -9,7 +10,9 @@ type SideBarProps = {
 function SideBar({ children }: SideBarProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
-  useResizeSideBar({ ref });
+  const { currentWidth } = useResizeSideBar({ ref });
+
+  useStoreSideBarSize({ currentWidth });
 
   return (
     <aside className="grid grid-cols-[1fr_auto] overflow-y-auto group" id="side-bar">

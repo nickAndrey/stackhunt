@@ -1,10 +1,12 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useState, type RefObject } from 'react';
 
 type Args = {
   ref: RefObject<HTMLDivElement | null>;
 };
 
 const useResizeSideBar = ({ ref }: Args) => {
+  const [currentWidth, setCurrentWidth] = useState(0);
+
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
@@ -17,6 +19,7 @@ const useResizeSideBar = ({ ref }: Args) => {
       if (e.clientX >= 250) return;
 
       resizableElement.style.width = e.clientX + 'px';
+      setCurrentWidth(e.clientX);
     };
 
     const handleMouseDown = () => {
@@ -43,6 +46,8 @@ const useResizeSideBar = ({ ref }: Args) => {
       element.removeEventListener('mousedown', handleMouseDown);
     };
   }, [ref]);
+
+  return { currentWidth };
 };
 
 export default useResizeSideBar;
