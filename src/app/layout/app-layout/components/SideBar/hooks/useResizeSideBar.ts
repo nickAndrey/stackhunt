@@ -1,3 +1,4 @@
+import { useDebounce } from '@uidotdev/usehooks';
 import { useEffect, useState, type RefObject } from 'react';
 
 type Args = {
@@ -6,6 +7,7 @@ type Args = {
 
 const useResizeSideBar = ({ ref }: Args) => {
   const [currentWidth, setCurrentWidth] = useState(0);
+  const currentWidthDebounced = useDebounce(currentWidth, 500);
 
   useEffect(() => {
     const element = ref.current;
@@ -47,7 +49,9 @@ const useResizeSideBar = ({ ref }: Args) => {
     };
   }, [ref]);
 
-  return { currentWidth };
+  return {
+    currentWidth: currentWidthDebounced,
+  };
 };
 
 export default useResizeSideBar;
