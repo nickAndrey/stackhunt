@@ -1,25 +1,42 @@
-import { lazy, Suspense } from 'react';
-import { createBrowserRouter } from 'react-router';
-import App from './App';
+import { lazy } from 'react';
+import { createBrowserRouter, Navigate } from 'react-router';
+import AuthLayout from './layout/AuthLayout';
+import RouteGuard from './layout/RouteGuard';
 
 const DashboardPage = lazy(() => import('@/domains/dashboard/Page'));
+const LoginPage = lazy(() => import('@/domains/login/Page'));
+const RegisterPage = lazy(() => import('@/domains/register/Page'));
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Suspense fallback="Loading ...">
-        <App />
-      </Suspense>
-    ),
+    element: <RouteGuard />,
     children: [
       {
         index: true,
-        element: <DashboardPage />,
+        element: <Navigate to="/dashboard" />,
       },
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+    ],
+  },
+  {
+    path: '/auth',
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/auth/login" />,
+      },
+      {
+        path: '/auth/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/auth/register',
+        element: <RegisterPage />,
       },
     ],
   },
