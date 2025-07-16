@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { Navigation } from './components/Navigation';
 import { SideBar } from './components/SideBar';
@@ -10,11 +9,9 @@ function AppLayout() {
         <Navigation />
       </SideBar>
 
-      <Suspense fallback="Loading...">
-        <main className="overflow-y-auto bg-gray-50">
-          <Outlet />
-        </main>
-      </Suspense>
+      <main className="overflow-y-auto bg-gray-50">
+        <Outlet />
+      </main>
     </div>
   );
 }
