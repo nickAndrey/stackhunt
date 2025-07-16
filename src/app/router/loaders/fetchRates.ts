@@ -1,4 +1,5 @@
 import type { HistoricalRatesRecord } from '@/shared/types/historical-rates-record';
+import calculateRateDeltas from '@/shared/utils/calculate-rate-deltas';
 import dbGet from '@/shared/utils/idb/db-get';
 import dbWrite from '@/shared/utils/idb/db-write';
 import formatTime from '@/shared/utils/time-format';
@@ -28,7 +29,7 @@ async function fetchRates() {
       dbName: 'dashboard',
       storeName: 'rates',
       data: {
-        ...dataJson,
+        ...{ ...dataJson, rates: calculateRateDeltas(dataJson.rates) },
         id: 'historical_rates',
         last_updated: Date.now(),
       },

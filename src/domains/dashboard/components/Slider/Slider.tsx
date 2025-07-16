@@ -7,7 +7,7 @@ type SliderProps = {
 
 function Slider({ children, headerComponent }: SliderProps) {
   return (
-    <section className="pt-4 bg-gray-200">
+    <section className="pt-4">
       <header className="mb-2 px-2">{headerComponent}</header>
 
       <div className="grid grid-flow-col gap-4 overflow-auto py-2">{children}</div>

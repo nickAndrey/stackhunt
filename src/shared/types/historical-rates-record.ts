@@ -30,7 +30,11 @@ export type CurrencyCode =
   | 'TRY'
   | 'ZAR';
 
-export type DailyRate = Record<CurrencyCode, number>;
+export type DailyRate = {
+  date: string;
+} & {
+  [key in CurrencyCode]?: { delta: number; percent: number };
+};
 
 export type HistoricalRatesRecord = {
   id: string;
@@ -39,7 +43,5 @@ export type HistoricalRatesRecord = {
   start_date: string;
   end_date: string;
   last_updated: number; // timestamp (ms since epoch)
-  rates: {
-    [date: string]: DailyRate;
-  };
+  rates: DailyRate[];
 };
