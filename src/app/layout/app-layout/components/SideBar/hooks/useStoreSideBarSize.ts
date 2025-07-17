@@ -14,12 +14,12 @@ const useStoreSideBarSize = ({ currentWidth }: Args) => {
     const savedWidth = localStorage.getItem(SIDEBAR_WIDTH);
     if (!savedWidth) return;
 
-    sideBar.style.width = savedWidth;
+    sideBar.style.width = savedWidth + 'px';
   }, []);
 
   useEffect(() => {
     if (currentWidth === 0) return;
-    localStorage.setItem(SIDEBAR_WIDTH, `${currentWidth}px`);
+    localStorage.setItem(SIDEBAR_WIDTH, currentWidth.toString());
   }, [currentWidth]);
 };
 

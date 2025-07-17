@@ -1,3 +1,5 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
+import { User } from 'lucide-react';
 import { NavLink } from 'react-router';
 
 const routes = [
@@ -5,6 +7,7 @@ const routes = [
     id: 0,
     href: '/patients',
     label: 'Patients',
+    icon: <User width={20} height={20} />,
   },
   // {
   //   id: 0,
@@ -23,18 +26,31 @@ const routes = [
   // },
 ];
 
-function Navigation() {
+type NavigationProps = {
+  currentWidth: number;
+};
+
+function Navigation({ currentWidth }: NavigationProps) {
   const linkStyles = ({ isActive }: { isActive: boolean }) => {
-    return `${isActive ? 'active bg-blue-200' : ''} flex items-center p-2 rounded-lg`;
+    return `${isActive ? 'active bg-blue-200' : ''} flex items-center p-2 rounded-lg gap-2`;
   };
 
   return (
     <ul className="flex flex-col overflow-x-hidden px-2 mt-4">
       {routes.map((route) => (
         <li key={route.id}>
-          <NavLink to={route.href} className={linkStyles}>
-            <span className="truncate text-gray-800">{route.label}</span>
-          </NavLink>
+          <Tooltip>
+            <TooltipTrigger className="w-full">
+              <NavLink to={route.href} className={linkStyles}>
+                <span>{route.icon}</span>
+                <span className="truncate text-gray-800">{route.label}</span>
+              </NavLink>
+            </TooltipTrigger>
+
+            <TooltipContent side="right" align="center" hidden={currentWidth > 100}>
+              <span>{route.label}</span>
+            </TooltipContent>
+          </Tooltip>
         </li>
       ))}
     </ul>

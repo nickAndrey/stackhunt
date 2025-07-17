@@ -4,7 +4,7 @@ import useResizeSideBar from './hooks/useResizeSideBar';
 import useStoreSideBarSize from './hooks/useStoreSideBarSize';
 
 type SideBarProps = {
-  children: ReactNode;
+  children: (currentWidth: number) => ReactNode;
 };
 
 function SideBar({ children }: SideBarProps) {
@@ -16,7 +16,7 @@ function SideBar({ children }: SideBarProps) {
 
   return (
     <aside className="grid grid-cols-[1fr_auto] overflow-y-auto group" id="side-bar">
-      {children}
+      {children(currentWidth)}
       <div
         className="w-0.5 h-full bg-gray-200 hover:bg-gray-300 hover:w-1 hover:cursor-grab transition-[width,background] group-[.active]:bg-blue-300 group-[.active]:w-1"
         ref={ref}
