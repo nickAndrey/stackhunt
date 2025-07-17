@@ -3,24 +3,29 @@ import { NavLink } from 'react-router';
 const routes = [
   {
     id: 0,
-    href: '/dashboard',
-    label: 'Dashboard',
+    href: '/patients',
+    label: 'Patients',
   },
-  {
-    id: 1,
-    href: '/alerts',
-    label: 'Alerts',
-  },
-  {
-    id: 2,
-    href: '/settings',
-    label: 'Settings',
-  },
+  // {
+  //   id: 0,
+  //   href: '/dashboard',
+  //   label: 'Dashboard',
+  // },
+  // {
+  //   id: 1,
+  //   href: '/alerts',
+  //   label: 'Alerts',
+  // },
+  // {
+  //   id: 2,
+  //   href: '/settings',
+  //   label: 'Settings',
+  // },
 ];
 
 function Navigation() {
   const linkStyles = ({ isActive }: { isActive: boolean }) => {
-    return `${isActive ? 'active bg-gray-200' : ''} flex items-center p-2 rounded-lg`;
+    return `${isActive ? 'active bg-blue-200' : ''} flex items-center p-2 rounded-lg`;
   };
 
   return (
