@@ -3,6 +3,7 @@ import type { Allergy } from './allergy';
 import type { EmergencyContact } from './emergency-contact';
 import type { ContactPreference, Gender, PatientStatus } from './enums';
 import type { Medication } from './medication';
+import type { Note } from './note';
 
 export type Patient = {
   id: string; // UUID
@@ -20,7 +21,7 @@ export type Patient = {
   preferred_language?: string;
   contact_preference?: ContactPreference;
   emergency_contact?: EmergencyContact;
-  notes?: string;
+  notes?: Note[];
   files: string[];
   appointments: string[];
   medical_flags: string[];

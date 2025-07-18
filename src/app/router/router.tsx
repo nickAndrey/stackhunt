@@ -10,7 +10,7 @@ const AlertsPage = lazy(() => import('@/domains/alerts/Page'));
 const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 const LoginPage = lazy(() => import('@/domains/login/Page'));
 const RegisterPage = lazy(() => import('@/domains/register/Page'));
-const PatientsPage = lazy(() => import('@/domains/patients/Page'));
+const PatientDetailsPage = lazy(() => import('@/domains/patients/details/Page'));
 
 const router = createBrowserRouter([
   {
@@ -22,8 +22,8 @@ const router = createBrowserRouter([
         element: <Navigate to="/patients" />,
       },
       {
-        path: '/patients',
-        element: <PatientsPage />,
+        path: '/patients/:id',
+        element: <PatientDetailsPage />,
         loader: async () => ({ data: await emit_fetchPatients() }),
         hydrateFallbackElement: 'Loading ...',
       },

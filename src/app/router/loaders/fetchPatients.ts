@@ -25,8 +25,22 @@ const patients: Patient[] = [
       relation: 'husband',
       phone: '+1-202-555-0110',
     },
-    notes:
-      'Patient has a history of migraines. Observed mild anxiety. Prefers morning appointments.',
+    notes: [
+      {
+        id: 'note-001',
+        author_id: 'dr-231',
+        author_name: 'Dr. Alice Rivera',
+        content: 'Patient has a history of migraines.',
+        created_at: '2024-11-12T10:35:00Z',
+      },
+      {
+        id: 'note-002',
+        author_id: 'dr-312',
+        author_name: 'Dr. Omar Patel',
+        content: 'Observed mild anxiety. Prefers morning appointments.',
+        created_at: '2025-01-15T09:10:00Z',
+      },
+    ],
     files: [
       'https://example.com/files/mri_scan_elena_2024.pdf',
       'https://example.com/files/bloodwork_results_2024-11-10.jpg',
@@ -86,7 +100,15 @@ const patients: Patient[] = [
       relation: 'wife',
       phone: '+1-312-555-0184',
     },
-    notes: 'Diagnosed with type 2 diabetes. Needs regular glucose monitoring.',
+    notes: [
+      {
+        id: 'note-101',
+        author_id: 'dr-101',
+        author_name: 'Dr. Henry Tran',
+        content: 'Diagnosed with type 2 diabetes. Needs regular glucose monitoring.',
+        created_at: '2023-07-08T14:15:00Z',
+      },
+    ],
     files: [],
     appointments: ['apt-2024-08-14-002'],
     medical_flags: ['diabetes'],
@@ -130,7 +152,15 @@ const patients: Patient[] = [
       relation: 'sister',
       phone: '+44-20-7946-0950',
     },
-    notes: 'Recently immigrated; translation support recommended. History of asthma.',
+    notes: [
+      {
+        id: 'note-201',
+        author_id: 'dr-302',
+        author_name: 'Dr. Amira Hassan',
+        content: 'Recently immigrated; translation support recommended. History of asthma.',
+        created_at: '2025-02-03T09:05:00Z',
+      },
+    ],
     files: [],
     appointments: ['apt-2025-02-10-012'],
     medical_flags: ['asthma'],
@@ -180,7 +210,15 @@ const patients: Patient[] = [
       relation: 'mother',
       phone: '+49-30-2345-6789',
     },
-    notes: 'Student. Came in for sports injury. No known chronic issues.',
+    notes: [
+      {
+        id: 'note-301',
+        author_id: 'dr-212',
+        author_name: 'Dr. Felix Schmidt',
+        content: 'Student. Came in for sports injury. No known chronic issues.',
+        created_at: '2025-06-01T11:20:00Z',
+      },
+    ],
     files: ['https://example.com/files/xray_ankle_liam_2025.jpg'],
     appointments: ['apt-2025-06-02-001'],
     medical_flags: [],
