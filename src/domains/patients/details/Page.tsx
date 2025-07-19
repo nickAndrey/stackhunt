@@ -1,4 +1,3 @@
-import { Card } from '@/design-system/components/ui/card';
 import type { Patient } from '@/shared/types/patient';
 
 import { Button } from '@/design-system/components/ui/button';
@@ -6,6 +5,8 @@ import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router';
+import { PatientFilesCard } from './components/PatientFilesCard';
+import usePatientFiles from './components/PatientFilesCard/hooks/usePatientFiles';
 import { PatientInfoCard } from './components/PatientInfoCard';
 import { PatientNotesCard } from './components/PatientNotesCard';
 import usePatientNotes from './components/PatientNotesCard/hooks/usePatientNotes';
@@ -14,6 +15,8 @@ function Page() {
   const { data } = useLoaderData<{ data: Patient[] }>();
 
   const [patient, setPatient] = useState(data[0]);
+
+  const { manageFilesDialogIsOpen, setManageFilesDialogIsOpen } = usePatientFiles();
 
   const {
     noteMode,
@@ -90,7 +93,18 @@ function Page() {
       </div>
 
       <div className="col-span-12 lg:col-span-3">
-        <Card></Card>
+        <PatientFilesCard
+          files={patient.files}
+          onClickFilesUpload={() => setManageFilesDialogIsOpen(true)}
+          onClickDeleteFile={() => setManageFilesDialogIsOpen(true)}
+        />
+        <Modal
+          open={manageFilesDialogIsOpen}
+          onOpenChange={setManageFilesDialogIsOpen}
+          title="Files"
+        >
+          test
+        </Modal>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function AppLayout() {
     <div className="grid grid-cols-[auto_1fr] h-screen w-full">
       <SideBar>{(currentWidth) => <Navigation currentWidth={currentWidth} />}</SideBar>
 
-      <main className="overflow-y-auto bg-blue-50">
+      <main className="overflow-y-auto">
         <Header />
         <Outlet />
       </main>

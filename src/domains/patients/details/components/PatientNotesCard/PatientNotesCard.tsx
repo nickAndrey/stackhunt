@@ -27,7 +27,12 @@ function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: Patient
       <CardHeader>
         <CardTitle>Notes</CardTitle>
         <CardAction>
-          <Button variant="secondary" size="icon" className="size-8" onClick={onClickCreateNote}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8 rounded-2xl"
+            onClick={onClickCreateNote}
+          >
             <Plus />
           </Button>
         </CardAction>
@@ -53,7 +58,7 @@ function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: Patient
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="ml-auto size-8"
+                    className="ml-auto size-8 rounded-2xl"
                     onClick={() => onClickEditNote(note.id)}
                   >
                     <Pencil />
