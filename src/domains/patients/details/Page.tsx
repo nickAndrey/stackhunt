@@ -2,18 +2,8 @@ import { Card } from '@/design-system/components/ui/card';
 import type { Patient } from '@/shared/types/patient';
 
 import { Button } from '@/design-system/components/ui/button';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTrigger,
-} from '@/design-system/components/ui/dialog';
 import { Textarea } from '@/design-system/components/ui/textarea';
-import { DialogTitle } from '@radix-ui/react-dialog';
-import { Pencil, Plus } from 'lucide-react';
+import { Modal } from '@/shared/components/Modal';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { PatientInfoCard } from './components/PatientInfoCard';
@@ -78,59 +68,29 @@ function Page() {
       </div>
 
       <div className="col-span-12 lg:col-span-3">
-        <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
-          <PatientNotesCard
-            notes={patient.notes}
-            createNoteTriggerRenderer={() => (
-              <DialogTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="size-8"
-                  onClick={onClickCreateNote}
-                >
-                  <Plus />
-                </Button>
-              </DialogTrigger>
-            )}
-            editNoteTriggerRenderer={(id) => (
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="ml-auto size-8"
-                  onClick={() => onClickEditNote(id, patient?.notes)}
-                >
-                  <Pencil />
-                </Button>
-              </DialogTrigger>
-            )}
-          />
+        <PatientNotesCard
+          notes={patient.notes}
+          onClickCreateNote={onClickCreateNote}
+          onClickEditNote={(id) => onClickEditNote(id, patient?.notes)}
+        />
 
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{noteMode === 'create' ? 'Create Note' : 'Update Note'}</DialogTitle>
-              <DialogDescription>
-                Make changes to the note here. Click save when you're done.
-              </DialogDescription>
-            </DialogHeader>
-
-            <Textarea value={activeNote} onChange={onChangeActiveNote} />
-
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <Button type="button" onClick={handleSaveNote}>
-                Save changes
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <Modal
+          open={dialogIsOpen}
+          onOpenChange={setDialogIsOpen}
+          title={noteMode === 'create' ? 'Create Note' : 'Update Note'}
+          description="Make changes to the note here. Click save when you're done."
+          actionBtn={
+            <Button type="button" onClick={handleSaveNote}>
+              Save changes
+            </Button>
+          }
+        >
+          <Textarea value={activeNote} onChange={onChangeActiveNote} />
+        </Modal>
       </div>
 
       <div className="col-span-12 lg:col-span-3">
-        <Card>3</Card>
+        <Card></Card>
       </div>
     </div>
   );

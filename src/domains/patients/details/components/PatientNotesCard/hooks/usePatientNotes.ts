@@ -10,12 +10,14 @@ function usePatientNotes() {
   const onClickCreateNote = () => {
     setNoteMode('create');
     setActiveNote('');
+    setDialogIsOpen(true);
   };
 
   const onClickEditNote = (id: string, notes: Patient['notes']) => {
     setSelectedNote(id);
     setActiveNote(notes?.find((note) => note.id === id)?.content || '');
     setNoteMode('update');
+    setDialogIsOpen(true);
   };
 
   const onChangeActiveNote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

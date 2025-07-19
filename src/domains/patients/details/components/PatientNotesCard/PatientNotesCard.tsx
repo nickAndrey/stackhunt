@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/design-system/components/ui/accordion';
+import { Button } from '@/design-system/components/ui/button';
 import {
   Card,
   CardAction,
@@ -12,24 +13,24 @@ import {
   CardTitle,
 } from '@/design-system/components/ui/card';
 import type { Patient } from '@/shared/types/patient';
-import type { ReactNode } from 'react';
+import { Pencil, Plus } from 'lucide-react';
 
 type PatientNotesCardProps = {
   notes: Patient['notes'];
-  createNoteTriggerRenderer: () => ReactNode;
-  editNoteTriggerRenderer: (id: string) => ReactNode;
+  onClickCreateNote: () => void;
+  onClickEditNote: (id: string) => void;
 };
 
-function PatientNotesCard({
-  notes,
-  createNoteTriggerRenderer,
-  editNoteTriggerRenderer,
-}: PatientNotesCardProps) {
+function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: PatientNotesCardProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Notes</CardTitle>
-        <CardAction>{createNoteTriggerRenderer()}</CardAction>
+        <CardAction>
+          <Button variant="secondary" size="icon" className="size-8" onClick={onClickCreateNote}>
+            <Plus />
+          </Button>
+        </CardAction>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-2 max-h-[300px] overflow-y-auto">
@@ -49,7 +50,14 @@ function PatientNotesCard({
 
                 <div className="flex items-center gap-2">
                   <small>Created by: {note.author_name}</small>
-                  {editNoteTriggerRenderer(note.id)}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="ml-auto size-8"
+                    onClick={() => onClickEditNote(note.id)}
+                  >
+                    <Pencil />
+                  </Button>
                 </div>
               </AccordionContent>
             </AccordionItem>
