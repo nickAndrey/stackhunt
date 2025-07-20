@@ -1,18 +1,34 @@
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/design-system/components/ui/resizable';
 import { Outlet } from 'react-router';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
-import { SideBar } from './components/SideBar';
+import useStoreSideBarSize from './components/SideBar/hooks/useStoreSideBarSize';
 
 function AppLayout() {
-  return (
-    <div className="grid grid-cols-[auto_1fr] h-screen w-full">
-      <SideBar>{(currentWidth) => <Navigation currentWidth={currentWidth} />}</SideBar>
+  const { currentWidth, handleResize } = useStoreSideBarSize();
 
-      <main className="overflow-y-auto">
-        <Header />
-        <Outlet />
-      </main>
-    </div>
+  return (
+    <ResizablePanelGroup direction="horizontal" className="w-full min-h-screen">
+      <ResizablePanel
+        defaultSize={currentWidth}
+        maxSize={30}
+        className="min-w-[60px]"
+        onResize={handleResize}
+      >
+        <Navigation currentWidth={currentWidth} />
+      </ResizablePanel>
+      <ResizableHandle withHandle />
+      <ResizablePanel>
+        <main className="overflow-y-auto">
+          <Header />
+          <Outlet />
+        </main>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 }
 

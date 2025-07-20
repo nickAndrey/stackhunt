@@ -1,26 +1,30 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useDebounce } from '@uidotdev/usehooks';
+import { useEffect, useState } from 'react';
 
 const SIDEBAR_WIDTH = 'SideBar_width';
 
-type Args = {
-  currentWidth: number;
+const getInitialSidebarWidth = () => {
+  const saved = localStorage.getItem(SIDEBAR_WIDTH);
+  return saved ? parseFloat(saved) : 60;
 };
 
-const useStoreSideBarSize = ({ currentWidth }: Args) => {
-  useLayoutEffect(() => {
-    const sideBar = document.getElementById('side-bar');
-    if (!sideBar) return;
-
-    const savedWidth = localStorage.getItem(SIDEBAR_WIDTH);
-    if (!savedWidth) return;
-
-    sideBar.style.width = savedWidth + 'px';
-  }, []);
+const useStoreSideBarSize = () => {
+  const [currentWidth, setCurrentWidth] = useState(getInitialSidebarWidth);
+  const currentWidthDebounced = useDebounce(currentWidth, 500);
 
   useEffect(() => {
-    if (currentWidth === 0) return;
-    localStorage.setItem(SIDEBAR_WIDTH, currentWidth.toString());
-  }, [currentWidth]);
+    localStorage.setItem(SIDEBAR_WIDTH, currentWidthDebounced.toString());
+  }, [currentWidthDebounced]);
+
+  const handleResize = (currentSize: number) => {
+    const valueToSave = currentSize;
+    setCurrentWidth(valueToSave);
+  };
+
+  return {
+    currentWidth,
+    handleResize,
+  };
 };
 
 export default useStoreSideBarSize;

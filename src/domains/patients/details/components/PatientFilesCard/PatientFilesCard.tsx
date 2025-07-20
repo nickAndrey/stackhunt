@@ -16,6 +16,8 @@ type PatientFilesCardProps = {
 };
 
 function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: PatientFilesCardProps) {
+  const getFileName = (file: string) => file.slice(file.lastIndexOf('/') + 1);
+
   return (
     <Card>
       <CardHeader>
@@ -39,8 +41,10 @@ function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: Pati
               key={file}
               className="flex items-center gap-2 px-4 py-2 shadow-md rounded-md border-1"
             >
-              <FileText size={16} />
-              <p className="text-sm">{file.slice(file.lastIndexOf('/') + 1)}</p>
+              <FileText width={16} height={16} className="flex shrink-0" />
+              <p className="text-sm truncate" title={getFileName(file)}>
+                {getFileName(file)}
+              </p>
 
               <div className="ml-auto">
                 <Button

@@ -3,33 +3,31 @@ import type { Patient } from '@/shared/types/patient';
 import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useLoaderData } from 'react-router';
 import { PatientFilesCard } from './components/PatientFilesCard';
-import usePatientFiles from './components/PatientFilesCard/hooks/usePatientFiles';
 import { PatientInfoCard } from './components/PatientInfoCard';
 import { PatientNotesCard } from './components/PatientNotesCard';
-import usePatientNotes from './components/PatientNotesCard/hooks/usePatientNotes';
+
+type DialogName = 'fileRemoveConfirmation' | 'fileUpload' | 'noteCreate' | 'noteUpdate';
 
 function Page() {
   const { data } = useLoaderData<{ data: Patient[] }>();
 
   const [patient, setPatient] = useState(data[0]);
 
-  const { manageFilesDialogIsOpen, setManageFilesDialogIsOpen } = usePatientFiles();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [activeDialog, setActiveDialog] = useState<DialogName>('noteCreate');
 
-  const {
-    noteMode,
-    dialogIsOpen,
-    selectedNote,
-    activeNote,
-    onClickCreateNote,
-    onClickEditNote,
-    onChangeActiveNote,
-    setDialogIsOpen,
-  } = usePatientNotes();
+  const [activeNoteId, setActiveNoteId] = useState('');
+  const [activeNote, setActiveNote] = useState('');
 
-  const onAddNewNote = () => {
+  const openDialog = (kind: typeof activeDialog) => {
+    setActiveDialog(kind);
+    setIsDialogOpen(true);
+  };
+
+  const handleCreateNote = () => {
     setPatient((prev) => ({
       ...prev,
       notes: [
@@ -43,25 +41,68 @@ function Page() {
         },
       ],
     }));
+    setIsDialogOpen(false);
   };
 
-  const onUpdateNote = () => {
+  const handleUpdateNote = () => {
     setPatient((prev) => ({
       ...prev,
       notes: prev.notes?.map((note) =>
-        note.id === selectedNote ? { ...note, content: activeNote } : note
+        note.id === activeNoteId ? { ...note, content: activeNote } : note
       ),
     }));
+    setIsDialogOpen(false);
   };
 
-  const handleSaveNote = () => {
-    if (noteMode === 'create') {
-      onAddNewNote();
-    } else if (noteMode === 'update') {
-      onUpdateNote();
+  const dialogConfig: Record<
+    DialogName,
+    {
+      title: string;
+      description: string;
+      children: ReactNode;
+      actionBtn: ReactNode;
     }
-
-    setDialogIsOpen(false);
+  > = {
+    noteCreate: {
+      title: 'Create Note',
+      description: "Add a new note. Click save when you're done.",
+      children: <Textarea value={activeNote} onChange={(e) => setActiveNote(e.target.value)} />,
+      actionBtn: (
+        <Button type="button" onClick={handleCreateNote}>
+          Save
+        </Button>
+      ),
+    },
+    noteUpdate: {
+      title: 'Update Note',
+      description: "Make changes to the note here. Click save when you're done.",
+      children: <Textarea value={activeNote} onChange={(e) => setActiveNote(e.target.value)} />,
+      actionBtn: (
+        <Button type="button" onClick={handleUpdateNote}>
+          Save changes
+        </Button>
+      ),
+    },
+    fileUpload: {
+      title: 'Upload File',
+      description: 'Use area below to upload files',
+      children: null,
+      actionBtn: (
+        <Button type="button" onClick={() => console.log('uploaded')}>
+          Save changes
+        </Button>
+      ),
+    },
+    fileRemoveConfirmation: {
+      title: 'Delete File',
+      description: 'Are you sure you want to delete a file?',
+      children: null,
+      actionBtn: (
+        <Button type="button" variant="destructive" onClick={() => console.log('delete file')}>
+          Confirm Deletion
+        </Button>
+      ),
+    },
   };
 
   return (
@@ -73,39 +114,27 @@ function Page() {
       <div className="col-span-12 lg:col-span-3">
         <PatientNotesCard
           notes={patient.notes}
-          onClickCreateNote={onClickCreateNote}
-          onClickEditNote={(id) => onClickEditNote(id, patient?.notes)}
+          onClickCreateNote={() => {
+            openDialog('noteCreate');
+            setActiveNote('');
+          }}
+          onClickEditNote={(id) => {
+            openDialog('noteUpdate');
+            setActiveNoteId(id);
+            setActiveNote(patient.notes?.find((item) => item.id === id)?.content || '');
+          }}
         />
-
-        <Modal
-          open={dialogIsOpen}
-          onOpenChange={setDialogIsOpen}
-          title={noteMode === 'create' ? 'Create Note' : 'Update Note'}
-          description="Make changes to the note here. Click save when you're done."
-          actionBtn={
-            <Button type="button" onClick={handleSaveNote}>
-              Save changes
-            </Button>
-          }
-        >
-          <Textarea value={activeNote} onChange={onChangeActiveNote} />
-        </Modal>
       </div>
 
       <div className="col-span-12 lg:col-span-3">
         <PatientFilesCard
           files={patient.files}
-          onClickFilesUpload={() => setManageFilesDialogIsOpen(true)}
-          onClickDeleteFile={() => setManageFilesDialogIsOpen(true)}
+          onClickFilesUpload={() => openDialog('fileUpload')}
+          onClickDeleteFile={() => openDialog('fileRemoveConfirmation')}
         />
-        <Modal
-          open={manageFilesDialogIsOpen}
-          onOpenChange={setManageFilesDialogIsOpen}
-          title="Files"
-        >
-          test
-        </Modal>
       </div>
+
+      <Modal open={isDialogOpen} onOpenChange={setIsDialogOpen} {...dialogConfig[activeDialog]} />
     </div>
   );
 }
