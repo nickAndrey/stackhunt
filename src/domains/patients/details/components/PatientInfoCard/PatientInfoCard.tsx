@@ -5,9 +5,10 @@ import type { Patient } from '@/shared/types/patient';
 
 type PatientInfoCardProps = {
   patient: Patient;
+  onClickSendMessage: () => void;
 };
 
-function PatientInfoCard({ patient }: PatientInfoCardProps) {
+function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) {
   const patientDetails = [
     {
       id: 'gender',
@@ -72,7 +73,9 @@ function PatientInfoCard({ patient }: PatientInfoCardProps) {
           <h4>{`${patient.first_name} ${patient.last_name}`}</h4>
           <small>{patient.email}</small>
 
-          <Button className="mt-2 w-max">Send Message</Button>
+          <Button className="mt-2 w-max" onClick={onClickSendMessage}>
+            Send Message
+          </Button>
         </div>
       </div>
 

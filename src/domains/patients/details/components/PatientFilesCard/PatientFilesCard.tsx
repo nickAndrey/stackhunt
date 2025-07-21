@@ -6,13 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/design-system/components/ui/card';
+import { NoData } from '@/shared/components/NoData';
 import type { Patient } from '@/shared/types/patient';
 import { FileText, Plus, Trash2 } from 'lucide-react';
 
 type PatientFilesCardProps = {
   files: Patient['files'];
   onClickFilesUpload: () => void;
-  onClickDeleteFile: () => void;
+  onClickDeleteFile: (file: string) => void;
 };
 
 function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: PatientFilesCardProps) {
@@ -34,30 +35,42 @@ function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: Pati
         </CardAction>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="max-h-[300px] overflow-y-auto">
         <ul className="flex flex-col gap-2">
-          {files.map((file) => (
-            <li
-              key={file}
-              className="flex items-center gap-2 px-4 py-2 shadow-md rounded-md border-1"
-            >
-              <FileText width={16} height={16} className="flex shrink-0" />
-              <p className="text-sm truncate" title={getFileName(file)}>
-                {getFileName(file)}
-              </p>
+          {files.length > 0 ? (
+            files.map((file) => (
+              <li
+                key={file}
+                className="flex items-center gap-2 px-4 py-2 shadow-md rounded-md border-1"
+              >
+                <FileText width={16} height={16} className="flex shrink-0" />
 
-              <div className="ml-auto">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="size-8 rounded-4xl"
-                  onClick={onClickDeleteFile}
+                <a
+                  href={file}
+                  download
+                  className="text-sm truncate no-underline hover:underline"
+                  title={getFileName(file)}
                 >
-                  <Trash2 />
-                </Button>
-              </div>
+                  {getFileName(file)}
+                </a>
+
+                <div className="ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 rounded-4xl"
+                    onClick={() => onClickDeleteFile(file)}
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              </li>
+            ))
+          ) : (
+            <li>
+              <NoData />
             </li>
-          ))}
+          )}
         </ul>
       </CardContent>
     </Card>

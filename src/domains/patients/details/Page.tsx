@@ -6,10 +6,17 @@ import { Modal } from '@/shared/components/Modal';
 import { useState, type ReactNode } from 'react';
 import { useLoaderData } from 'react-router';
 import { PatientFilesCard } from './components/PatientFilesCard';
+import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
+import { useFileDrop } from './components/PatientFilesCard/components/FileDropZone/hooks/useFileDrop';
 import { PatientInfoCard } from './components/PatientInfoCard';
 import { PatientNotesCard } from './components/PatientNotesCard';
 
-type DialogName = 'fileRemoveConfirmation' | 'fileUpload' | 'noteCreate' | 'noteUpdate';
+type DialogName =
+  | 'fileRemoveConfirmation'
+  | 'fileUpload'
+  | 'noteCreate'
+  | 'noteUpdate'
+  | 'sendMessage';
 
 function Page() {
   const { data } = useLoaderData<{ data: Patient[] }>();
@@ -21,6 +28,12 @@ function Page() {
 
   const [activeNoteId, setActiveNoteId] = useState('');
   const [activeNote, setActiveNote] = useState('');
+
+  const [message, setMessage] = useState('');
+
+  const [fileToRemove, setFileToRemove] = useState('');
+
+  const fileDrop = useFileDrop();
 
   const openDialog = (kind: typeof activeDialog) => {
     setActiveDialog(kind);
@@ -86,20 +99,57 @@ function Page() {
     fileUpload: {
       title: 'Upload File',
       description: 'Use area below to upload files',
-      children: null,
+      children: <FileDropZone {...fileDrop} />,
       actionBtn: (
-        <Button type="button" onClick={() => console.log('uploaded')}>
+        <Button
+          type="button"
+          onClick={() => {
+            setPatient((prev) => ({
+              ...prev,
+              files: [...prev.files, ...fileDrop.files.map((item) => item.name)],
+            }));
+            setIsDialogOpen(false);
+            fileDrop.onResetFiles();
+          }}
+        >
           Save changes
         </Button>
       ),
     },
     fileRemoveConfirmation: {
       title: 'Delete File',
-      description: 'Are you sure you want to delete a file?',
+      description: `Are you sure you want to delete a file? ${fileToRemove}`,
       children: null,
       actionBtn: (
-        <Button type="button" variant="destructive" onClick={() => console.log('delete file')}>
+        <Button
+          type="button"
+          variant="destructive"
+          onClick={() => {
+            setPatient((prev) => ({
+              ...prev,
+              files: prev.files.filter((file) => file !== fileToRemove),
+            }));
+            setIsDialogOpen(false);
+          }}
+        >
           Confirm Deletion
+        </Button>
+      ),
+    },
+    sendMessage: {
+      title: 'Send a message',
+      description: '',
+      children: <Textarea value={message} onChange={(e) => setMessage(e.target.value)} />,
+      actionBtn: (
+        <Button
+          type="button"
+          onClick={() => {
+            console.log('message sent');
+            setIsDialogOpen(false);
+            setMessage('');
+          }}
+        >
+          Send
         </Button>
       ),
     },
@@ -108,7 +158,7 @@ function Page() {
   return (
     <div className="grid grid-cols-[repeat(12,1fr)] gap-3 px-4">
       <div className="col-span-12 lg:col-span-6">
-        <PatientInfoCard patient={patient} />
+        <PatientInfoCard patient={patient} onClickSendMessage={() => openDialog('sendMessage')} />
       </div>
 
       <div className="col-span-12 lg:col-span-3">
@@ -130,7 +180,10 @@ function Page() {
         <PatientFilesCard
           files={patient.files}
           onClickFilesUpload={() => openDialog('fileUpload')}
-          onClickDeleteFile={() => openDialog('fileRemoveConfirmation')}
+          onClickDeleteFile={(file) => {
+            openDialog('fileRemoveConfirmation');
+            setFileToRemove(file);
+          }}
         />
       </div>
 
