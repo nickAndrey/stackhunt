@@ -1,5 +1,6 @@
 import type { Address } from './address';
 import type { Allergy } from './allergy';
+import type { Appointment } from './appointment';
 import type { EmergencyContact } from './emergency-contact';
 import type { ContactPreference, Gender, PatientStatus } from './enums';
 import type { Medication } from './medication';
@@ -23,7 +24,7 @@ export type Patient = {
   emergency_contact?: EmergencyContact;
   notes?: Note[];
   files: string[];
-  appointments: string[];
+  appointments: Appointment[];
   medical_flags: string[];
   allergies: Allergy[];
   medications: Medication[];
