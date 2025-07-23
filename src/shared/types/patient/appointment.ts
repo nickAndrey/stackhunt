@@ -10,12 +10,21 @@ export type AppointmentStatus = 'scheduled' | 'completed' | 'cancelled';
 
 export type Appointment = {
   id: string;
-  patient_id: string;
   type: AppointmentType;
-  date: string; // ISO datetime
+  date: string;
   duration_minutes?: number;
-  staff_id: string; // doctor or nurse ID
   location?: string;
   notes?: string;
   status: AppointmentStatus;
+  patient: {
+    id: string;
+    full_name: string;
+    profile_image?: string;
+  };
+  staff: {
+    id: string;
+    full_name: string;
+    role: 'doctor' | 'nurse';
+    profile_image?: string;
+  };
 };

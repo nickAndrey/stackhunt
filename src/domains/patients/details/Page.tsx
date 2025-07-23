@@ -5,6 +5,7 @@ import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { useState, type ReactNode } from 'react';
 import { useLoaderData } from 'react-router';
+import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { PatientFilesCard } from './components/PatientFilesCard';
 import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
 import { useFileDrop } from './components/PatientFilesCard/components/FileDropZone/hooks/useFileDrop';
@@ -41,6 +42,8 @@ function Page() {
   };
 
   const handleCreateNote = () => {
+    if (activeNote.trim() === '') return;
+
     setPatient((prev) => ({
       ...prev,
       notes: [
@@ -156,12 +159,10 @@ function Page() {
   };
 
   return (
-    <div className="grid grid-cols-[repeat(12,1fr)] gap-3 px-4">
-      <div className="col-span-12 lg:col-span-6">
+    <>
+      <div className="grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] xl:grid-cols-[minmax(350px,1fr)_repeat(2,minmax(250px,1fr))] gap-3 px-4">
         <PatientInfoCard patient={patient} onClickSendMessage={() => openDialog('sendMessage')} />
-      </div>
 
-      <div className="col-span-12 lg:col-span-3">
         <PatientNotesCard
           notes={patient.notes}
           onClickCreateNote={() => {
@@ -174,9 +175,7 @@ function Page() {
             setActiveNote(patient.notes?.find((item) => item.id === id)?.content || '');
           }}
         />
-      </div>
 
-      <div className="col-span-12 lg:col-span-3">
         <PatientFilesCard
           files={patient.files}
           onClickFilesUpload={() => openDialog('fileUpload')}
@@ -185,10 +184,17 @@ function Page() {
             setFileToRemove(file);
           }}
         />
+
+        <div className="xl:col-span-full">
+          <PatientAppointmentsCard
+            appointments={patient.appointments}
+            onClickAddAppointment={() => {}}
+          />
+        </div>
       </div>
 
       <Modal open={isDialogOpen} onOpenChange={setIsDialogOpen} {...dialogConfig[activeDialog]} />
-    </div>
+    </>
   );
 }
 
