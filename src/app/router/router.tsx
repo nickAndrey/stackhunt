@@ -2,15 +2,14 @@ import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import AuthLayout from '../layout/AuthLayout';
 import RouteGuard from '../layout/RouteGuard';
-import emit_fetchPatients from './loaders/fetchPatients';
-import fetchRates from './loaders/fetchRates';
 
-const DashboardPage = lazy(() => import('@/domains/dashboard/Page'));
-const AlertsPage = lazy(() => import('@/domains/alerts/Page'));
 const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 const LoginPage = lazy(() => import('@/domains/login/Page'));
 const RegisterPage = lazy(() => import('@/domains/register/Page'));
 const PatientDetailsPage = lazy(() => import('@/domains/patients/details/Page'));
+const PatientsListPage = lazy(() => import('@/domains/patients/list/Page'));
+const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
+const DoctorsListPage = lazy(() => import('@/domains/doctors/Page'));
 
 const router = createBrowserRouter([
   {
@@ -22,26 +21,28 @@ const router = createBrowserRouter([
         element: <Navigate to="/patients" />,
       },
       {
+        path: '/patients',
+        element: <PatientsListPage />,
+      },
+      {
         path: '/patients/:id',
         element: <PatientDetailsPage />,
-        loader: async () => ({ data: await emit_fetchPatients() }),
-        hydrateFallbackElement: 'Loading ...',
       },
       {
-        path: '/dashboard',
-        element: <DashboardPage />,
-        loader: async () => await fetchRates(),
-        hydrateFallbackElement: 'Loading ...',
+        path: '/doctors',
+        element: <DoctorsListPage />,
       },
       {
-        path: '/alerts',
-        element: <AlertsPage />,
-        hydrateFallbackElement: 'Loading ...',
+        path: '/doctors/:id',
+        element: <h1>doctor details</h1>,
+      },
+      {
+        path: '/appointments',
+        element: <AppointmentsPage />,
       },
       {
         path: '/settings',
         element: <SettingsPage />,
-        hydrateFallbackElement: 'Loading ...',
       },
     ],
   },

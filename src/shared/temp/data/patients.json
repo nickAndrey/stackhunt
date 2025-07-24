@@ -1,0 +1,294 @@
+{
+  "data": [
+    {
+      "id": "8f1a2e30-9e6d-4b18-9cb7-8b8e7a62b5b4",
+      "first_name": "Elena",
+      "last_name": "Martinez",
+      "email": "elena.martinez@example.com",
+      "phone": "+1-202-555-0143",
+      "gender": "female",
+      "birth_date": "1985-06-22",
+      "address": { "street": "456 Maple Ave", "city": "New York", "zip_code": "10001" },
+      "national_id": "NY12345678",
+      "insurance_number": "INS-2024-8712",
+      "registration_date": "2024-11-12T10:30:00Z",
+      "profile_image": "https://example.com/uploads/patients/elena-martinez.jpg",
+      "preferred_language": "en",
+      "contact_preference": "email",
+      "emergency_contact": {
+        "name": "Carlos Martinez",
+        "relation": "husband",
+        "phone": "+1-202-555-0110"
+      },
+      "notes": [
+        {
+          "id": "note-001",
+          "author_id": "dr-231",
+          "author_name": "Dr. Alice Rivera",
+          "content": "Patient has a history of migraines.",
+          "created_at": "2024-11-12T10:35:00Z"
+        },
+        {
+          "id": "note-002",
+          "author_id": "dr-312",
+          "author_name": "Dr. Omar Patel",
+          "content": "Observed mild anxiety. Prefers morning appointments.",
+          "created_at": "2025-01-15T09:10:00Z"
+        }
+      ],
+      "files": [
+        "https://example.com/files/mri_scan_elena_2024.pdf",
+        "https://example.com/files/bloodwork_results_2024-11-10.jpg"
+      ],
+      "appointments": [
+        {
+          "id": "appt-001",
+          "type": "consultation",
+          "date": "2025-07-20T10:00:00Z",
+          "duration_minutes": 30,
+          "location": "Room 101",
+          "notes": "Initial consultation for knee pain.",
+          "status": "completed",
+          "patient": {
+            "id": "patient-001",
+            "full_name": "Alice Johnson",
+            "profile_image": "https://example.com/profiles/alice.jpg"
+          },
+          "staff": {
+            "id": "staff-001",
+            "full_name": "Dr. Emily Carter",
+            "role": "doctor",
+            "profile_image": "https://example.com/staff/emily.jpg"
+          }
+        },
+        {
+          "id": "appt-002",
+          "type": "lab_test",
+          "date": "2025-07-22T08:30:00Z",
+          "duration_minutes": 15,
+          "location": "Lab A",
+          "notes": "Blood test for cholesterol and glucose levels.",
+          "status": "scheduled",
+          "patient": {
+            "id": "patient-002",
+            "full_name": "Michael Lee",
+            "profile_image": "https://example.com/profiles/michael.jpg"
+          },
+          "staff": {
+            "id": "staff-002",
+            "full_name": "Nurse Jessica Brown",
+            "role": "nurse",
+            "profile_image": "https://example.com/staff/jessica.jpg"
+          }
+        },
+        {
+          "id": "appt-003",
+          "type": "surgery",
+          "date": "2025-08-01T13:00:00Z",
+          "duration_minutes": 120,
+          "location": "Operating Room 2",
+          "notes": "Knee arthroscopy procedure.",
+          "status": "scheduled",
+          "patient": {
+            "id": "patient-001",
+            "full_name": "Alice Johnson",
+            "profile_image": "https://example.com/profiles/alice.jpg"
+          },
+          "staff": {
+            "id": "staff-001",
+            "full_name": "Dr. Emily Carter",
+            "role": "doctor",
+            "profile_image": "https://example.com/staff/emily.jpg"
+          }
+        },
+        {
+          "id": "appt-004",
+          "type": "follow_up",
+          "date": "2025-08-10T09:15:00Z",
+          "duration_minutes": 20,
+          "location": "Room 102",
+          "notes": "Follow-up after knee surgery.",
+          "status": "scheduled",
+          "patient": {
+            "id": "patient-001",
+            "full_name": "Alice Johnson",
+            "profile_image": "https://example.com/profiles/alice.jpg"
+          },
+          "staff": {
+            "id": "staff-003",
+            "full_name": "Dr. Ryan Smith",
+            "role": "doctor",
+            "profile_image": "https://example.com/staff/ryan.jpg"
+          }
+        }
+      ],
+      "medical_flags": ["migraine", "anxiety"],
+      "allergies": [
+        {
+          "substance": "penicillin",
+          "reaction": "rash and difficulty breathing",
+          "severity": "severe"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Ibuprofen",
+          "dosage": "200mg twice a day",
+          "start_date": "2025-01-01",
+          "end_date": "2025-02-01",
+          "prescribed_by": "dr-231"
+        },
+        {
+          "name": "Propranolol",
+          "dosage": "40mg daily",
+          "start_date": "2024-10-01",
+          "end_date": "2025-10-01",
+          "prescribed_by": "dr-145"
+        }
+      ],
+      "conditions": ["migraine", "mild anxiety"],
+      "consent_to_contact": true,
+      "consent_signed_date": "2024-11-12",
+      "status": "active",
+      "tags": ["VIP", "high-risk"]
+    },
+    {
+      "id": "d27fa8e1-2d24-40ee-9825-994d2a59a607",
+      "first_name": "Michael",
+      "last_name": "Nguyen",
+      "email": "michael.nguyen@example.com",
+      "phone": "+1-312-555-0198",
+      "gender": "male",
+      "birth_date": "1972-04-10",
+      "address": { "street": "23 Cedar Street", "city": "Chicago", "zip_code": "60616" },
+      "national_id": "IL74839204",
+      "insurance_number": "CH-7788-0092",
+      "registration_date": "2023-07-08T14:00:00Z",
+      "profile_image": "https://example.com/uploads/patients/michael-nguyen.png",
+      "preferred_language": "en",
+      "contact_preference": "phone",
+      "emergency_contact": {
+        "name": "Linda Nguyen",
+        "relation": "wife",
+        "phone": "+1-312-555-0184"
+      },
+      "notes": [
+        {
+          "id": "note-101",
+          "author_id": "dr-101",
+          "author_name": "Dr. Henry Tran",
+          "content": "Diagnosed with type 2 diabetes. Needs regular glucose monitoring.",
+          "created_at": "2023-07-08T14:15:00Z"
+        }
+      ],
+      "files": [],
+      "appointments": [],
+      "medical_flags": ["diabetes"],
+      "allergies": [],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg twice a day",
+          "start_date": "2024-01-15",
+          "end_date": "2025-01-15",
+          "prescribed_by": "dr-101"
+        }
+      ],
+      "conditions": ["type 2 diabetes"],
+      "consent_to_contact": true,
+      "consent_signed_date": "2023-07-08",
+      "status": "active",
+      "tags": ["chronic", "monitoring"]
+    },
+    {
+      "id": "78fcea64-b0c9-4c79-a242-3df019fd61da",
+      "first_name": "Fatima",
+      "last_name": "Al-Farsi",
+      "email": "fatima.alfarsi@example.com",
+      "phone": "+44-20-7946-0958",
+      "gender": "female",
+      "birth_date": "1991-09-03",
+      "address": { "street": "12 Queen's Crescent", "city": "London", "zip_code": "NW5 4ED" },
+      "national_id": "UK92837465",
+      "insurance_number": "NHS-48201938",
+      "registration_date": "2025-02-03T09:00:00Z",
+      "profile_image": "https://example.com/uploads/patients/fatima-alfarsi.jpg",
+      "preferred_language": "ar",
+      "contact_preference": "sms",
+      "emergency_contact": {
+        "name": "Amina Al-Farsi",
+        "relation": "sister",
+        "phone": "+44-20-7946-0950"
+      },
+      "notes": [
+        {
+          "id": "note-201",
+          "author_id": "dr-302",
+          "author_name": "Dr. Amira Hassan",
+          "content": "Recently immigrated; translation support recommended. History of asthma.",
+          "created_at": "2025-02-03T09:05:00Z"
+        }
+      ],
+      "files": [],
+      "appointments": [],
+      "medical_flags": ["asthma"],
+      "allergies": [
+        { "substance": "dust mites", "reaction": "shortness of breath", "severity": "moderate" }
+      ],
+      "medications": [
+        {
+          "name": "Salbutamol",
+          "dosage": "as needed",
+          "start_date": "2024-12-01",
+          "end_date": "2025-12-01",
+          "prescribed_by": "dr-302"
+        }
+      ],
+      "conditions": ["asthma"],
+      "consent_to_contact": true,
+      "consent_signed_date": "2025-02-03",
+      "status": "active",
+      "tags": ["new-patient", "language-support"]
+    },
+    {
+      "id": "f531f0b0-13e6-4d52-bbd7-2e2efc4c4a3c",
+      "first_name": "Liam",
+      "last_name": "Kowalski",
+      "email": "liam.kowalski@example.com",
+      "phone": "+49-30-1234-5678",
+      "gender": "male",
+      "birth_date": "2003-11-18",
+      "address": { "street": "Grunewaldstraße 8", "city": "Berlin", "zip_code": "10823" },
+      "national_id": "DE1102983476",
+      "insurance_number": "GKV-2025-3312",
+      "registration_date": "2025-06-01T11:15:00Z",
+      "profile_image": "https://example.com/uploads/patients/liam-kowalski.jpg",
+      "preferred_language": "de",
+      "contact_preference": "sms",
+      "emergency_contact": {
+        "name": "Anna Kowalski",
+        "relation": "mother",
+        "phone": "+49-30-2345-6789"
+      },
+      "notes": [
+        {
+          "id": "note-301",
+          "author_id": "dr-212",
+          "author_name": "Dr. Felix Schmidt",
+          "content": "Student. Came in for sports injury. No known chronic issues.",
+          "created_at": "2025-06-01T11:20:00Z"
+        }
+      ],
+      "files": ["https://example.com/files/xray_ankle_liam_2025.jpg"],
+      "appointments": [],
+      "medical_flags": [],
+      "allergies": [],
+      "medications": [],
+      "conditions": [],
+      "consent_to_contact": true,
+      "consent_signed_date": "2025-06-01",
+      "status": "active",
+      "tags": ["student", "sports"]
+    }
+  ]
+}

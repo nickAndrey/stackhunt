@@ -1,29 +1,32 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
-import { User } from 'lucide-react';
+import { BriefcaseMedical, CalendarRange, Settings, User } from 'lucide-react';
 import { NavLink } from 'react-router';
 
 const routes = [
   {
     id: 0,
+    href: '/appointments',
+    label: 'Appointments',
+    icon: <CalendarRange width={20} height={20} />,
+  },
+  {
+    id: 1,
+    href: '/doctors',
+    label: 'Doctors',
+    icon: <BriefcaseMedical width={20} height={20} />,
+  },
+  {
+    id: 2,
     href: '/patients',
     label: 'Patients',
     icon: <User width={20} height={20} />,
   },
-  // {
-  //   id: 0,
-  //   href: '/dashboard',
-  //   label: 'Dashboard',
-  // },
-  // {
-  //   id: 1,
-  //   href: '/alerts',
-  //   label: 'Alerts',
-  // },
-  // {
-  //   id: 2,
-  //   href: '/settings',
-  //   label: 'Settings',
-  // },
+  {
+    id: 3,
+    href: '/settings',
+    label: 'Settings',
+    icon: <Settings width={20} height={20} />,
+  },
 ];
 
 type NavigationProps = {
