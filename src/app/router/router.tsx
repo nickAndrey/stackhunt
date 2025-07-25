@@ -1,3 +1,4 @@
+import { PatientPageLoader } from '@/domains/patients/details/components/PatientPageLoader';
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import AuthLayout from '../layout/AuthLayout';
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/patients/:id',
-        element: <PatientDetailsPage />,
+        element: (
+          <PatientPageLoader>
+            {(patient) => <PatientDetailsPage data={patient} />}
+          </PatientPageLoader>
+        ),
       },
       {
         path: '/doctors',

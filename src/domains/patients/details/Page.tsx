@@ -4,7 +4,6 @@ import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { useState, type ReactNode } from 'react';
-import { useLoaderData } from 'react-router';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { PatientFilesCard } from './components/PatientFilesCard';
 import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
@@ -19,10 +18,10 @@ type DialogName =
   | 'noteUpdate'
   | 'sendMessage';
 
-function Page() {
-  const { data } = useLoaderData<{ data: Patient[] }>();
+type PageProps = { data: Patient };
 
-  const [patient, setPatient] = useState(data[0]);
+function Page({ data }: PageProps) {
+  const [patient, setPatient] = useState(data);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeDialog, setActiveDialog] = useState<DialogName>('noteCreate');
