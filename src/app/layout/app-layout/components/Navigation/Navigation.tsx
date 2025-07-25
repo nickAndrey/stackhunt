@@ -50,7 +50,7 @@ function Navigation({ currentWidth }: NavigationProps) {
               </NavLink>
             </TooltipTrigger>
 
-            <TooltipContent side="right" align="center" hidden={currentWidth > 100}>
+            <TooltipContent side="right" align="center" hidden={currentWidth > 5}>
               <span>{route.label}</span>
             </TooltipContent>
           </Tooltip>

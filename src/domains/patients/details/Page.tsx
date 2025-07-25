@@ -52,7 +52,7 @@ function Page({ data }: PageProps) {
           author_id: 'ws',
           author_name: 'ws',
           content: activeNote,
-          created_at: '2025-07-18T10:35:00Z',
+          created_at: new Date().toISOString(),
         },
       ],
     }));
