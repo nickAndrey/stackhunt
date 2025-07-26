@@ -5,6 +5,7 @@ import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { useState, type ReactNode } from 'react';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
+import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
 import { PatientFilesCard } from './components/PatientFilesCard';
 import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
 import { useFileDrop } from './components/PatientFilesCard/components/FileDropZone/hooks/useFileDrop';
@@ -16,7 +17,8 @@ type DialogName =
   | 'fileUpload'
   | 'noteCreate'
   | 'noteUpdate'
-  | 'sendMessage';
+  | 'sendMessage'
+  | 'createAppointment';
 
 type PageProps = { data: Patient };
 
@@ -155,6 +157,23 @@ function Page({ data }: PageProps) {
         </Button>
       ),
     },
+    createAppointment: {
+      title: 'Create an appointment',
+      description:
+        'Schedule a new appointment for this patient. Choose a suitable date and time, add any relevant notes or purpose, and assign a practitioner if needed.',
+      children: <AppointmentForm />,
+      actionBtn: (
+        <Button
+          type="button"
+          onClick={() => {
+            console.log('appointment created');
+            setIsDialogOpen(false);
+          }}
+        >
+          Create
+        </Button>
+      ),
+    },
   };
 
   return (
@@ -187,7 +206,7 @@ function Page({ data }: PageProps) {
         <div className="xl:col-span-full">
           <PatientAppointmentsCard
             appointments={patient.appointments}
-            onClickAddAppointment={() => {}}
+            onClickAddAppointment={() => openDialog('createAppointment')}
           />
         </div>
       </div>
