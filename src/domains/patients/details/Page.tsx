@@ -6,6 +6,7 @@ import { Modal } from '@/shared/components/Modal';
 import { db } from '@/shared/db/db';
 import type { Staff } from '@/shared/types/staff';
 import { useState, type ReactNode } from 'react';
+import { toast } from 'sonner';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
 import { useAppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm/hooks/useAppointmentForm';
@@ -45,7 +46,10 @@ function Page({ data }: PageProps) {
 
   const fileDrop = useFileDrop();
 
-  const appointmentsForm = useAppointmentForm({ patientId: patient.id });
+  const appointmentsForm = useAppointmentForm({
+    patientId: patient.id,
+    appointments: data.patient.appointments,
+  });
 
   const openDialog = (kind: typeof activeDialog) => {
     setActiveDialog(kind);
@@ -196,6 +200,8 @@ function Page({ data }: PageProps) {
           type="button"
           onClick={() => {
             appointmentsForm.handleSubmit();
+            setIsDialogOpen(false);
+            toast.success('Appointment was successfully created');
           }}
         >
           Create
@@ -233,7 +239,7 @@ function Page({ data }: PageProps) {
 
         <div className="xl:col-span-full">
           <PatientAppointmentsCard
-            appointments={patient.appointments}
+            appointments={appointmentsForm.appointmentsList}
             staff={data.staff}
             onClickAddAppointment={() => openDialog('createAppointment')}
           />

@@ -3,6 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/design-system/components/ui/resizable';
+import { Toaster } from '@/design-system/components/ui/sonner';
 import { Outlet } from 'react-router';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -26,6 +27,7 @@ function AppLayout() {
         <main className="overflow-y-auto">
           <Header />
           <Outlet />
+          <Toaster position="top-center" />
         </main>
       </ResizablePanel>
     </ResizablePanelGroup>

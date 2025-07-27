@@ -21,7 +21,7 @@ function TimeLine({ items }: TimeLineProps) {
             {dayjs(item.date).format('MMMM D, YYYY h:mm A')}
           </time>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>
-          <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+          <p className="mb-4 text-sm font-normal text-gray-500 dark:text-gray-400">
             {item.description}
           </p>
         </li>
