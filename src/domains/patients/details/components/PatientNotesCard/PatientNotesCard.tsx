@@ -14,6 +14,7 @@ import {
 } from '@/design-system/components/ui/card';
 import { NoData } from '@/shared/components/NoData';
 import type { Patient } from '@/shared/types/patient';
+import dayjs from 'dayjs';
 import { Pencil, Plus } from 'lucide-react';
 
 type PatientNotesCardProps = {
@@ -46,7 +47,7 @@ function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: Patient
               <AccordionItem value={note.id} key={note.id}>
                 <AccordionTrigger>
                   <div className="flex gap-2 items-center w-full">
-                    <span>{Intl.DateTimeFormat('en-CA').format(new Date(note.created_at))}</span>
+                    <span>{dayjs(note.created_at).format('MMMM-DD-YYYY')}</span>
                   </div>
                 </AccordionTrigger>
 

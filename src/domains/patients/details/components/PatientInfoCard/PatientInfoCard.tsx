@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/design-system/components/
 import { Button } from '@/design-system/components/ui/button';
 import { Card } from '@/design-system/components/ui/card';
 import type { Patient } from '@/shared/types/patient';
+import dayjs from 'dayjs';
 
 type PatientInfoCardProps = {
   patient: Patient;
@@ -18,7 +19,7 @@ function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) 
     {
       id: 'birth_date',
       label: 'Birthday',
-      value: patient.birth_date,
+      value: dayjs(patient.birth_date).format('MMMM-DD-YYYY'),
     },
     {
       id: 'phone',

@@ -1,39 +1,13 @@
 import { Badge } from '@/design-system/components/ui/badge';
-import { db } from '@/shared/db/db';
 import type { Patient } from '@/shared/types/patient';
-import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 
-function Page() {
-  const { status, data, error } = useQuery({
-    queryKey: ['patients'],
-    queryFn: async (): Promise<Patient[]> => {
-      const patients = await db.patients.toArray();
+type PageProps = {
+  data: Patient[];
+};
 
-      const mutatedPatients = await Promise.all(
-        patients.map(async (patient) => ({
-          ...patient,
-          notes: await db.notes.where('patient_id').equals(patient.id).toArray(),
-          appointments: await db.appointments.where('patient_id').equals(patient.id).toArray(),
-          medications: await db.medications.where('patient_id').equals(patient.id).toArray(),
-          conditions: await db.conditions.where('patient_id').equals(patient.id).toArray(),
-          allergies: await db.allergies.where('patient_id').equals(patient.id).toArray(),
-          tags: await db.tags.where('patient_id').equals(patient.id).toArray(),
-          files: await db.files.where('patient_id').equals(patient.id).toArray(),
-          medical_flags: await db.medical_flags.where('patient_id').equals(patient.id).toArray(),
-        }))
-      );
-
-      return mutatedPatients;
-    },
-    staleTime: 60 * 60 * 1000, // 1 hour cache
-  });
-
-  if (status === 'pending') return <h2>Loading...</h2>;
-
-  if (status === 'error') return <h2>{error.message}</h2>;
-
+function Page({ data }: PageProps) {
   return (
     <div className="px-4 overflow-auto">
       <table className="border border-gray-200 rounded-md shadow-sm">
@@ -63,7 +37,7 @@ function Page() {
               <td className="px-4 py-2 font-medium">{`${patient.first_name} ${patient.last_name}`}</td>
               <td className="px-4 py-2">{patient.gender}</td>
               <td className="px-4 py-2">
-                <time>{dayjs(patient.birth_date).format('YYYY-MM-DD')}</time>
+                <time>{dayjs(patient.birth_date).format('MMMM-DD-YYYY')}</time>
               </td>
               <td className="px-4 py-2">
                 <Badge variant="default" className="bg-blue-500">
@@ -83,14 +57,14 @@ function Page() {
               <td className="px-4 py-2">
                 <time>
                   {dayjs(patient.appointments[patient.appointments.length - 2]?.date).format(
-                    'YYYY-MM-DD'
+                    'MMMM-DD-YYYY'
                   ) || '--'}
                 </time>
               </td>
               <td className="px-4 py-2">
                 <time>
                   {dayjs(patient.appointments[patient.appointments.length - 1]?.date).format(
-                    'YYYY-MM-DD'
+                    'MMMM-DD-YYYY'
                   ) || '--'}
                 </time>
               </td>

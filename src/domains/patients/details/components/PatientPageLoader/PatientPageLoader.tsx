@@ -20,17 +20,23 @@ async function fetchPatientFromIndexedDB(id?: string): Promise<Patient> {
       db.medical_flags.where('patient_id').equals(patient.id).toArray(),
     ]);
 
-  return {
-    ...patient,
-    notes,
-    appointments,
-    medications,
-    conditions,
-    allergies,
-    tags,
-    files,
-    medical_flags,
-  };
+  return new Promise((resolve) => {
+    setTimeout(
+      () =>
+        resolve({
+          ...patient,
+          notes,
+          appointments,
+          medications,
+          conditions,
+          allergies,
+          tags,
+          files,
+          medical_flags,
+        }),
+      2000
+    );
+  });
 }
 
 const PatientPageLoader = createPageLoader('patient', fetchPatientFromIndexedDB);

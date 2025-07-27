@@ -48,17 +48,8 @@
         "location": "Room 101",
         "notes": "Initial consultation for knee pain.",
         "status": "completed",
-        "patient": {
-          "id": "patient-001",
-          "full_name": "Alice Johnson",
-          "profile_image": "https://example.com/profiles/alice.jpg"
-        },
-        "staff": {
-          "id": "staff-001",
-          "full_name": "Dr. Emily Carter",
-          "role": "doctor",
-          "profile_image": "https://example.com/staff/emily.jpg"
-        }
+        "patient_id": "patient-001",
+        "staff_id": "staff-001"
       },
       {
         "id": "appt-002",
@@ -68,17 +59,8 @@
         "location": "Lab A",
         "notes": "Blood test for cholesterol and glucose levels.",
         "status": "scheduled",
-        "patient": {
-          "id": "patient-002",
-          "full_name": "Michael Lee",
-          "profile_image": "https://example.com/profiles/michael.jpg"
-        },
-        "staff": {
-          "id": "staff-002",
-          "full_name": "Nurse Jessica Brown",
-          "role": "nurse",
-          "profile_image": "https://example.com/staff/jessica.jpg"
-        }
+        "patient_id": "patient-001",
+        "staff_id": "staff-001"
       },
       {
         "id": "appt-003",
@@ -88,17 +70,8 @@
         "location": "Operating Room 2",
         "notes": "Knee arthroscopy procedure.",
         "status": "scheduled",
-        "patient": {
-          "id": "patient-001",
-          "full_name": "Alice Johnson",
-          "profile_image": "https://example.com/profiles/alice.jpg"
-        },
-        "staff": {
-          "id": "staff-001",
-          "full_name": "Dr. Emily Carter",
-          "role": "doctor",
-          "profile_image": "https://example.com/staff/emily.jpg"
-        }
+        "patient_id": "patient-001",
+        "staff_id": "staff-001"
       },
       {
         "id": "appt-004",
@@ -108,17 +81,8 @@
         "location": "Room 102",
         "notes": "Follow-up after knee surgery.",
         "status": "scheduled",
-        "patient": {
-          "id": "patient-001",
-          "full_name": "Alice Johnson",
-          "profile_image": "https://example.com/profiles/alice.jpg"
-        },
-        "staff": {
-          "id": "staff-003",
-          "full_name": "Dr. Ryan Smith",
-          "role": "doctor",
-          "profile_image": "https://example.com/staff/ryan.jpg"
-        }
+        "patient_id": "patient-001",
+        "staff_id": "staff-001"
       }
     ],
     "medical_flags": ["migraine", "anxiety"],

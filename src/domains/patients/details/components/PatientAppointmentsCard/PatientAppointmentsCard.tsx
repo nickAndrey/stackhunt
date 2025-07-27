@@ -8,6 +8,8 @@ import {
 } from '@/design-system/components/ui/card';
 import { NoData } from '@/shared/components/NoData';
 import type { Patient } from '@/shared/types/patient';
+import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
+import dayjs from 'dayjs';
 import { Plus } from 'lucide-react';
 import { TimeLine } from './components/TimeLine';
 
@@ -42,8 +44,8 @@ function PatientAppointmentsCard({
         <TimeLine
           items={appointments.map((item) => ({
             id: item.id,
-            date: item.date,
-            title: `${item.type} with ${item.staff.full_name}`,
+            date: dayjs(item.date).format('MMMM-DD-YYYY'),
+            title: `${getAppointmentLabel(item.type)} with ${item.staff_id}`,
             description: item.notes,
           }))}
         />

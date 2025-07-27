@@ -6,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/components/ui/popover';
@@ -16,7 +17,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/design-system/components/ui/select';
+import { Textarea } from '@/design-system/components/ui/textarea';
 import type { AppointmentType } from '@/shared/types/patient';
+import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
@@ -32,12 +35,14 @@ const formSchema = z.object({
     'surgery',
     'vaccination',
   ]),
+  staff_id: z.string().min(1, 'Staff ID must be provided'),
   date: z.date({
     error: 'Date must be provided',
   }),
   time: z.string({
     error: 'Time must be provided',
   }),
+  note: z.string(),
 });
 
 // Todo: uncomment and connect with useAppointmentForm hook.
@@ -50,19 +55,53 @@ function AppointmentForm() {
       type: 'consultation',
       date: new Date(),
       time: '09:30:00',
+      staff_id: '',
+      note: '',
     },
   });
 
-  const typeOptions: {
-    key: AppointmentType;
-    label: string;
-  }[] = [
-    { key: 'consultation', label: 'Consultation' },
-    { key: 'emergency', label: 'Emergency' },
-    { key: 'follow_up', label: 'Follow Up' },
-    { key: 'lab_test', label: 'Lab test' },
-    { key: 'surgery', label: 'Surgery' },
-    { key: 'vaccination', label: 'Vaccination' },
+  // Todo: replace with actual list of doctors
+  const dumpDoctors = [
+    {
+      id: '1',
+      name: 'Dr. J.J. Johnson',
+    },
+    {
+      id: '2',
+      name: 'Dr. Sarah Thompson',
+    },
+    {
+      id: '3',
+      name: 'Dr. Miguel Alvarez',
+    },
+    {
+      id: '4',
+      name: 'Dr. Priya Mehta',
+    },
+    {
+      id: '5',
+      name: 'Dr. Ahmed El-Sayed',
+    },
+    {
+      id: '6',
+      name: 'Dr. Lisa Chen',
+    },
+    {
+      id: '7',
+      name: 'Dr. Tomás Ribeiro',
+    },
+    {
+      id: '8',
+      name: 'Dr. Emily Carter',
+    },
+    {
+      id: '9',
+      name: 'Dr. Giovanni Russo',
+    },
+    {
+      id: '10',
+      name: 'Dr. Hana Nakamura',
+    },
   ];
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
@@ -83,13 +122,37 @@ function AppointmentForm() {
                   <SelectValue placeholder="Appointment type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {typeOptions.map((opt) => (
-                    <SelectItem value={opt.key} key={opt.key}>
-                      {opt.label}
+                  {formSchema.shape.type.options.map((opt) => (
+                    <SelectItem value={opt} key={opt}>
+                      {getAppointmentLabel(opt)}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="staff_id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="staff-id">Doctor</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger className="w-full" id="staff-id">
+                    <SelectValue placeholder="Select a doctor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {dumpDoctors.map((doctor) => (
+                      <SelectItem value={doctor.id} key={doctor.id}>
+                        {doctor.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -106,7 +169,7 @@ function AppointmentForm() {
                     <FormControl>
                       <Button variant="outline">
                         {field.value ? (
-                          dayjs(field.value).format('YYYY-MMMM-DD')
+                          dayjs(field.value).format('MMMM-DD-YYYY')
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -144,7 +207,21 @@ function AppointmentForm() {
             )}
           />
         </fieldset>
-        <Button>submit</Button>
+        <FormField
+          control={form.control}
+          name="note"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel htmlFor="note">Note</FormLabel>
+              <Textarea
+                id="note"
+                onChange={field.onChange}
+                value={field.value}
+                placeholder="Provide a note"
+              />
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
   );

@@ -79,6 +79,39 @@ function Page({ data }: PageProps) {
     setIsDialogOpen(false);
   };
 
+  const handleUploadFiles = async () => {
+    setPatient((prev) => ({
+      ...prev,
+      files: [
+        ...prev.files,
+        ...fileDrop.files.map((item) => ({
+          id: uuidv4(),
+          url: item.url,
+        })),
+      ],
+    }));
+
+    await db.files.bulkAdd(
+      fileDrop.files.map((item) => ({
+        id: uuidv4(),
+        url: item.url,
+        patient_id: data.id,
+      }))
+    );
+    setIsDialogOpen(false);
+    fileDrop.onResetFiles();
+  };
+
+  const handleDeleteFile = async () => {
+    setPatient((prev) => ({
+      ...prev,
+      files: prev.files.filter((file) => file.id !== fileToRemove),
+    }));
+
+    await db.files.delete(fileToRemove);
+    setIsDialogOpen(false);
+  };
+
   const dialogConfig: Record<
     DialogName,
     {
@@ -113,31 +146,7 @@ function Page({ data }: PageProps) {
       description: 'Use area below to upload files',
       children: <FileDropZone {...fileDrop} />,
       actionBtn: (
-        <Button
-          type="button"
-          onClick={async () => {
-            setPatient((prev) => ({
-              ...prev,
-              files: [
-                ...prev.files,
-                ...fileDrop.files.map((item) => ({
-                  id: uuidv4(),
-                  url: item.url,
-                })),
-              ],
-            }));
-
-            await db.files.bulkAdd(
-              fileDrop.files.map((item) => ({
-                id: uuidv4(),
-                url: item.url,
-                patient_id: data.id,
-              }))
-            );
-            setIsDialogOpen(false);
-            fileDrop.onResetFiles();
-          }}
-        >
+        <Button type="button" onClick={handleUploadFiles}>
           Save changes
         </Button>
       ),
@@ -147,19 +156,7 @@ function Page({ data }: PageProps) {
       description: `Are you sure you want to delete a file? ${fileToRemove}`,
       children: null,
       actionBtn: (
-        <Button
-          type="button"
-          variant="destructive"
-          onClick={async () => {
-            setPatient((prev) => ({
-              ...prev,
-              files: prev.files.filter((file) => file.id !== fileToRemove),
-            }));
-
-            await db.files.delete(fileToRemove);
-            setIsDialogOpen(false);
-          }}
-        >
+        <Button type="button" variant="destructive" onClick={handleDeleteFile}>
           Confirm Deletion
         </Button>
       ),
