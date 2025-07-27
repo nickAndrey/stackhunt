@@ -3,6 +3,7 @@ import type { Patient } from '@/shared/types/patient';
 import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
+import { db } from '@/shared/db/db';
 import { useState, type ReactNode } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
@@ -43,32 +44,38 @@ function Page({ data }: PageProps) {
     setIsDialogOpen(true);
   };
 
-  const handleCreateNote = () => {
+  const handleCreateNote = async () => {
     if (activeNote.trim() === '') return;
+
+    const newNote = {
+      id: uuidv4(),
+      author_id: 'current user',
+      author_name: 'current user',
+      content: activeNote,
+      created_at: new Date().toISOString(),
+      patient_id: data.id,
+    };
 
     setPatient((prev) => ({
       ...prev,
-      notes: [
-        ...(prev.notes ?? []),
-        {
-          id: Date.now().toString(),
-          author_id: 'ws',
-          author_name: 'ws',
-          content: activeNote,
-          created_at: new Date().toISOString(),
-        },
-      ],
+      notes: [...(prev.notes ?? []), newNote],
     }));
+
+    await db.notes.add(newNote);
+
     setIsDialogOpen(false);
   };
 
-  const handleUpdateNote = () => {
+  const handleUpdateNote = async () => {
     setPatient((prev) => ({
       ...prev,
       notes: prev.notes?.map((note) =>
         note.id === activeNoteId ? { ...note, content: activeNote } : note
       ),
     }));
+
+    await db.notes.update(activeNoteId, { content: activeNote });
+
     setIsDialogOpen(false);
   };
 
@@ -108,17 +115,25 @@ function Page({ data }: PageProps) {
       actionBtn: (
         <Button
           type="button"
-          onClick={() => {
+          onClick={async () => {
             setPatient((prev) => ({
               ...prev,
               files: [
                 ...prev.files,
                 ...fileDrop.files.map((item) => ({
                   id: uuidv4(),
-                  url: item.name,
+                  url: item.url,
                 })),
               ],
             }));
+
+            await db.files.bulkAdd(
+              fileDrop.files.map((item) => ({
+                id: uuidv4(),
+                url: item.url,
+                patient_id: data.id,
+              }))
+            );
             setIsDialogOpen(false);
             fileDrop.onResetFiles();
           }}
@@ -135,11 +150,13 @@ function Page({ data }: PageProps) {
         <Button
           type="button"
           variant="destructive"
-          onClick={() => {
+          onClick={async () => {
             setPatient((prev) => ({
               ...prev,
-              files: prev.files.filter((file) => file.url !== fileToRemove),
+              files: prev.files.filter((file) => file.id !== fileToRemove),
             }));
+
+            await db.files.delete(fileToRemove);
             setIsDialogOpen(false);
           }}
         >
@@ -204,9 +221,9 @@ function Page({ data }: PageProps) {
         <PatientFilesCard
           files={patient.files}
           onClickFilesUpload={() => openDialog('fileUpload')}
-          onClickDeleteFile={(file) => {
+          onClickDeleteFile={(id) => {
             openDialog('fileRemoveConfirmation');
-            setFileToRemove(file);
+            setFileToRemove(id);
           }}
         />
 

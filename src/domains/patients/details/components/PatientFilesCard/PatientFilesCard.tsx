@@ -13,7 +13,7 @@ import { FileText, Plus, Trash2 } from 'lucide-react';
 type PatientFilesCardProps = {
   files: Patient['files'];
   onClickFilesUpload: () => void;
-  onClickDeleteFile: (file: string) => void;
+  onClickDeleteFile: (id: string) => void;
 };
 
 function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: PatientFilesCardProps) {

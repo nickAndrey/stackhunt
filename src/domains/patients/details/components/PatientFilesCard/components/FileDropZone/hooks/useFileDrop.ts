@@ -1,4 +1,6 @@
+import type { File } from '@/shared/types/patient';
 import { useRef, useState } from 'react';
+import { v4 } from 'uuid';
 
 export function useFileDrop() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -7,7 +9,11 @@ export function useFileDrop() {
 
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList) return;
-    setFiles(Array.from(fileList));
+    setFiles(
+      Array.from(fileList).map((item) => {
+        return { id: v4(), url: item.name };
+      })
+    );
   };
 
   const onResetFiles = () => {

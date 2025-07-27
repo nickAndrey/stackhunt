@@ -38,7 +38,7 @@ export default function FileDropZone({
             {files.map((file, idx) => (
               <li key={idx} className="flex items-center gap-2">
                 <FileText size={16} />
-                {file.name}
+                {file.url}
               </li>
             ))}
           </ul>
