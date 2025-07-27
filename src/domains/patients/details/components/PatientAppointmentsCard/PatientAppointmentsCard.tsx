@@ -8,20 +8,27 @@ import {
 } from '@/design-system/components/ui/card';
 import { NoData } from '@/shared/components/NoData';
 import type { Patient } from '@/shared/types/patient';
+import type { Staff } from '@/shared/types/staff';
 import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
-import dayjs from 'dayjs';
 import { Plus } from 'lucide-react';
 import { TimeLine } from './components/TimeLine';
 
 type PatientAppointmentsCardProps = {
   appointments: Patient['appointments'];
+  staff: Staff[];
   onClickAddAppointment: () => void;
 };
 
 function PatientAppointmentsCard({
   appointments,
+  staff,
   onClickAddAppointment,
 }: PatientAppointmentsCardProps) {
+  const getMemberInfo = (id: string) => {
+    const member = staff.find((item) => item.id === id);
+    return `${member?.role} ${member?.first_name} ${member?.last_name}`;
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -42,11 +49,11 @@ function PatientAppointmentsCard({
         {appointments.length === 0 && <NoData />}
 
         <TimeLine
-          items={appointments.map((item) => ({
-            id: item.id,
-            date: dayjs(item.date).format('MMMM-DD-YYYY'),
-            title: `${getAppointmentLabel(item.type)} with ${item.staff_id}`,
-            description: item.notes,
+          items={appointments.map((appointment) => ({
+            id: appointment.id,
+            date: appointment.date,
+            title: `${getAppointmentLabel(appointment.type)} with ${getMemberInfo(appointment.staff_id)}`,
+            description: appointment.notes,
           }))}
         />
       </CardContent>

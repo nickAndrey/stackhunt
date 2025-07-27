@@ -8,7 +8,7 @@ const getInitialSidebarWidth = () => {
   return saved ? parseFloat(saved) : 60;
 };
 
-const useStoreSideBarSize = () => {
+export function useStoreSideBarSize() {
   const [currentWidth, setCurrentWidth] = useState(getInitialSidebarWidth);
   const currentWidthDebounced = useDebounce(currentWidth, 500);
 
@@ -25,6 +25,4 @@ const useStoreSideBarSize = () => {
     currentWidth,
     handleResize,
   };
-};
-
-export default useStoreSideBarSize;
+}

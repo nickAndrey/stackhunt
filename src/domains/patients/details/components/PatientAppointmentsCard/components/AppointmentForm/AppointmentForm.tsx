@@ -18,99 +18,21 @@ import {
   SelectValue,
 } from '@/design-system/components/ui/select';
 import { Textarea } from '@/design-system/components/ui/textarea';
-import type { AppointmentType } from '@/shared/types/patient';
+import type { Staff } from '@/shared/types/staff';
 import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
-import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-const formSchema = z.object({
-  type: z.enum<AppointmentType[]>([
-    'consultation',
-    'emergency',
-    'follow_up',
-    'lab_test',
-    'surgery',
-    'vaccination',
-  ]),
-  staff_id: z.string().min(1, 'Staff ID must be provided'),
-  date: z.date({
-    error: 'Date must be provided',
-  }),
-  time: z.string({
-    error: 'Time must be provided',
-  }),
-  note: z.string(),
-});
+import type { useAppointmentForm } from './hooks/useAppointmentForm';
 
 // Todo: uncomment and connect with useAppointmentForm hook.
-// type AppointmentFormProps = {};
+type AppointmentFormProps = ReturnType<typeof useAppointmentForm> & {
+  staff: Staff[];
+};
 
-function AppointmentForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      type: 'consultation',
-      date: new Date(),
-      time: '09:30:00',
-      staff_id: '',
-      note: '',
-    },
-  });
-
-  // Todo: replace with actual list of doctors
-  const dumpDoctors = [
-    {
-      id: '1',
-      name: 'Dr. J.J. Johnson',
-    },
-    {
-      id: '2',
-      name: 'Dr. Sarah Thompson',
-    },
-    {
-      id: '3',
-      name: 'Dr. Miguel Alvarez',
-    },
-    {
-      id: '4',
-      name: 'Dr. Priya Mehta',
-    },
-    {
-      id: '5',
-      name: 'Dr. Ahmed El-Sayed',
-    },
-    {
-      id: '6',
-      name: 'Dr. Lisa Chen',
-    },
-    {
-      id: '7',
-      name: 'Dr. Tomás Ribeiro',
-    },
-    {
-      id: '8',
-      name: 'Dr. Emily Carter',
-    },
-    {
-      id: '9',
-      name: 'Dr. Giovanni Russo',
-    },
-    {
-      id: '10',
-      name: 'Dr. Hana Nakamura',
-    },
-  ];
-
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-  };
-
+function AppointmentForm({ staff, form, formSchema }: AppointmentFormProps) {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4">
         <FormField
           control={form.control}
           name="type"
@@ -144,9 +66,14 @@ function AppointmentForm() {
                     <SelectValue placeholder="Select a doctor" />
                   </SelectTrigger>
                   <SelectContent>
-                    {dumpDoctors.map((doctor) => (
+                    {staff.map((doctor) => (
                       <SelectItem value={doctor.id} key={doctor.id}>
-                        {doctor.name}
+                        <div className="w-full flex justify-between gap-2 items-center">
+                          <p>
+                            {doctor.first_name} {doctor.last_name}
+                          </p>
+                          <small>{doctor.specialty}</small>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -167,9 +94,9 @@ function AppointmentForm() {
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
-                      <Button variant="outline">
+                      <Button variant="outline" id="date">
                         {field.value ? (
-                          dayjs(field.value).format('MMMM-DD-YYYY')
+                          dayjs(field.value).format('MMMM D, YYYY')
                         ) : (
                           <span>Pick a date</span>
                         )}

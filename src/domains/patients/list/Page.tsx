@@ -37,7 +37,7 @@ function Page({ data }: PageProps) {
               <td className="px-4 py-2 font-medium">{`${patient.first_name} ${patient.last_name}`}</td>
               <td className="px-4 py-2">{patient.gender}</td>
               <td className="px-4 py-2">
-                <time>{dayjs(patient.birth_date).format('MMMM-DD-YYYY')}</time>
+                <time>{dayjs(patient.birth_date).format('MMMM D, YYYY')}</time>
               </td>
               <td className="px-4 py-2">
                 <Badge variant="default" className="bg-blue-500">
@@ -57,14 +57,14 @@ function Page({ data }: PageProps) {
               <td className="px-4 py-2">
                 <time>
                   {dayjs(patient.appointments[patient.appointments.length - 2]?.date).format(
-                    'MMMM-DD-YYYY'
+                    'MMMM D, YYYY'
                   ) || '--'}
                 </time>
               </td>
               <td className="px-4 py-2">
                 <time>
                   {dayjs(patient.appointments[patient.appointments.length - 1]?.date).format(
-                    'MMMM-DD-YYYY'
+                    'MMMM D, YYYY'
                   ) || '--'}
                 </time>
               </td>

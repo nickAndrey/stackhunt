@@ -19,7 +19,7 @@ function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) 
     {
       id: 'birth_date',
       label: 'Birthday',
-      value: dayjs(patient.birth_date).format('MMMM-DD-YYYY'),
+      value: dayjs(patient.birth_date).format('MMMM D, YYYY'),
     },
     {
       id: 'phone',

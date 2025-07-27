@@ -1,15 +1,16 @@
 import Dexie, { type Table } from 'dexie';
+import type { Flag } from '../types/flag';
+import type { Note } from '../types/note';
 import type {
   Allergy,
   Appointment,
   Condition,
   File,
-  Flag,
   Medication,
-  Note,
   Patient,
   Tag,
 } from '../types/patient';
+import type { Staff } from '../types/staff';
 
 type WithPatientId<T> = T & { patient_id: string };
 type PatientCore = Pick<
@@ -44,6 +45,7 @@ export class ClinicCRMDatabase extends Dexie {
   medications!: Table<WithPatientId<Medication>>;
   conditions!: Table<WithPatientId<Condition>>;
   tags!: Table<WithPatientId<Tag>>;
+  staff!: Table<Staff>;
 
   constructor() {
     super('ClinicCRM');
@@ -57,6 +59,7 @@ export class ClinicCRMDatabase extends Dexie {
       medications: `++id, name, dosage, start_date, end_date, prescribed_by, patient_id`,
       conditions: `++id, condition, patient_id`,
       tags: `++id, tag, patient_id`,
+      staff: `++id, first_name, last_name, email, phone, gender, role, status, profile_image, department, specialty, license_number, employee_id, start_date, end_date, bio, address, preferred_contact_method`,
     });
   }
 }

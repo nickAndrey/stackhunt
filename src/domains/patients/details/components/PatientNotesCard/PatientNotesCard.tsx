@@ -47,7 +47,7 @@ function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: Patient
               <AccordionItem value={note.id} key={note.id}>
                 <AccordionTrigger>
                   <div className="flex gap-2 items-center w-full">
-                    <span>{dayjs(note.created_at).format('MMMM-DD-YYYY')}</span>
+                    <span>{dayjs(note.created_at).format('MMMM D, YYYY')}</span>
                   </div>
                 </AccordionTrigger>
 

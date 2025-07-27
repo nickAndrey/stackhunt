@@ -4,10 +4,11 @@ import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { db } from '@/shared/db/db';
+import type { Staff } from '@/shared/types/staff';
 import { useState, type ReactNode } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
+import { useAppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm/hooks/useAppointmentForm';
 import { PatientFilesCard } from './components/PatientFilesCard';
 import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
 import { useFileDrop } from './components/PatientFilesCard/components/FileDropZone/hooks/useFileDrop';
@@ -22,10 +23,15 @@ type DialogName =
   | 'sendMessage'
   | 'createAppointment';
 
-type PageProps = { data: Patient };
+type PageProps = {
+  data: {
+    patient: Patient;
+    staff: Staff[];
+  };
+};
 
 function Page({ data }: PageProps) {
-  const [patient, setPatient] = useState(data);
+  const [patient, setPatient] = useState(data.patient);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeDialog, setActiveDialog] = useState<DialogName>('noteCreate');
@@ -39,6 +45,8 @@ function Page({ data }: PageProps) {
 
   const fileDrop = useFileDrop();
 
+  const appointmentsForm = useAppointmentForm({ patientId: patient.id });
+
   const openDialog = (kind: typeof activeDialog) => {
     setActiveDialog(kind);
     setIsDialogOpen(true);
@@ -48,12 +56,12 @@ function Page({ data }: PageProps) {
     if (activeNote.trim() === '') return;
 
     const newNote = {
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       author_id: 'current user',
       author_name: 'current user',
       content: activeNote,
       created_at: new Date().toISOString(),
-      patient_id: data.id,
+      patient_id: patient.id,
     };
 
     setPatient((prev) => ({
@@ -85,7 +93,7 @@ function Page({ data }: PageProps) {
       files: [
         ...prev.files,
         ...fileDrop.files.map((item) => ({
-          id: uuidv4(),
+          id: crypto.randomUUID(),
           url: item.url,
         })),
       ],
@@ -93,9 +101,9 @@ function Page({ data }: PageProps) {
 
     await db.files.bulkAdd(
       fileDrop.files.map((item) => ({
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         url: item.url,
-        patient_id: data.id,
+        patient_id: patient.id,
       }))
     );
     setIsDialogOpen(false);
@@ -182,13 +190,12 @@ function Page({ data }: PageProps) {
       title: 'Create an appointment',
       description:
         'Schedule a new appointment for this patient. Choose a suitable date and time, add any relevant notes or purpose, and assign a practitioner if needed.',
-      children: <AppointmentForm />,
+      children: <AppointmentForm staff={data.staff} {...appointmentsForm} />,
       actionBtn: (
         <Button
           type="button"
           onClick={() => {
-            console.log('appointment created');
-            setIsDialogOpen(false);
+            appointmentsForm.handleSubmit();
           }}
         >
           Create
@@ -227,6 +234,7 @@ function Page({ data }: PageProps) {
         <div className="xl:col-span-full">
           <PatientAppointmentsCard
             appointments={patient.appointments}
+            staff={data.staff}
             onClickAddAppointment={() => openDialog('createAppointment')}
           />
         </div>

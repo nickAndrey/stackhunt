@@ -1,13 +1,11 @@
-type PatientStatus = 'active' | 'inactive' | 'deceased' | 'blocked';
-type Gender = 'male' | 'female' | 'other' | 'undisclosed';
-type ContactPreference = 'email' | 'phone' | 'sms';
-type AllergySeverity = 'mild' | 'moderate' | 'severe';
+import type { Address } from './address';
+import type { ContactPreference } from './contact-preference';
+import type { Flag } from './flag';
+import type { Gender } from './gender';
+import type { Note } from './note';
 
-type Address = {
-  street: string;
-  city: string;
-  zip_code: string;
-};
+type PatientStatus = 'active' | 'inactive' | 'deceased' | 'blocked';
+type AllergySeverity = 'mild' | 'moderate' | 'severe';
 
 type Allergy = {
   id: string;
@@ -54,11 +52,6 @@ type File = {
   url: string;
 };
 
-type Flag = {
-  id: string;
-  flag: string;
-};
-
 type Medication = {
   id: string;
   name: string;
@@ -68,25 +61,13 @@ type Medication = {
   prescribed_by: string;
 };
 
-type Note = {
-  id: string;
-  author_id: string;
-  author_name: string;
-  content: string;
-  created_at: string;
-  updated_at?: string;
-  updated_by?: string;
-  updated_by_name?: string;
-  content_before?: string;
-};
-
 type Tag = {
   id: string;
   tag: string;
 };
 
 type Patient = {
-  id: string; // UUID
+  id: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -115,20 +96,15 @@ type Patient = {
 };
 
 export type {
-  Address,
   Allergy,
   AllergySeverity,
   Appointment,
   AppointmentStatus,
   AppointmentType,
   Condition,
-  ContactPreference,
   EmergencyContact,
   File,
-  Flag,
-  Gender,
   Medication,
-  Note,
   Patient,
   PatientStatus,
   Tag,

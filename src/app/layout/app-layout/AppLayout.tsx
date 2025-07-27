@@ -6,7 +6,7 @@ import {
 import { Outlet } from 'react-router';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
-import useStoreSideBarSize from './hooks/useStoreSideBarSize';
+import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();

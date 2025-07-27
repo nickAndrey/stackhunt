@@ -1,8 +1,11 @@
 import { db } from '@/shared/db/db';
 import type { Patient } from '@/shared/types/patient';
+import type { Staff } from '@/shared/types/staff';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
 
-async function fetchPatientFromIndexedDB(id?: string): Promise<Patient> {
+async function fetchPatientFromIndexedDB(
+  id?: string
+): Promise<{ patient: Patient; staff: Staff[] }> {
   if (!id) throw new Error('Invalid patient id');
 
   const patient = await db.patients.get({ id: id });
@@ -20,19 +23,24 @@ async function fetchPatientFromIndexedDB(id?: string): Promise<Patient> {
       db.medical_flags.where('patient_id').equals(patient.id).toArray(),
     ]);
 
+  const staff = await db.staff.toArray();
+
   return new Promise((resolve) => {
     setTimeout(
       () =>
         resolve({
-          ...patient,
-          notes,
-          appointments,
-          medications,
-          conditions,
-          allergies,
-          tags,
-          files,
-          medical_flags,
+          patient: {
+            ...patient,
+            notes,
+            appointments,
+            medications,
+            conditions,
+            allergies,
+            tags,
+            files,
+            medical_flags,
+          },
+          staff: staff,
         }),
       2000
     );

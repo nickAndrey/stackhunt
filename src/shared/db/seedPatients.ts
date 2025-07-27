@@ -8,12 +8,9 @@ export async function seedPatients(withDBReset = false) {
   if (withDBReset) {
     await Promise.all([
       db.patients.clear(),
-      db.notes.clear(),
-      db.appointments.clear(),
       db.medications.clear(),
       db.conditions.clear(),
       db.allergies.clear(),
-      db.tags.clear(),
       db.files.clear(),
       db.medical_flags.clear(),
     ]);
