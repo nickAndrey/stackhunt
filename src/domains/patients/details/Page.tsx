@@ -4,6 +4,7 @@ import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { Modal } from '@/shared/components/Modal';
 import { useState, type ReactNode } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
 import { PatientFilesCard } from './components/PatientFilesCard';
@@ -110,7 +111,13 @@ function Page({ data }: PageProps) {
           onClick={() => {
             setPatient((prev) => ({
               ...prev,
-              files: [...prev.files, ...fileDrop.files.map((item) => item.name)],
+              files: [
+                ...prev.files,
+                ...fileDrop.files.map((item) => ({
+                  id: uuidv4(),
+                  url: item.name,
+                })),
+              ],
             }));
             setIsDialogOpen(false);
             fileDrop.onResetFiles();
@@ -131,7 +138,7 @@ function Page({ data }: PageProps) {
           onClick={() => {
             setPatient((prev) => ({
               ...prev,
-              files: prev.files.filter((file) => file !== fileToRemove),
+              files: prev.files.filter((file) => file.url !== fileToRemove),
             }));
             setIsDialogOpen(false);
           }}

@@ -1,7 +1,7 @@
 import { Badge } from '@/design-system/components/ui/badge';
+import { db } from '@/shared/db/db';
 import type { Patient } from '@/shared/types/patient';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 
@@ -9,10 +9,25 @@ function Page() {
   const { status, data, error } = useQuery({
     queryKey: ['patients'],
     queryFn: async (): Promise<Patient[]> => {
-      const res = await axios.get('/src/shared/temp/data/patients.json');
-      return res.data.data;
+      const patients = await db.patients.toArray();
+
+      const mutatedPatients = await Promise.all(
+        patients.map(async (patient) => ({
+          ...patient,
+          notes: await db.notes.where('patient_id').equals(patient.id).toArray(),
+          appointments: await db.appointments.where('patient_id').equals(patient.id).toArray(),
+          medications: await db.medications.where('patient_id').equals(patient.id).toArray(),
+          conditions: await db.conditions.where('patient_id').equals(patient.id).toArray(),
+          allergies: await db.allergies.where('patient_id').equals(patient.id).toArray(),
+          tags: await db.tags.where('patient_id').equals(patient.id).toArray(),
+          files: await db.files.where('patient_id').equals(patient.id).toArray(),
+          medical_flags: await db.medical_flags.where('patient_id').equals(patient.id).toArray(),
+        }))
+      );
+
+      return mutatedPatients;
     },
-    staleTime: 60 * 60 * 1000,
+    staleTime: 60 * 60 * 1000, // 1 hour cache
   });
 
   if (status === 'pending') return <h2>Loading...</h2>;
@@ -58,9 +73,9 @@ function Page() {
               <td className="px-4 py-2">{patient.phone}</td>
               <td className="px-4 py-2">
                 <ul className="flex flex-wrap gap-1">
-                  {patient.tags.map((tag) => (
-                    <li key={tag}>
-                      <Badge variant="secondary">{tag}</Badge>
+                  {patient.tags.map((item) => (
+                    <li key={item.id}>
+                      <Badge variant="secondary">{item.tag}</Badge>
                     </li>
                   ))}
                 </ul>
@@ -81,9 +96,9 @@ function Page() {
               </td>
               <td className="px-4 py-2">
                 <ul className="flex flex-wrap gap-1">
-                  {patient.medical_flags.map((flag) => (
-                    <li key={flag}>
-                      <Badge variant="destructive">{flag}</Badge>
+                  {patient.medical_flags.map((item) => (
+                    <li key={item.id}>
+                      <Badge variant="destructive">{item.flag}</Badge>
                     </li>
                   ))}
                 </ul>

@@ -38,20 +38,20 @@ function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: Pati
       <CardContent className="max-h-[300px] overflow-y-auto">
         <ul className="flex flex-col gap-2">
           {files.length > 0 ? (
-            files.map((file) => (
+            files.map((item) => (
               <li
-                key={file}
+                key={item.id}
                 className="flex items-center gap-2 px-4 py-2 shadow-md rounded-md border-1"
               >
                 <FileText width={16} height={16} className="flex shrink-0" />
 
                 <a
-                  href={file}
+                  href={item.url}
                   download
                   className="text-sm truncate no-underline hover:underline"
-                  title={getFileName(file)}
+                  title={getFileName(item.url)}
                 >
-                  {getFileName(file)}
+                  {getFileName(item.url)}
                 </a>
 
                 <div className="ml-auto">
@@ -59,7 +59,7 @@ function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: Pati
                     variant="ghost"
                     size="icon"
                     className="size-8 rounded-4xl"
-                    onClick={() => onClickDeleteFile(file)}
+                    onClick={() => onClickDeleteFile(item.id)}
                   >
                     <Trash2 />
                   </Button>
