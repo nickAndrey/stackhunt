@@ -2,6 +2,8 @@ import type { Patient } from '@/shared/types/patient';
 
 import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
+import { FileDropZone } from '@/shared/components/FileDropZone';
+import { useFileDrop } from '@/shared/components/FileDropZone/hooks/useFileDrop';
 import { Modal } from '@/shared/components/Modal';
 import { db } from '@/shared/db/db';
 import type { Staff } from '@/shared/types/staff';
@@ -11,8 +13,6 @@ import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
 import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
 import { useAppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm/hooks/useAppointmentForm';
 import { PatientFilesCard } from './components/PatientFilesCard';
-import { FileDropZone } from './components/PatientFilesCard/components/FileDropZone';
-import { useFileDrop } from './components/PatientFilesCard/components/FileDropZone/hooks/useFileDrop';
 import { PatientInfoCard } from './components/PatientInfoCard';
 import { PatientNotesCard } from './components/PatientNotesCard';
 

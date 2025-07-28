@@ -39,9 +39,9 @@ function Navigation({ currentWidth }: NavigationProps) {
   };
 
   return (
-    <ul className="flex flex-col overflow-x-hidden px-2 mt-4">
+    <ul className="flex flex-col overflow-x-hidden px-2 pt-6 pb-4 h-full">
       {routes.map((route) => (
-        <li key={route.id}>
+        <li key={route.id} className={route.href === '/settings' ? 'mt-auto' : ''}>
           <Tooltip>
             <TooltipTrigger className="w-full">
               <NavLink to={route.href} className={linkStyles}>
