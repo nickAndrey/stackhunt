@@ -2,6 +2,7 @@ import { db } from '@/shared/db/db';
 import type { Patient } from '@/shared/types/patient';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';
+import { fetchPatientRelatedData } from '../../services/fetch-patient-related-data';
 
 async function findPatient(value: string): Promise<Patient[]> {
   const [match1, match2, match3, match4] = await Promise.all([
@@ -17,14 +18,7 @@ async function findPatient(value: string): Promise<Patient[]> {
 
   const patients = allMatches.map(async (patient) => ({
     ...patient,
-    notes: await db.notes.where('patient_id').equals(patient.id).toArray(),
-    appointments: await db.appointments.where('patient_id').equals(patient.id).toArray(),
-    medications: await db.medications.where('patient_id').equals(patient.id).toArray(),
-    conditions: await db.conditions.where('patient_id').equals(patient.id).toArray(),
-    allergies: await db.allergies.where('patient_id').equals(patient.id).toArray(),
-    tags: await db.tags.where('patient_id').equals(patient.id).toArray(),
-    files: await db.files.where('patient_id').equals(patient.id).toArray(),
-    medical_flags: await db.medical_flags.where('patient_id').equals(patient.id).toArray(),
+    ...(await fetchPatientRelatedData(patient.id)),
   }));
 
   return await Promise.all(patients);
