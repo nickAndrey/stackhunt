@@ -23,6 +23,10 @@ export function useFileDrop() {
     fileInputRef.current?.click();
   };
 
+  const onRemoveFile = (id: string) => {
+    setFiles((prev) => prev.filter((item) => item.id !== id));
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleFiles(e.target.files);
   };
@@ -52,5 +56,6 @@ export function useFileDrop() {
     onDragOver,
     onDragLeave,
     onResetFiles,
+    onRemoveFile,
   };
 }

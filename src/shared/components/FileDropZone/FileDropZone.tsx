@@ -1,4 +1,5 @@
-import { FileText } from 'lucide-react';
+import { Button } from '@/design-system/components/ui/button';
+import { FileText, Trash2 } from 'lucide-react';
 import type { useFileDrop } from './hooks/useFileDrop';
 
 type FileDropZoneProps = ReturnType<typeof useFileDrop> & {};
@@ -12,6 +13,7 @@ export default function FileDropZone({
   onDrop,
   onDragOver,
   onDragLeave,
+  onRemoveFile,
 }: FileDropZoneProps) {
   return (
     <div className="w-full max-w-xl mx-auto p-4">
@@ -35,10 +37,18 @@ export default function FileDropZone({
         <div className="mt-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-2">Selected Files:</h3>
           <ul className="list-disc list-inside text-gray-600 text-sm space-y-1">
-            {files.map((file, idx) => (
-              <li key={idx} className="flex items-center gap-2">
+            {files.map((file) => (
+              <li key={file.id} className="flex items-center gap-2">
                 <FileText size={16} />
                 {file.url}
+
+                <Button
+                  variant="ghost"
+                  className="rounded-4xl size-8 ml-auto"
+                  onClick={() => onRemoveFile(file.id)}
+                >
+                  <Trash2 />
+                </Button>
               </li>
             ))}
           </ul>

@@ -1,9 +1,12 @@
 import { Button } from '@/design-system/components/ui/button';
 import { Input } from '@/design-system/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
+import { Modal } from '@/shared/components/Modal';
 import { Portal } from '@/shared/components/Portal';
 import type { Patient } from '@/shared/types/patient';
 import { Plus, Search, UserPlus } from 'lucide-react';
+import { PatientCreateForm } from './components/PatientCreateForm';
+import { usePatientCreateForm } from './components/PatientCreateForm/hooks/usePatientCreateForm';
 import { PatientsTable } from './components/PatientsTable';
 import { useSearchPatient } from './hooks/useSearchPatient';
 
@@ -13,6 +16,8 @@ type PageProps = {
 
 function Page({ data }: PageProps) {
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
+
+  const createForm = usePatientCreateForm();
 
   return (
     <>
@@ -48,6 +53,25 @@ function Page({ data }: PageProps) {
 
       <div className="pt-4">
         <PatientsTable patients={searchResults ?? data} />
+
+        <Modal
+          open
+          title="Create new patient"
+          actionBtn={
+            <>
+              <Button onClick={createForm.handlePrev} disabled={createForm.step === 0}>
+                Prev
+              </Button>
+              <Button onClick={createForm.handleNext}>
+                {createForm.step < 6 ? 'Next' : 'Submit'}
+              </Button>
+            </>
+          }
+        >
+          <div className="max-h-[500px] overflow-auto px-2">
+            <PatientCreateForm {...createForm} />
+          </div>
+        </Modal>
       </div>
     </>
   );
