@@ -17,22 +17,45 @@ export function usePatientCreateForm() {
 
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
-    defaultValues: {},
+    defaultValues: {
+      first_name: '',
+      last_name: '',
+      gender: 'other',
+      birth_date: new Date(),
+    },
   });
 
   const step2Form = useForm<z.infer<typeof contactInfoSchema>>({
     resolver: zodResolver(contactInfoSchema),
-    defaultValues: {},
+    defaultValues: {
+      phone: '',
+      email: '',
+      address: {
+        street: '',
+        city: '',
+        zip_code: '',
+      },
+    },
   });
 
   const step3Form = useForm<z.infer<typeof emergencySchema>>({
     resolver: zodResolver(emergencySchema),
-    defaultValues: {},
+    defaultValues: {
+      emergency_contact: '',
+      preferred_language: '',
+      contact_preference: 'email',
+      consent_to_contact: false,
+      consent_signed_date: new Date(),
+    },
   });
 
   const step4Form = useForm<z.infer<typeof identificationSchema>>({
     resolver: zodResolver(identificationSchema),
-    defaultValues: {},
+    defaultValues: {
+      national_id: '',
+      insurance_number: '',
+      registration_date: new Date(),
+    },
   });
 
   const step5Form = useForm<z.infer<typeof medicalInfoSchema>>({

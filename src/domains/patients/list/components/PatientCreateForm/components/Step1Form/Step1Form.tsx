@@ -25,7 +25,7 @@ type Step1FormProps = ReturnType<typeof usePatientCreateForm>['forms']['step1For
 function Step1Form(form: Step1FormProps) {
   return (
     <Form {...form}>
-      <form>
+      <form className="flex flex-col gap-3">
         <FormField
           control={form.control}
           name="first_name"

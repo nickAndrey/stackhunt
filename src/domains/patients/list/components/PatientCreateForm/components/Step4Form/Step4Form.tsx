@@ -18,7 +18,7 @@ type Step4FormProps = ReturnType<typeof usePatientCreateForm>['forms']['step4For
 function Step4Form(form: Step4FormProps) {
   return (
     <Form {...form}>
-      <form>
+      <form className="flex flex-col gap-3">
         <FormField
           control={form.control}
           name="insurance_number"
