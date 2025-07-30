@@ -56,6 +56,7 @@ function Page({ data }: PageProps) {
 
         <Modal
           open
+          className="!max-w-[600px]"
           title="Create new patient"
           actionBtn={
             <>

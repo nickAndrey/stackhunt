@@ -19,6 +19,7 @@ type ModalProps = {
   closeBtn?: ReactNode;
   actionBtn?: ReactNode;
   open?: boolean;
+  className?: string;
   onOpenChange?: (open: boolean) => void;
 };
 
@@ -30,13 +31,14 @@ function Modal({
   closeBtn,
   actionBtn,
   open,
+  className,
   onOpenChange,
 }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
 
-      <DialogContent>
+      <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
