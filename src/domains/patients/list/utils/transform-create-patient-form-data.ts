@@ -26,20 +26,32 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
     status: data.status,
   };
 
-  const conditions = data.conditions.split(',').map((item) => ({
-    condition: item,
-    id: crypto.randomUUID(),
-  }));
+  const conditions = data.conditions
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => ({
+      condition: item,
+      id: crypto.randomUUID(),
+    }));
 
-  const medical_flags = data.medical_flags.split(',').map((item) => ({
-    flag: item,
-    id: crypto.randomUUID(),
-  }));
+  const medical_flags = data.medical_flags
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => ({
+      flag: item,
+      id: crypto.randomUUID(),
+    }));
 
-  const tags = data.tags.split(',').map((item) => ({
-    tag: item,
-    id: crypto.randomUUID(),
-  }));
+  const tags = data.tags
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => ({
+      tag: item,
+      id: crypto.randomUUID(),
+    }));
 
   const allergies = data.allergies.map((item) => ({
     ...item,

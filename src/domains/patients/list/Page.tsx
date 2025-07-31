@@ -5,6 +5,7 @@ import { Modal } from '@/shared/components/Modal';
 import { Portal } from '@/shared/components/Portal';
 import type { Patient } from '@/shared/types/patient';
 import { Plus, Search, UserPlus } from 'lucide-react';
+import { useState } from 'react';
 import { PatientCreateForm } from './components/PatientCreateForm';
 import { usePatientCreateForm } from './components/PatientCreateForm/hooks/usePatientCreateForm';
 import { PatientsTable } from './components/PatientsTable';
@@ -18,6 +19,8 @@ function Page({ data }: PageProps) {
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
 
   const createForm = usePatientCreateForm();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <>
@@ -34,7 +37,7 @@ function Page({ data }: PageProps) {
           </div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="secondary">
+              <Button variant="secondary" onClick={() => setIsDialogOpen(true)}>
                 <Plus />
               </Button>
             </TooltipTrigger>
@@ -55,6 +58,8 @@ function Page({ data }: PageProps) {
         <PatientsTable patients={searchResults ?? data} />
 
         <Modal
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
           className="!max-w-[600px]"
           title="Create new patient"
           actionBtn={
