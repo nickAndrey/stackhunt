@@ -50,7 +50,7 @@ export class ClinicCRMDatabase extends Dexie {
   constructor() {
     super('ClinicCRM');
     this.version(1).stores({
-      patients: `++id, first_name, last_name, email, phone, gender, birth_date, address, national_id, insurance_number, registration_date, profile_image, preferred_language, contact_preference, emergency_contact, consent_to_contact, consent_signed_date, status`,
+      patients: `++id, first_name, last_name, &email, phone, gender, birth_date, address, national_id, insurance_number, registration_date, profile_image, preferred_language, contact_preference, emergency_contact, consent_to_contact, consent_signed_date, status`,
       notes: `++id, author_id, author_name, content, created_at, updated_at, updated_by, updated_by_name, content_before, patient_id`,
       files: `++id, patient_id, url`,
       appointments: `++id, type, date, duration_minutes, location, notes, status, patient, staff, patient_id, staff_id`,

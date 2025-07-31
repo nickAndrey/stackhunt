@@ -1,16 +1,13 @@
-import { fetchPatientRelatedData } from '@/domains/patients/services/fetch-patient-related-data';
 import { db } from '@/shared/db/db';
+import { getPatientWithRelatedData } from '@/shared/services/patients/get-patient-with-related-data';
 import type { Patient } from '@/shared/types/patient';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
 
-async function fetchPatientsFromIndexedDB(): Promise<Patient[]> {
+async function getPatients(): Promise<Patient[]> {
   const patients = await db.patients.toArray();
 
   const mutatedPatients = await Promise.all(
-    patients.map(async (patient) => ({
-      ...patient,
-      ...(await fetchPatientRelatedData(patient.id)),
-    }))
+    patients.map(async (patient) => await getPatientWithRelatedData(patient.id))
   );
 
   return new Promise((resolve) => {
@@ -18,6 +15,6 @@ async function fetchPatientsFromIndexedDB(): Promise<Patient[]> {
   });
 }
 
-const PatientsPageLoader = createPageLoader('patients', fetchPatientsFromIndexedDB);
+const PatientsPageLoader = createPageLoader('patients', getPatients);
 
 export default PatientsPageLoader;

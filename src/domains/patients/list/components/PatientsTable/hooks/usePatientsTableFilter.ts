@@ -1,5 +1,5 @@
-import { fetchPatientRelatedData } from '@/domains/patients/services/fetch-patient-related-data';
 import { db } from '@/shared/db/db';
+import { getPatientWithRelatedData } from '@/shared/services/patients/get-patient-with-related-data';
 import type { Patient } from '@/shared/types/patient';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';
@@ -86,10 +86,7 @@ export function usePatientsTableFilter(initialPatients: Patient[]) {
       }
 
       const data = await Promise.all(
-        matchedIds.map(async (id) => ({
-          ...(await db.patients.get(id)),
-          ...(await fetchPatientRelatedData(id)),
-        }))
+        matchedIds.map(async (id) => await getPatientWithRelatedData(id))
       );
 
       setPatientsFiltered(data.filter(Boolean) as Patient[]);

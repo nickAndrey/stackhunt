@@ -5,7 +5,7 @@ import { Modal } from '@/shared/components/Modal';
 import { Portal } from '@/shared/components/Portal';
 import type { Patient } from '@/shared/types/patient';
 import { Plus, Search, UserPlus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PatientCreateForm } from './components/PatientCreateForm';
 import { usePatientCreateForm } from './components/PatientCreateForm/hooks/usePatientCreateForm';
 import { PatientsTable } from './components/PatientsTable';
@@ -16,11 +16,60 @@ type PageProps = {
 };
 
 function Page({ data }: PageProps) {
+  const [initialData, setInitialData] = useState<Patient[]>(data);
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const createForm = usePatientCreateForm();
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  useEffect(() => {
+    const newPatient = createForm.newPatient;
+    if (newPatient !== null) {
+      setInitialData((prev) => [...prev, newPatient]);
+    }
+  }, [createForm.newPatient]);
+
+  const modalConfig = [
+    {
+      title: 'Step 1: Personal Information',
+      description:
+        'Enter the patient’s basic personal details, including name, gender, and date of birth.',
+    },
+    {
+      title: 'Step 2: Contact Information',
+      description: 'Provide the patient’s contact details and residential address.',
+    },
+    {
+      title: 'Step 3: Emergency Contact',
+      description:
+        'Set up an emergency contact and the patient’s preferred communication language and method.',
+    },
+    {
+      title: 'Step 4: Identification',
+      description:
+        'Input the patient’s identification details, such as national ID and insurance number.',
+    },
+    {
+      title: 'Step 5: Medical Information',
+      description:
+        'Record any relevant medical history, known conditions, allergies, and medications.',
+    },
+    {
+      title: 'Step 6: Files and Notes',
+      description: 'Attach any relevant medical files or notes associated with the patient.',
+    },
+    {
+      title: 'Step 7: Status and Tags',
+      description:
+        'Assign the patient’s current status and add relevant tags for easier categorization.',
+    },
+    {
+      title: 'Step 8: Summary',
+      description:
+        'Review all the information you’ve entered to ensure it’s accurate before submitting the patient record.',
+    },
+  ];
 
   return (
     <>
@@ -55,19 +104,30 @@ function Page({ data }: PageProps) {
       </Portal>
 
       <div className="pt-4">
-        <PatientsTable patients={searchResults ?? data} />
+        <PatientsTable patients={searchResults ?? initialData} />
 
         <Modal
           open={isDialogOpen}
-          onOpenChange={setIsDialogOpen}
+          onOpenChange={(isOpen) => {
+            setIsDialogOpen(isOpen);
+            if (!isOpen) createForm.handleReset();
+          }}
           className="!max-w-[600px]"
-          title="Create new patient"
+          title={modalConfig[createForm.step].title}
+          description={modalConfig[createForm.step].description}
           actionBtn={
             <>
               {createForm.step > 0 && <Button onClick={createForm.handlePrev}>Prev</Button>}
 
               {createForm.step === Object.keys(createForm.forms).length ? (
-                <Button onClick={createForm.handleSubmit}>Submit</Button>
+                <Button
+                  onClick={() => {
+                    createForm.handleSubmit();
+                    setIsDialogOpen(false);
+                  }}
+                >
+                  Submit
+                </Button>
               ) : (
                 <Button onClick={createForm.handleNext}>Next</Button>
               )}

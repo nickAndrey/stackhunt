@@ -1,9 +1,11 @@
 import { db } from '@/shared/db/db';
+import { getPatientWithRelatedData } from '@/shared/services/patients/get-patient-with-related-data';
+import type { Patient } from '@/shared/types/patient';
 import type { transformCreatePatientFormData } from '../utils/transform-create-patient-form-data';
 
 type TransformedCreatePatientFormData = ReturnType<typeof transformCreatePatientFormData>;
 
-export async function createPatient(data: TransformedCreatePatientFormData) {
+export async function createPatient(data: TransformedCreatePatientFormData): Promise<Patient> {
   const { patientCore, conditions, medical_flags, tags, allergies, medications, files } = data;
 
   const patientId = patientCore.id;
@@ -58,4 +60,7 @@ export async function createPatient(data: TransformedCreatePatientFormData) {
       }))
     );
   });
+
+  const newPatient = await getPatientWithRelatedData(patientId);
+  return newPatient;
 }

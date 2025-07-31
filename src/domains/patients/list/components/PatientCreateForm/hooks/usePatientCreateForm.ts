@@ -1,6 +1,8 @@
+import type { Patient } from '@/shared/types/patient';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type z from 'zod';
 import { createPatient } from '../../../services/create-patient';
 import { transformCreatePatientFormData } from '../../../utils/transform-create-patient-form-data';
@@ -16,13 +18,14 @@ import {
 
 export function usePatientCreateForm() {
   const [step, setStep] = useState(0);
+  const [newPatient, setNewPatient] = useState<Patient | null>(null);
 
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      first_name: 'John',
-      last_name: 'Doe',
-      gender: 'male',
+      first_name: '',
+      last_name: '',
+      gender: 'other',
       birth_date: new Date(),
     },
   });
@@ -30,12 +33,12 @@ export function usePatientCreateForm() {
   const step2Form = useForm<z.infer<typeof contactInfoSchema>>({
     resolver: zodResolver(contactInfoSchema),
     defaultValues: {
-      phone: '+1 779 655 3674',
-      email: 'john.doe@gmail.com',
+      phone: '',
+      email: '',
       address: {
-        street: '2238 Yukon St',
-        city: 'Vancouver',
-        zip_code: 'V5Y 1K9',
+        street: '',
+        city: '',
+        zip_code: '',
       },
     },
   });
@@ -44,11 +47,11 @@ export function usePatientCreateForm() {
     resolver: zodResolver(emergencySchema),
     defaultValues: {
       emergency_contact: {
-        name: 'Jane Doe',
-        relation: 'wife',
-        phone: '+1 779 655 3675',
+        name: '',
+        relation: '',
+        phone: '',
       },
-      preferred_language: 'en',
+      preferred_language: '',
       contact_preference: 'email',
       consent_to_contact: true,
       consent_signed_date: new Date(),
@@ -58,8 +61,8 @@ export function usePatientCreateForm() {
   const step4Form = useForm<z.infer<typeof identificationSchema>>({
     resolver: zodResolver(identificationSchema),
     defaultValues: {
-      national_id: '7312045839',
-      insurance_number: 'INS-5249-3821',
+      national_id: '',
+      insurance_number: '',
       registration_date: new Date(),
     },
   });
@@ -67,36 +70,10 @@ export function usePatientCreateForm() {
   const step5Form = useForm<z.infer<typeof medicalInfoSchema>>({
     resolver: zodResolver(medicalInfoSchema),
     defaultValues: {
-      medical_flags: 'Diabetic, Hypertension',
-      conditions: 'Asthma, Chronic back pain',
-      allergies: [
-        {
-          substance: 'Peanuts',
-          reaction: 'Anaphylaxis',
-          severity: 'severe',
-        },
-        {
-          substance: 'Penicillin',
-          reaction: 'Rash',
-          severity: 'moderate',
-        },
-      ],
-      medications: [
-        {
-          name: 'Metformin',
-          dosage: '500mg twice daily',
-          start_date: new Date('2023-03-01'),
-          end_date: new Date('2025-03-01'),
-          prescribed_by: 'Dr. Sarah Thompson',
-        },
-        {
-          name: 'Albuterol Inhaler',
-          dosage: '2 puffs as needed',
-          start_date: new Date('2022-01-15'),
-          end_date: new Date('2026-01-15'),
-          prescribed_by: 'Dr. James Lee',
-        },
-      ],
+      medical_flags: '',
+      conditions: '',
+      allergies: [],
+      medications: [],
     },
   });
 
@@ -152,15 +129,33 @@ export function usePatientCreateForm() {
       ...step6Form.getValues(),
       ...step7Form.getValues(),
     };
-    const transformedData = transformCreatePatientFormData(finalData);
-    await createPatient(transformedData);
+
+    try {
+      const transformedData = transformCreatePatientFormData(finalData);
+      const newPatient = await createPatient(transformedData);
+      toast.success('New patient was successfully added');
+      setNewPatient(newPatient);
+    } catch (err) {
+      console.error('Error creating patient:', err);
+      toast.error('Failed to create patient. Please try again.');
+    }
+  };
+
+  const handleReset = () => {
+    // Set timeout need for silent resetting to not fail a close modal animation
+    setTimeout(() => {
+      Object.values(forms).forEach((form) => form.reset());
+      setStep(0);
+    }, 1000);
   };
 
   return {
     step,
     forms,
+    newPatient,
     handleNext,
     handlePrev,
     handleSubmit,
+    handleReset,
   };
 }
