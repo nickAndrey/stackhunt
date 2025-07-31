@@ -4,6 +4,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
@@ -27,6 +28,7 @@ function Step2Form(form: Step2FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -43,6 +45,7 @@ function Step2Form(form: Step2FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -59,6 +62,7 @@ function Step2Form(form: Step2FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -75,6 +79,7 @@ function Step2Form(form: Step2FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -91,6 +96,7 @@ function Step2Form(form: Step2FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

@@ -1,3 +1,4 @@
+import { FormSummary } from './components/FormSummary';
 import { Step1Form } from './components/Step1Form';
 import { Step2Form } from './components/Step2Form';
 import { Step3Form } from './components/Step3Form';
@@ -25,6 +26,8 @@ function PatientCreateForm(props: PatientCreateFormProps) {
       return <Step6Form {...props.forms.step6Form} />;
     case 6:
       return <Step7Form {...props.forms.step7Form} />;
+    default:
+      return <FormSummary {...props.forms} />;
   }
 }
 

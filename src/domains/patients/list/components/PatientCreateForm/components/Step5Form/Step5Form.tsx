@@ -78,21 +78,22 @@ function Step5Form(form: Step5FormProps) {
         <Accordion type="multiple">
           <AccordionItem value="allergies">
             <AccordionTrigger>Allergies</AccordionTrigger>
+
             <AccordionContent className="flex flex-col gap-3">
               {allergies.fields.map((allergy, index) => (
                 <Accordion type="multiple" key={allergy.id} className="px-3 border-b-2">
                   <AccordionItem value={`allergy_${index + 1}`}>
-                    <AccordionTrigger className="relative">
-                      Allergy #{index + 1}
+                    <div className="relative">
+                      <AccordionTrigger>Allergy #{index + 1}</AccordionTrigger>
                       <Button
                         type="button"
                         variant="ghost"
-                        className="absolute top-[1/2] -translate-y-[25%] right-[5%]"
+                        className="absolute top-[50%] -translate-y-[50%] right-[5%] rounded-full"
                         onClick={() => allergies.remove(index)}
                       >
                         <Trash2 size={8} />
                       </Button>
-                    </AccordionTrigger>
+                    </div>
                     <AccordionContent className="flex flex-col gap-3">
                       <FormItem>
                         <FormLabel>Substance</FormLabel>
@@ -152,21 +153,22 @@ function Step5Form(form: Step5FormProps) {
 
           <AccordionItem value="medications">
             <AccordionTrigger>Medications</AccordionTrigger>
+
             <AccordionContent className="flex flex-col gap-3">
               {medications.fields.map((medication, index) => (
                 <Accordion type="multiple" key={medication.id} className="px-3 border-b-2">
                   <AccordionItem value={`medication_${index + 1}`}>
-                    <AccordionTrigger className="relative">
-                      Medication #{index + 1}
+                    <div className="relative">
+                      <AccordionTrigger>Medication #{index + 1}</AccordionTrigger>
                       <Button
                         type="button"
                         variant="ghost"
-                        className="absolute top-[1/2] -translate-y-[25%] right-[5%]"
+                        className="absolute top-[50%] -translate-y-[50%] right-[5%] rounded-full"
                         onClick={() => medications.remove(index)}
                       >
                         <Trash2 size={8} />
                       </Button>
-                    </AccordionTrigger>
+                    </div>
                     <AccordionContent className="flex flex-col gap-3">
                       <FormItem>
                         <FormLabel>Name</FormLabel>

@@ -1,19 +1,19 @@
 import z from 'zod';
 
 export const personalInfoSchema = z.object({
-  first_name: z.string(),
-  last_name: z.string(),
+  first_name: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
+  last_name: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
   gender: z.enum(['male', 'female', 'other', 'undisclosed']),
   birth_date: z.date(),
 });
 
 export const contactInfoSchema = z.object({
-  phone: z.string(),
-  email: z.email(),
+  phone: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
+  email: z.email().min(1, { error: 'This field is required and cannot be empty.' }),
   address: z.object({
-    street: z.string(),
-    city: z.string(),
-    zip_code: z.string(),
+    street: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
+    city: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
+    zip_code: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
   }),
 });
 
@@ -45,11 +45,6 @@ export const medicalInfoSchema = z.object({
 });
 
 export const filesAndNotesSchema = z.object({
-  notes: z.array(
-    z.object({
-      note: z.string(),
-    })
-  ),
   files: z.array(
     z.object({
       url: z.string(),
@@ -58,7 +53,11 @@ export const filesAndNotesSchema = z.object({
 });
 
 export const emergencySchema = z.object({
-  emergency_contact: z.string().optional(),
+  emergency_contact: z.object({
+    name: z.string(),
+    relation: z.string(),
+    phone: z.string(),
+  }),
   preferred_language: z.string().optional(),
   contact_preference: z.enum(['email', 'phone', 'sms']),
   consent_to_contact: z.boolean(),
@@ -67,9 +66,5 @@ export const emergencySchema = z.object({
 
 export const tagsSchema = z.object({
   status: z.enum(['active', 'inactive', 'deceased', 'blocked']),
-  tags: z.array(
-    z.object({
-      tag: z.string(),
-    })
-  ),
+  tags: z.string(),
 });

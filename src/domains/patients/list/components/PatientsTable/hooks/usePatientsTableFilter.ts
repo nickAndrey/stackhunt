@@ -92,8 +92,6 @@ export function usePatientsTableFilter(initialPatients: Patient[]) {
         }))
       );
 
-      console.log(data.filter(Boolean));
-
       setPatientsFiltered(data.filter(Boolean) as Patient[]);
     };
 

@@ -55,17 +55,17 @@ function Page({ data }: PageProps) {
         <PatientsTable patients={searchResults ?? data} />
 
         <Modal
-          open
           className="!max-w-[600px]"
           title="Create new patient"
           actionBtn={
             <>
-              <Button onClick={createForm.handlePrev} disabled={createForm.step === 0}>
-                Prev
-              </Button>
-              <Button onClick={createForm.handleNext}>
-                {createForm.step < 6 ? 'Next' : 'Submit'}
-              </Button>
+              {createForm.step > 0 && <Button onClick={createForm.handlePrev}>Prev</Button>}
+
+              {createForm.step === Object.keys(createForm.forms).length ? (
+                <Button onClick={createForm.handleSubmit}>Submit</Button>
+              ) : (
+                <Button onClick={createForm.handleNext}>Next</Button>
+              )}
             </>
           }
         >

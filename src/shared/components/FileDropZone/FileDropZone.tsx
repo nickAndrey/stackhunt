@@ -16,7 +16,7 @@ export default function FileDropZone({
   onRemoveFile,
 }: FileDropZoneProps) {
   return (
-    <div className="w-full max-w-xl mx-auto p-4">
+    <div className="w-full max-w-xl mx-auto">
       <div
         onClick={onClick}
         onDragOver={onDragOver}

@@ -6,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/components/ui/popover';
@@ -39,6 +40,7 @@ function Step1Form(form: Step1FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -55,6 +57,7 @@ function Step1Form(form: Step1FormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

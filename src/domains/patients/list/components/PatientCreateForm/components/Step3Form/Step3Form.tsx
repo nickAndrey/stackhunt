@@ -1,4 +1,10 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/design-system/components/ui/accordion';
+import {
   Form,
   FormControl,
   FormField,
@@ -22,22 +28,6 @@ function Step3Form(form: Step3FormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-3">
-        <FormField
-          control={form.control}
-          name="emergency_contact"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Emergency Contact</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Provide an emergency contact..."
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="preferred_language"
@@ -89,6 +79,61 @@ function Step3Form(form: Step3FormProps) {
             </FormItem>
           )}
         />
+        <Accordion type="multiple">
+          <AccordionItem value="emergency_contact">
+            <AccordionTrigger>Emergency Contact</AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-3">
+              <FormField
+                control={form.control}
+                name="emergency_contact.name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Provide an emergency contact name..."
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergency_contact.relation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact Relation</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Provide an emergency contact relation..."
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergency_contact.phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact Phone</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Provide an emergency contact phone..."
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </form>
     </Form>
   );

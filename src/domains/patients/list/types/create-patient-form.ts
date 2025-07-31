@@ -1,0 +1,18 @@
+import type z from 'zod';
+import type {
+  contactInfoSchema,
+  emergencySchema,
+  filesAndNotesSchema,
+  identificationSchema,
+  medicalInfoSchema,
+  personalInfoSchema,
+  tagsSchema,
+} from '../components/PatientCreateForm/hooks/form-schema';
+
+export type CreatePatientForm = z.infer<typeof personalInfoSchema> &
+  z.infer<typeof contactInfoSchema> &
+  z.infer<typeof identificationSchema> &
+  z.infer<typeof medicalInfoSchema> &
+  z.infer<typeof filesAndNotesSchema> &
+  z.infer<typeof emergencySchema> &
+  z.infer<typeof tagsSchema>;
