@@ -20,11 +20,16 @@ export function createPageLoader<T>(
       staleTime: 1000,
     });
 
-    if (status === 'pending') return <Loader text="•••" />;
+    if (status === 'pending')
+      return (
+        <div className="flex items-center justify-center w-full h-screen">
+          <Loader text="•••" />
+        </div>
+      );
 
     if (status === 'error') return <h2>{error.message}</h2>;
 
-    if (!data) return <h2>Not Found</h2>;
+    if (typeof data !== 'boolean' && !data) return <h2>Not Found</h2>;
 
     return children(data);
   };

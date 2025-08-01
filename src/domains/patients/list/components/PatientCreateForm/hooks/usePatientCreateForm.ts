@@ -132,6 +132,9 @@ export function usePatientCreateForm() {
 
     try {
       const transformedData = transformCreatePatientFormData(finalData);
+
+      console.log(JSON.stringify(transformedData));
+
       const newPatient = await createPatient(transformedData);
       toast.success('New patient was successfully added');
       setNewPatient(newPatient);

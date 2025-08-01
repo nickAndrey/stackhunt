@@ -1,3 +1,4 @@
+import { Alert, AlertDescription, AlertTitle } from '@/design-system/components/ui/alert';
 import { Button } from '@/design-system/components/ui/button';
 import { Checkbox } from '@/design-system/components/ui/checkbox';
 import {
@@ -9,11 +10,16 @@ import {
   FormMessage,
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
-import { Download, Eye, EyeOff } from 'lucide-react';
+import { Download, Eye, EyeOff, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { useLoginForm } from './hooks/useLoginForm';
 
-function Page() {
+type PageProps = {
+  isAdminUser: boolean;
+};
+
+function Page({ isAdminUser }: PageProps) {
   const { loginForm, handleSubmit } = useLoginForm();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -32,6 +38,19 @@ function Page() {
             Please enter your email and password to sign in.
           </p>
         </div>
+
+        {!isAdminUser && (
+          <Alert variant="default">
+            <TriangleAlert />
+            <AlertTitle>No Admin User Found</AlertTitle>
+            <AlertDescription>
+              Your system doesn't have an admin account yet.
+              <Link to="/auth/register" className="underline text-black">
+                Create one now
+              </Link>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <Form {...loginForm}>
           <form

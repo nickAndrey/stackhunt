@@ -1,3 +1,4 @@
+import LoginPage from '@/domains/login/Page';
 import PatientDetailsPage from '@/domains/patients/details/Page';
 import PatientsListPage from '@/domains/patients/list/Page';
 import { lazy } from 'react';
@@ -6,7 +7,7 @@ import AuthLayout from '../layout/AuthLayout';
 import RouteGuard from '../layout/RouteGuard';
 
 const SettingsPage = lazy(() => import('@/domains/settings/Page'));
-const LoginPage = lazy(() => import('@/domains/login/Page'));
+
 const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
 const DoctorsListPage = lazy(() => import('@/domains/doctors/Page'));
 const PatientPageLoader = lazy(
@@ -14,6 +15,9 @@ const PatientPageLoader = lazy(
 );
 const PatientsPageLoader = lazy(
   () => import('@/domains/patients/list/components/PatientsPageLoader/PatientsPageLoader')
+);
+const LoginPageLoader = lazy(
+  () => import('@/domains/login/components/LoginPageLoader/LoginPageLoader')
 );
 
 const router = createBrowserRouter([
@@ -69,7 +73,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/auth/login',
-        element: <LoginPage />,
+        element: (
+          <LoginPageLoader>
+            {(isAdminUser) => <LoginPage isAdminUser={isAdminUser} />}
+          </LoginPageLoader>
+        ),
       },
     ],
   },

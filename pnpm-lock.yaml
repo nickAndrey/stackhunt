@@ -68,6 +68,9 @@ importers:
       dexie:
         specifier: ^4.0.11
         version: 4.0.11
+      jsstore:
+        specifier: ^4.9.0
+        version: 4.9.0
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)
@@ -2030,6 +2033,9 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  jsstore@4.9.0:
+    resolution: {integrity: sha512-5eApM5QO8LQu1L2of8cIyFRKMZ6Dch6NBFbqDHkBUFjXSEoj/rZtfZw9tTgKQ5Lcp6+8jyGmfKuuAsqbBGOKow==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -4695,6 +4701,8 @@ snapshots:
   json-stable-stringify-without-jsonify@1.0.1: {}
 
   json5@2.2.3: {}
+
+  jsstore@4.9.0: {}
 
   keyv@4.5.4:
     dependencies:

@@ -5,7 +5,7 @@ type LoaderProps = {
 function Loader({ text }: LoaderProps) {
   //•••
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-white">
+    <div className="flex">
       {[...text].map((char, idx) => (
         <span
           key={`${char}_${idx}`}
