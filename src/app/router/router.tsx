@@ -7,7 +7,6 @@ import RouteGuard from '../layout/RouteGuard';
 
 const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 const LoginPage = lazy(() => import('@/domains/login/Page'));
-const RegisterPage = lazy(() => import('@/domains/register/Page'));
 const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
 const DoctorsListPage = lazy(() => import('@/domains/doctors/Page'));
 const PatientPageLoader = lazy(
@@ -71,10 +70,6 @@ const router = createBrowserRouter([
       {
         path: '/auth/login',
         element: <LoginPage />,
-      },
-      {
-        path: '/auth/register',
-        element: <RegisterPage />,
       },
     ],
   },
