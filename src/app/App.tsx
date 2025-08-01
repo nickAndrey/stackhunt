@@ -15,8 +15,14 @@ seedPatients();
 seedStaff();
 
 function App() {
+  const fallBackElement = (
+    <div className="flex items-center justify-center w-full h-screen">
+      <img src="/logo-big.png" className="w-[300px] h-[150px]" />
+    </div>
+  );
+
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={fallBackElement}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>

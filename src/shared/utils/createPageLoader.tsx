@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { useParams } from 'react-router';
+import { Loader } from '../components/Loader';
 
 type LoaderProps<T> = {
   children: (data: T) => ReactNode;
@@ -19,7 +20,7 @@ export function createPageLoader<T>(
       staleTime: 1000,
     });
 
-    if (status === 'pending') return <h2>Loading...</h2>;
+    if (status === 'pending') return <Loader text="•••" />;
 
     if (status === 'error') return <h2>{error.message}</h2>;
 
