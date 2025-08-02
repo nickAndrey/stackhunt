@@ -45,7 +45,7 @@ function Page({ isAdminUser }: PageProps) {
             <AlertTitle>No Admin User Found</AlertTitle>
             <AlertDescription>
               Your system doesn't have an admin account yet.
-              <Link to="/auth/register" className="underline text-black">
+              <Link to="/auth/register?admin=true" className="underline text-black">
                 Create one now
               </Link>
             </AlertDescription>

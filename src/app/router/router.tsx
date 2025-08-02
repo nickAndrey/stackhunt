@@ -10,6 +10,7 @@ const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 
 const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
 const DoctorsListPage = lazy(() => import('@/domains/doctors/Page'));
+const RegisterPage = lazy(() => import('@/domains/register/Page'));
 const PatientPageLoader = lazy(
   () => import('@/domains/patients/details/components/PatientPageLoader/PatientPageLoader')
 );
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
             {(isAdminUser) => <LoginPage isAdminUser={isAdminUser} />}
           </LoginPageLoader>
         ),
+      },
+      {
+        path: '/auth/register',
+        element: <RegisterPage />,
       },
     ],
   },
