@@ -12,13 +12,13 @@ const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
 const MembersPage = lazy(() => import('@/domains/members/Page'));
 
 const PatientPageLoader = lazy(
-  () => import('@/domains/patients/details/components/PatientPageLoader/PatientPageLoader')
+  () => import('@/domains/patients/details/components/patient-page-loader/PatientPageLoader')
 );
 const PatientsPageLoader = lazy(
-  () => import('@/domains/patients/list/components/PatientsPageLoader/PatientsPageLoader')
+  () => import('@/domains/patients/list/components/patient-page-loader/PatientsPageLoader')
 );
 const LoginPageLoader = lazy(
-  () => import('@/domains/login/components/LoginPageLoader/LoginPageLoader')
+  () => import('@/domains/login/components/login-page-loader/LoginPageLoader')
 );
 
 export const router = createBrowserRouter([

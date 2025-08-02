@@ -11,7 +11,7 @@ import type { Patient } from '@/shared/types/patient';
 import type { Staff } from '@/shared/types/staff';
 import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
 import { Plus } from 'lucide-react';
-import { TimeLine } from './components/TimeLine';
+import { TimeLine } from './components/time-line';
 
 type PatientAppointmentsCardProps = {
   appointments: Patient['appointments'];

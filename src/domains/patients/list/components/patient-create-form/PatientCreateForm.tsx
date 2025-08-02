@@ -1,11 +1,11 @@
-import { FormSummary } from './components/FormSummary';
-import { Step1Form } from './components/Step1Form';
-import { Step2Form } from './components/Step2Form';
-import { Step3Form } from './components/Step3Form';
-import { Step4Form } from './components/Step4Form';
-import { Step5Form } from './components/Step5Form';
-import { Step6Form } from './components/Step6Form';
-import { Step7Form } from './components/Step7Form';
+import { FormSummary } from './components/form-summary';
+import { Step1Form } from './components/step-1-form';
+import { Step2Form } from './components/step-2-form';
+import { Step3Form } from './components/step-3-form';
+import { Step4Form } from './components/step-4-form';
+import { Step5Form } from './components/step-5-form';
+import { Step6Form } from './components/step-6-form';
+import { Step7Form } from './components/step-7-form';
 import { usePatientCreateForm } from './hooks/usePatientCreateForm';
 
 type PatientCreateFormProps = ReturnType<typeof usePatientCreateForm>;

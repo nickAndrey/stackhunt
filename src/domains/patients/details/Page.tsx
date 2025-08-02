@@ -9,12 +9,12 @@ import { db } from '@/shared/db/db';
 import type { Staff } from '@/shared/types/staff';
 import { useState, type ReactNode } from 'react';
 import { toast } from 'sonner';
-import { PatientAppointmentsCard } from './components/PatientAppointmentsCard';
-import { AppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm';
-import { useAppointmentForm } from './components/PatientAppointmentsCard/components/AppointmentForm/hooks/useAppointmentForm';
-import { PatientFilesCard } from './components/PatientFilesCard';
-import { PatientInfoCard } from './components/PatientInfoCard';
-import { PatientNotesCard } from './components/PatientNotesCard';
+import { PatientAppointmentsCard } from './components/patient-appointments-card';
+import { AppointmentForm } from './components/patient-appointments-card/components/appointment-form';
+import { useAppointmentForm } from './components/patient-appointments-card/components/appointment-form/hooks/useAppointmentForm';
+import { PatientFilesCard } from './components/patient-files-card';
+import { PatientInfoCard } from './components/patient-info-card';
+import { PatientNotesCard } from './components/patient-notes-card';
 
 type DialogName =
   | 'fileRemoveConfirmation'

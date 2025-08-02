@@ -6,9 +6,9 @@ import { Portal } from '@/shared/components/Portal';
 import type { Patient } from '@/shared/types/patient';
 import { Plus, Search, UserPlus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { PatientCreateForm } from './components/PatientCreateForm';
-import { usePatientCreateForm } from './components/PatientCreateForm/hooks/usePatientCreateForm';
-import { PatientsTable } from './components/PatientsTable';
+import { PatientCreateForm } from './components/patient-create-form';
+import { usePatientCreateForm } from './components/patient-create-form/hooks/usePatientCreateForm';
+import { PatientsTable } from './components/patients-table';
 import { useSearchPatient } from './hooks/useSearchPatient';
 
 type PageProps = {

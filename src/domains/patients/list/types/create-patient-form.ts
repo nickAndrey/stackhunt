@@ -7,7 +7,7 @@ import type {
   medicalInfoSchema,
   personalInfoSchema,
   tagsSchema,
-} from '../components/PatientCreateForm/hooks/form-schema';
+} from '../components/patient-create-form/hooks/form-schema';
 
 export type CreatePatientForm = z.infer<typeof personalInfoSchema> &
   z.infer<typeof contactInfoSchema> &

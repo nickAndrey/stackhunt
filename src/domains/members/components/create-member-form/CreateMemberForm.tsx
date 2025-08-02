@@ -1,7 +1,7 @@
-import { FormSummary } from './components/FormSummary';
-import { Step1Form } from './components/Step1Form';
-import { Step2Form } from './components/Step2Form';
-import { Step3Form } from './components/Step3Form';
+import { FormSummary } from './components/form-summary';
+import { Step1Form } from './components/step-1-form';
+import { Step2Form } from './components/step-2-form';
+import { Step3Form } from './components/step-3-form';
 import { useCreateMemberForm } from './hooks/useCreateMemberForm';
 
 type CreateMemberFormProps = ReturnType<typeof useCreateMemberForm>;
