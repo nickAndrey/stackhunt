@@ -1,9 +1,13 @@
-import { Button } from '@/design-system/components/ui/button';
-import { useRegisterForm } from './components/RegisterForm/hooks/useRegisterForm';
-import RegisterForm from './components/RegisterForm/RegisterForm';
+import { Navigate } from 'react-router';
 
-export function Page() {
-  const registerForm = useRegisterForm();
+type PageProps = {
+  isAdminUser: boolean;
+};
+
+export function Page({ isAdminUser }: PageProps) {
+  // const registerForm = useRegisterForm();
+
+  if (isAdminUser) return <Navigate to="/auth/login" />;
 
   return (
     <div className="h-screen flex items-center justify-center bg-[url(/login-page-bg.webp)] bg-cover bg-center">
@@ -24,10 +28,10 @@ export function Page() {
         </div>
 
         <div className="overflow-y-auto max-h-[300px] px-2">
-          <RegisterForm {...registerForm} />
+          {/* <RegisterForm {...registerForm} /> */}
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-3">
+        {/* <div className="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-3">
           {registerForm.step > 0 && (
             <Button variant="secondary" className="w-full" onClick={registerForm.handlePrev}>
               Prev
@@ -47,7 +51,7 @@ export function Page() {
               Next
             </Button>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

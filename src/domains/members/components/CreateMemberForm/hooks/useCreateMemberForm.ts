@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './schemas';
 
-export function useRegisterForm() {
+export function useCreateMemberForm() {
   const [step, setStep] = useState(0);
 
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
@@ -18,6 +18,7 @@ export function useRegisterForm() {
       preferred_contact_method: 'email',
     },
   });
+
   const step2Form = useForm<z.infer<typeof jobDetailsSchema>>({
     resolver: zodResolver(jobDetailsSchema),
     defaultValues: {
@@ -30,6 +31,7 @@ export function useRegisterForm() {
       start_date: new Date(),
     },
   });
+
   const step3Form = useForm<z.infer<typeof addressAndBioSchema>>({
     resolver: zodResolver(addressAndBioSchema),
     defaultValues: {

@@ -2,11 +2,11 @@ import { FormSummary } from './components/FormSummary';
 import { Step1Form } from './components/Step1Form';
 import { Step2Form } from './components/Step2Form';
 import { Step3Form } from './components/Step3Form';
-import type { useRegisterForm } from './hooks/useRegisterForm';
+import { useCreateMemberForm } from './hooks/useCreateMemberForm';
 
-type RegisterFormProps = ReturnType<typeof useRegisterForm>;
+type CreateMemberFormProps = ReturnType<typeof useCreateMemberForm>;
 
-function RegisterForm(props: RegisterFormProps) {
+function CreateMemberForm(props: CreateMemberFormProps) {
   switch (props.step) {
     case 0:
       return <Step1Form form={props.forms.step1Form} schema={props.schemas.personalInfoSchema} />;
@@ -19,4 +19,4 @@ function RegisterForm(props: RegisterFormProps) {
   }
 }
 
-export default RegisterForm;
+export default CreateMemberForm;

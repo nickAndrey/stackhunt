@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { useRegisterForm } from '../../hooks/useRegisterForm';
+import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
 
 type FormSummaryProps = ReturnType<typeof useRegisterForm>['forms'];
 

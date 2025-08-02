@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/design-system/components/ui/select';
-import type { useRegisterForm } from '../../hooks/useRegisterForm';
+import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
 
 type Step1FormProps = {
   form: ReturnType<typeof useRegisterForm>['forms']['step1Form'];

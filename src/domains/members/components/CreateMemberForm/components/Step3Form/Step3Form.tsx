@@ -8,7 +8,7 @@ import {
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import { Textarea } from '@/design-system/components/ui/textarea';
-import type { useRegisterForm } from '../../hooks/useRegisterForm';
+import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
 
 type Step3FormProps = {
   form: ReturnType<typeof useRegisterForm>['forms']['step3Form'];

@@ -19,7 +19,7 @@ import {
 } from '@/design-system/components/ui/select';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
-import type { useRegisterForm } from '../../hooks/useRegisterForm';
+import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
 
 type Step2FormProps = {
   form: ReturnType<typeof useRegisterForm>['forms']['step2Form'];
