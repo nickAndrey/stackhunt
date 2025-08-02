@@ -7,7 +7,7 @@ type NoDataProps = {
   icon?: React.ReactNode;
 };
 
-function NoData({
+export function NoData({
   title = 'No data found',
   message = 'There is currently nothing to display.',
   icon = <Ghost strokeWidth={1} className="w-10 h-10 text-muted-foreground" />,
@@ -22,5 +22,3 @@ function NoData({
     </Card>
   );
 }
-
-export default NoData;

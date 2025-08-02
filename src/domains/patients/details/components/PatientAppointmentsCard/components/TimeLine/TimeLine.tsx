@@ -11,7 +11,7 @@ type TimeLineProps = {
   items: TimeLineItem[];
 };
 
-function TimeLine({ items }: TimeLineProps) {
+export function TimeLine({ items }: TimeLineProps) {
   return (
     <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {items.map((item) => (
@@ -29,5 +29,3 @@ function TimeLine({ items }: TimeLineProps) {
     </ol>
   );
 }
-
-export default TimeLine;

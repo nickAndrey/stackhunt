@@ -23,7 +23,11 @@ type PatientNotesCardProps = {
   onClickEditNote: (id: string) => void;
 };
 
-function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: PatientNotesCardProps) {
+export function PatientNotesCard({
+  notes,
+  onClickCreateNote,
+  onClickEditNote,
+}: PatientNotesCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -78,5 +82,3 @@ function PatientNotesCard({ notes, onClickCreateNote, onClickEditNote }: Patient
     </Card>
   );
 }
-
-export default PatientNotesCard;

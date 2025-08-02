@@ -4,7 +4,7 @@ import type { useFileDrop } from './hooks/useFileDrop';
 
 type FileDropZoneProps = ReturnType<typeof useFileDrop> & {};
 
-export default function FileDropZone({
+export function FileDropZone({
   fileInputRef,
   files,
   isDragActive,

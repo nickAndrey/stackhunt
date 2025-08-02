@@ -2,8 +2,7 @@ type LoaderProps = {
   text: string;
 };
 
-function Loader({ text }: LoaderProps) {
-  //•••
+export function Loader({ text }: LoaderProps) {
   return (
     <div className="flex">
       {[...text].map((char, idx) => (
@@ -21,5 +20,3 @@ function Loader({ text }: LoaderProps) {
     </div>
   );
 }
-
-export default Loader;

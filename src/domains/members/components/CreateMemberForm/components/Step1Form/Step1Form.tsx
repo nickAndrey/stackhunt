@@ -14,14 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/design-system/components/ui/select';
-import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
+import type { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
 
 type Step1FormProps = {
-  form: ReturnType<typeof useRegisterForm>['forms']['step1Form'];
-  schema: ReturnType<typeof useRegisterForm>['schemas']['personalInfoSchema'];
+  form: ReturnType<typeof useCreateMemberForm>['forms']['step1Form'];
+  schema: ReturnType<typeof useCreateMemberForm>['schemas']['personalInfoSchema'];
 };
 
-function Step1Form({ form, schema }: Step1FormProps) {
+export function Step1Form({ form, schema }: Step1FormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-3">
@@ -161,5 +161,3 @@ function Step1Form({ form, schema }: Step1FormProps) {
     </Form>
   );
 }
-
-export default Step1Form;

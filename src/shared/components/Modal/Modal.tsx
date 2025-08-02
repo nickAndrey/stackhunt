@@ -23,7 +23,7 @@ type ModalProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-function Modal({
+export function Modal({
   title,
   trigger,
   children,

@@ -10,7 +10,7 @@ import { usePatientCreateForm } from './hooks/usePatientCreateForm';
 
 type PatientCreateFormProps = ReturnType<typeof usePatientCreateForm>;
 
-function PatientCreateForm(props: PatientCreateFormProps) {
+export function PatientCreateForm(props: PatientCreateFormProps) {
   switch (props.step) {
     case 0:
       return <Step1Form {...props.forms.step1Form} />;
@@ -30,5 +30,3 @@ function PatientCreateForm(props: PatientCreateFormProps) {
       return <FormSummary {...props.forms} />;
   }
 }
-
-export default PatientCreateForm;

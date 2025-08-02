@@ -1,1 +1,1 @@
-export { default as FormSummary } from './FormSummary';
+export * from './FormSummary';

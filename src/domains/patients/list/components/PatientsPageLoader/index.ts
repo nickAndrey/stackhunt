@@ -1,1 +1,1 @@
-export { default as PatientsPageLoader } from './PatientsPageLoader';
+export * from './PatientsPageLoader';

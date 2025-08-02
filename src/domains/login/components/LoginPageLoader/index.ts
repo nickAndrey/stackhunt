@@ -1,1 +1,1 @@
-export { default as LoginPageLoader } from './LoginPageLoader';
+export * from './LoginPageLoader';

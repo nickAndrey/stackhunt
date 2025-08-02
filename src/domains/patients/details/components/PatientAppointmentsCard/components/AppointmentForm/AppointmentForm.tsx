@@ -29,7 +29,7 @@ type AppointmentFormProps = ReturnType<typeof useAppointmentForm> & {
   staff: Staff[];
 };
 
-function AppointmentForm({ staff, form, formSchema }: AppointmentFormProps) {
+export function AppointmentForm({ staff, form, formSchema }: AppointmentFormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4">
@@ -153,5 +153,3 @@ function AppointmentForm({ staff, form, formSchema }: AppointmentFormProps) {
     </Form>
   );
 }
-
-export default AppointmentForm;

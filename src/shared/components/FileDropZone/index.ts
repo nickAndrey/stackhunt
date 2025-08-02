@@ -1,1 +1,1 @@
-export { default as FileDropZone } from './FileDropZone';
+export * from './FileDropZone';

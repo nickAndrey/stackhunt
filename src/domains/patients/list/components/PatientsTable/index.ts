@@ -1,1 +1,1 @@
-export { default as PatientsTable } from './PatientsTable';
+export * from './PatientsTable';

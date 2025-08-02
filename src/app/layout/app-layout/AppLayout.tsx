@@ -9,7 +9,7 @@ import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
-function AppLayout() {
+export function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();
 
   return (
@@ -33,5 +33,3 @@ function AppLayout() {
     </ResizablePanelGroup>
   );
 }
-
-export default AppLayout;

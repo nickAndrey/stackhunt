@@ -16,7 +16,11 @@ type PatientFilesCardProps = {
   onClickDeleteFile: (id: string) => void;
 };
 
-function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: PatientFilesCardProps) {
+export function PatientFilesCard({
+  files,
+  onClickFilesUpload,
+  onClickDeleteFile,
+}: PatientFilesCardProps) {
   const getFileName = (file: string) => file.slice(file.lastIndexOf('/') + 1);
 
   return (
@@ -76,5 +80,3 @@ function PatientFilesCard({ files, onClickFilesUpload, onClickDeleteFile }: Pati
     </Card>
   );
 }
-
-export default PatientFilesCard;

@@ -33,7 +33,7 @@ type NavigationProps = {
   currentWidth: number;
 };
 
-function Navigation({ currentWidth }: NavigationProps) {
+export function Navigation({ currentWidth }: NavigationProps) {
   const linkStyles = ({ isActive }: { isActive: boolean }) => {
     return `${isActive ? 'active bg-blue-200' : ''} flex items-center p-2 rounded-lg gap-2`;
   };
@@ -59,5 +59,3 @@ function Navigation({ currentWidth }: NavigationProps) {
     </ul>
   );
 }
-
-export default Navigation;

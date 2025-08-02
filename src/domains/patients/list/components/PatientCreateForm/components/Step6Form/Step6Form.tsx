@@ -6,7 +6,7 @@ import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
 
 type Step6FormProps = ReturnType<typeof usePatientCreateForm>['forms']['step6Form'];
 
-function Step6Form(form: Step6FormProps) {
+export function Step6Form(form: Step6FormProps) {
   const fileDrop = useFileDrop();
 
   useEffect(() => {
@@ -33,5 +33,3 @@ function Step6Form(form: Step6FormProps) {
     </Form>
   );
 }
-
-export default Step6Form;

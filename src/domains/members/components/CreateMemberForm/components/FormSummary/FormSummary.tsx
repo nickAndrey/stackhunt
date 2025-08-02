@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
+import { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
 
-type FormSummaryProps = ReturnType<typeof useRegisterForm>['forms'];
+type FormSummaryProps = ReturnType<typeof useCreateMemberForm>['forms'];
 
-function FormSummary(forms: FormSummaryProps) {
+export function FormSummary(forms: FormSummaryProps) {
   const finalData = {
     ...forms.step1Form.getValues(),
     ...forms.step2Form.getValues(),
@@ -47,5 +47,3 @@ function FormSummary(forms: FormSummaryProps) {
     </div>
   );
 }
-
-export default FormSummary;

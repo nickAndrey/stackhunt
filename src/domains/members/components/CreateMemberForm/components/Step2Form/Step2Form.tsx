@@ -19,14 +19,14 @@ import {
 } from '@/design-system/components/ui/select';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
-import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
+import type { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
 
 type Step2FormProps = {
-  form: ReturnType<typeof useRegisterForm>['forms']['step2Form'];
-  schema: ReturnType<typeof useRegisterForm>['schemas']['jobDetailsSchema'];
+  form: ReturnType<typeof useCreateMemberForm>['forms']['step2Form'];
+  schema: ReturnType<typeof useCreateMemberForm>['schemas']['jobDetailsSchema'];
 };
 
-function Step2Form({ form, schema }: Step2FormProps) {
+export function Step2Form({ form, schema }: Step2FormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-3">
@@ -182,5 +182,3 @@ function Step2Form({ form, schema }: Step2FormProps) {
     </Form>
   );
 }
-
-export default Step2Form;

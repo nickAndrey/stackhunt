@@ -1,1 +1,1 @@
-export { default as PatientInfoCard } from './PatientInfoCard';
+export * from './PatientInfoCard';

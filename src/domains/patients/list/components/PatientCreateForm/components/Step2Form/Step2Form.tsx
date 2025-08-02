@@ -11,7 +11,7 @@ import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
 
 type Step2FormProps = ReturnType<typeof usePatientCreateForm>['forms']['step2Form'];
 
-function Step2Form(form: Step2FormProps) {
+export function Step2Form(form: Step2FormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-3">
@@ -104,5 +104,3 @@ function Step2Form(form: Step2FormProps) {
     </Form>
   );
 }
-
-export default Step2Form;

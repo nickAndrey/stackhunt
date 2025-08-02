@@ -9,7 +9,7 @@ type PatientInfoCardProps = {
   onClickSendMessage: () => void;
 };
 
-function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) {
+export function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) {
   const patientDetails = [
     {
       id: 'gender',
@@ -91,5 +91,3 @@ function PatientInfoCard({ patient, onClickSendMessage }: PatientInfoCardProps) 
     </Card>
   );
 }
-
-export default PatientInfoCard;

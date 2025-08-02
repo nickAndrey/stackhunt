@@ -1,1 +1,1 @@
-export { default as Step5Form } from './Step5Form';
+export * from './Step5Form';

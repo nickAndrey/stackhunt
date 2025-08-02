@@ -1,1 +1,1 @@
-export { default as CreateMemberForm } from './CreateMemberForm';
+export * from './CreateMemberForm';

@@ -1,1 +1,1 @@
-export { default as Step2Form } from './Step2Form';
+export * from './Step2Form';

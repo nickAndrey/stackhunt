@@ -29,7 +29,7 @@ import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
 
 type Step5FormProps = ReturnType<typeof usePatientCreateForm>['forms']['step5Form'];
 
-function Step5Form(form: Step5FormProps) {
+export function Step5Form(form: Step5FormProps) {
   const allergies = useFieldArray({
     control: form.control,
     name: 'allergies',
@@ -287,5 +287,3 @@ function Step5Form(form: Step5FormProps) {
     </Form>
   );
 }
-
-export default Step5Form;

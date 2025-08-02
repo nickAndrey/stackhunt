@@ -8,13 +8,13 @@ import {
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import { Textarea } from '@/design-system/components/ui/textarea';
-import type { useRegisterForm } from '../../hooks/useCreateMemberForm';
+import type { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
 
 type Step3FormProps = {
-  form: ReturnType<typeof useRegisterForm>['forms']['step3Form'];
+  form: ReturnType<typeof useCreateMemberForm>['forms']['step3Form'];
 };
 
-function Step3Form({ form }: Step3FormProps) {
+export function Step3Form({ form }: Step3FormProps) {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-3">
@@ -90,5 +90,3 @@ function Step3Form({ form }: Step3FormProps) {
     </Form>
   );
 }
-
-export default Step3Form;

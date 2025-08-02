@@ -21,7 +21,7 @@ const LoginPageLoader = lazy(
   () => import('@/domains/login/components/LoginPageLoader/LoginPageLoader')
 );
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <RouteGuard />,
@@ -91,5 +91,3 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-export default router;

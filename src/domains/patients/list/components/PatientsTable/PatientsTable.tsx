@@ -13,7 +13,7 @@ type PatientsTableProps = {
   patients: Patient[];
 };
 
-function PatientsTable({ patients }: PatientsTableProps) {
+export function PatientsTable({ patients }: PatientsTableProps) {
   const { filterColumn, handleFilterChange, patientsFiltered } = usePatientsTableFilter(patients);
 
   return (
@@ -80,5 +80,3 @@ function PatientsTable({ patients }: PatientsTableProps) {
     </div>
   );
 }
-
-export default PatientsTable;

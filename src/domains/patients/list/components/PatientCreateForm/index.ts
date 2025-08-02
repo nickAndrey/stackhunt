@@ -1,1 +1,1 @@
-export { default as PatientCreateForm } from './PatientCreateForm';
+export * from './PatientCreateForm';

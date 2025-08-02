@@ -19,7 +19,7 @@ type PatientAppointmentsCardProps = {
   onClickAddAppointment: () => void;
 };
 
-function PatientAppointmentsCard({
+export function PatientAppointmentsCard({
   appointments,
   staff,
   onClickAddAppointment,
@@ -60,5 +60,3 @@ function PatientAppointmentsCard({
     </Card>
   );
 }
-
-export default PatientAppointmentsCard;

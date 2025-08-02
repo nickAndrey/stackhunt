@@ -3,7 +3,7 @@ import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
 
 type FormSummaryProps = ReturnType<typeof usePatientCreateForm>['forms'];
 
-function FormSummary(forms: FormSummaryProps) {
+export function FormSummary(forms: FormSummaryProps) {
   const finalData = {
     ...forms.step1Form.getValues(),
     ...forms.step2Form.getValues(),
@@ -130,5 +130,3 @@ function FormSummary(forms: FormSummaryProps) {
     </div>
   );
 }
-
-export default FormSummary;

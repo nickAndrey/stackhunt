@@ -6,7 +6,7 @@ import { useCreateMemberForm } from './hooks/useCreateMemberForm';
 
 type CreateMemberFormProps = ReturnType<typeof useCreateMemberForm>;
 
-function CreateMemberForm(props: CreateMemberFormProps) {
+export function CreateMemberForm(props: CreateMemberFormProps) {
   switch (props.step) {
     case 0:
       return <Step1Form form={props.forms.step1Form} schema={props.schemas.personalInfoSchema} />;
@@ -18,5 +18,3 @@ function CreateMemberForm(props: CreateMemberFormProps) {
       return <FormSummary {...props.forms} />;
   }
 }
-
-export default CreateMemberForm;
