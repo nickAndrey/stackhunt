@@ -1,22 +1,7 @@
+import { passwordSchema } from '@/shared/zod-schemas/password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-
-const passwordSchema = z
-  .string()
-  .min(8, { message: 'Password must be at least 8 characters long.' })
-  .refine((val) => /[A-Z]/.test(val), {
-    message: 'Password must contain at least one uppercase letter.',
-  })
-  .refine((val) => /[a-z]/.test(val), {
-    message: 'Password must contain at least one lowercase letter.',
-  })
-  .refine((val) => /[0-9]/.test(val), {
-    message: 'Password must contain at least one number.',
-  })
-  .refine((val) => /[^A-Za-z0-9]/.test(val), {
-    message: 'Password must contain at least one special character.',
-  });
 
 const loginSchema = z.object({
   email: z.email({ error: 'Email is invalid' }),

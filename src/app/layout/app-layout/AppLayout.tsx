@@ -5,8 +5,8 @@ import {
 } from '@/design-system/components/ui/resizable';
 import { Toaster } from '@/design-system/components/ui/sonner';
 import { Outlet } from 'react-router';
-import { Header } from './components/Header';
-import { Navigation } from './components/Navigation';
+import { Header } from './components/header';
+import { Navigation } from './components/navigation';
 import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 export function AppLayout() {
