@@ -1,5 +1,5 @@
+import { Alert, AlertDescription, AlertTitle } from '@/design-system/components/ui/alert';
 import { Button } from '@/design-system/components/ui/button';
-import { Checkbox } from '@/design-system/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
-import { Download, Eye, EyeOff } from 'lucide-react';
+import { AlertCircleIcon, Download, Eye, EyeOff, LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Navigate } from 'react-router';
 import { useLoginForm } from './hooks/useLoginForm';
@@ -19,14 +19,25 @@ type PageProps = {
 };
 
 function Page({ isAdminUser }: PageProps) {
-  const { loginForm, handleSubmit } = useLoginForm();
+  const { loginForm, formStatus, loginErrorMsg, handleSubmit } = useLoginForm();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   if (!isAdminUser) return <Navigate to="/auth/register" />;
 
   return (
-    <div className="h-screen flex items-center justify-center bg-[url(/login-page-bg.webp)] bg-cover bg-center">
-      <div className="w-md min-h-4/12 rounded-2xl shadow-xl shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
+    <div className="h-screen flex flex-col gap-3 items-center justify-center bg-[url(/login-page-bg.webp)] bg-cover bg-center">
+      {loginErrorMsg && (
+        <Alert variant="destructive" className="w-md">
+          <AlertCircleIcon />
+          <AlertTitle>Unable to login.</AlertTitle>
+          <AlertDescription>
+            <p>Please verify credentials provided.</p>
+            <p>{loginErrorMsg}</p>
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <div className="w-md rounded-2xl shadow-xl shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
         <img
           src="/logo.png"
           alt="Mounting Medical logo"
@@ -41,10 +52,7 @@ function Page({ isAdminUser }: PageProps) {
         </div>
 
         <Form {...loginForm}>
-          <form
-            className="flex flex-col items-center justify-center space-y-4 h-full"
-            onSubmit={loginForm.handleSubmit(handleSubmit)}
-          >
+          <form className="flex flex-col items-center justify-center space-y-4">
             <FormField
               control={loginForm.control}
               name="email"
@@ -100,29 +108,15 @@ function Page({ isAdminUser }: PageProps) {
               )}
             />
 
-            <div className="flex items-center justify-between w-full">
-              <FormField
-                control={loginForm.control}
-                name="remember_me"
-                render={({ field }) => (
-                  <FormItem className="w-full flex">
-                    <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                    </FormControl>
-                    <FormLabel>Remember me</FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <a href="" className="text-xs hover:underline text-nowrap py-1">
-                Forgot password?
-              </a>
-            </div>
-
-            <Button variant="secondary" className="w-full">
+            <Button type="button" variant="secondary" className="w-full" onClick={handleSubmit}>
+              {formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
               <span className="font-semibold text-sm">Sign in</span>
               <Download className="rotate-[-90deg]" />
             </Button>
+
+            <a href="" className="text-xs hover:underline text-nowrap ml-auto">
+              Forgot password?
+            </a>
           </form>
         </Form>
       </div>

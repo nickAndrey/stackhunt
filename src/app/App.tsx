@@ -3,6 +3,7 @@ import { seedStaff } from '@/shared/db/seedStaff';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router';
+import { AuthProvider } from './contexts/auth';
 import { router } from './router';
 
 const queryClient = new QueryClient();
@@ -23,9 +24,11 @@ function App() {
 
   return (
     <Suspense fallback={fallBackElement}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </AuthProvider>
     </Suspense>
   );
 }

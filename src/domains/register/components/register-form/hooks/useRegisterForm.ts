@@ -1,4 +1,6 @@
+import { useAuth } from '@/app/contexts/auth';
 import { registerNewMember } from '@/shared/services/members/register-new-member';
+import type { FormStatus } from '@/shared/types/form-status';
 import { passwordSchema } from '@/shared/zod-schemas/password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -27,8 +29,9 @@ const schema = z
 
 export function useRegisterForm() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const [formStatus, setFormStatus] = useState<'idle' | 'processing' | 'error'>('idle');
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -45,12 +48,12 @@ export function useRegisterForm() {
   const handleSubmit = form.handleSubmit(async (data) => {
     setFormStatus('processing');
 
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        resolve(registerNewMember(data));
-        setFormStatus('idle');
-      }, 2000)
-    );
+    await new Promise((res) => setTimeout(res, 2000));
+
+    await registerNewMember(data);
+    await login({ email: data.email, password: data.password });
+
+    setFormStatus('idle');
 
     await navigate('/');
   });

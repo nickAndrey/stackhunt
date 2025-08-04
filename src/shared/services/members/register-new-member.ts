@@ -7,7 +7,7 @@ type MemberCreateInput = Pick<Staff, 'first_name' | 'last_name' | 'email' | 'rol
 };
 
 export async function registerNewMember(params: MemberCreateInput) {
-  const hashedPassword = await bcrypt.hash(params.password, 12);
+  const hashedPassword = await bcrypt.hash(params.password, 8);
 
   await db.transaction('rw', ['staff', 'auth_credentials'], async () => {
     const memberId = crypto.randomUUID();
