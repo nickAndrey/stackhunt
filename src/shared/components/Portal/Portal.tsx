@@ -22,5 +22,5 @@ export function Portal({ elementId, children }: PortalProps) {
     setTargetElementContainer(el);
   }, [elementId]);
 
-  return <>{targetElementContainer && createPortal(children, targetElementContainer)}</>;
+  return targetElementContainer && createPortal(children, targetElementContainer);
 }

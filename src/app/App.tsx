@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router';
 import { AuthProvider } from './contexts/auth';
+import { HeaderProvider } from './contexts/header';
 import { router } from './router';
 
 const queryClient = new QueryClient();
@@ -25,9 +26,11 @@ function App() {
   return (
     <Suspense fallback={fallBackElement}>
       <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
+        <HeaderProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </HeaderProvider>
       </AuthProvider>
     </Suspense>
   );

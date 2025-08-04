@@ -1,5 +1,6 @@
 import type { Patient } from '@/shared/types/patient';
 
+import { useHeader } from '@/app/contexts/header';
 import { Button } from '@/design-system/components/ui/button';
 import { Textarea } from '@/design-system/components/ui/textarea';
 import { FileDropZone } from '@/shared/components/FileDropZone';
@@ -7,7 +8,7 @@ import { useFileDrop } from '@/shared/components/FileDropZone/hooks/useFileDrop'
 import { Modal } from '@/shared/components/Modal';
 import { db } from '@/shared/db/db';
 import type { Staff } from '@/shared/types/staff';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { toast } from 'sonner';
 import { PatientAppointmentsCard } from './components/patient-appointments-card';
 import { AppointmentForm } from './components/patient-appointments-card/components/appointment-form';
@@ -32,6 +33,8 @@ type PageProps = {
 };
 
 function Page({ data }: PageProps) {
+  const { setHeader } = useHeader();
+
   const [patient, setPatient] = useState(data.patient);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -123,6 +126,13 @@ function Page({ data }: PageProps) {
     await db.files.delete(fileToRemove);
     setIsDialogOpen(false);
   };
+
+  useEffect(() => {
+    const { first_name, last_name } = data.patient;
+
+    setHeader({ title: `Patient: ${first_name} ${last_name}` });
+    return () => setHeader({});
+  }, [data.patient, setHeader]);
 
   const dialogConfig: Record<
     DialogName,

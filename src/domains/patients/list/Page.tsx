@@ -1,10 +1,10 @@
+import { useHeader } from '@/app/contexts/header';
 import { Button } from '@/design-system/components/ui/button';
 import { Input } from '@/design-system/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import { Modal } from '@/shared/components/Modal';
-import { Portal } from '@/shared/components/Portal';
 import type { Patient } from '@/shared/types/patient';
-import { Plus, Search, UserPlus } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { PatientCreateForm } from './components/patient-create-form';
 import { usePatientCreateForm } from './components/patient-create-form/hooks/usePatientCreateForm';
@@ -16,9 +16,11 @@ type PageProps = {
 };
 
 function Page({ data }: PageProps) {
-  const [initialData, setInitialData] = useState<Patient[]>(data);
+  const { setHeader } = useHeader();
+
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
 
+  const [initialData, setInitialData] = useState<Patient[]>(data);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const createForm = usePatientCreateForm();
@@ -29,6 +31,35 @@ function Page({ data }: PageProps) {
       setInitialData((prev) => [...prev, newPatient]);
     }
   }, [createForm.newPatient]);
+
+  useEffect(() => {
+    setHeader({
+      title: 'Patients',
+      actions: (
+        <>
+          <div className="relative mr-2">
+            <Input
+              placeholder="Search for patient..."
+              className="peer block w-full rounded-md border py-[9px] pl-10 text-sm"
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
+            />
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-[16px] w-[16px]" />
+          </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="secondary" onClick={() => setIsDialogOpen(true)}>
+                <Plus />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Add patient</TooltipContent>
+          </Tooltip>
+        </>
+      ),
+    });
+
+    return () => setHeader({});
+  }, [searchValue, setHeader, setSearchValue]);
 
   const modalConfig = [
     {
@@ -72,74 +103,42 @@ function Page({ data }: PageProps) {
   ];
 
   return (
-    <>
-      <Portal elementId="header-actions">
-        <div className="flex gap-2 items-center">
-          <div className="relative mr-2">
-            <Input
-              placeholder="Search for patient..."
-              className="peer block w-full rounded-md border py-[9px] pl-10 text-sm"
-              onChange={(e) => setSearchValue(e.target.value)}
-              value={searchValue}
-            />
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-[16px] w-[16px]" />
-          </div>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="secondary" onClick={() => setIsDialogOpen(true)}>
-                <Plus />
+    <div>
+      <PatientsTable patients={searchResults ?? initialData} />
+
+      <Modal
+        open={isDialogOpen}
+        onOpenChange={(isOpen) => {
+          setIsDialogOpen(isOpen);
+          if (!isOpen) createForm.handleReset();
+        }}
+        className="!max-w-[600px]"
+        title={modalConfig[createForm.step].title}
+        description={modalConfig[createForm.step].description}
+        actionBtn={
+          <>
+            {createForm.step > 0 && <Button onClick={createForm.handlePrev}>Prev</Button>}
+
+            {createForm.step === Object.keys(createForm.forms).length ? (
+              <Button
+                onClick={() => {
+                  createForm.handleSubmit();
+                  setIsDialogOpen(false);
+                }}
+              >
+                Submit
               </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">Add patient</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="secondary">
-                <UserPlus />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">Assign patients</TooltipContent>
-          </Tooltip>
+            ) : (
+              <Button onClick={createForm.handleNext}>Next</Button>
+            )}
+          </>
+        }
+      >
+        <div className="max-h-[500px] overflow-auto px-2">
+          <PatientCreateForm {...createForm} />
         </div>
-      </Portal>
-
-      <div className="pt-4">
-        <PatientsTable patients={searchResults ?? initialData} />
-
-        <Modal
-          open={isDialogOpen}
-          onOpenChange={(isOpen) => {
-            setIsDialogOpen(isOpen);
-            if (!isOpen) createForm.handleReset();
-          }}
-          className="!max-w-[600px]"
-          title={modalConfig[createForm.step].title}
-          description={modalConfig[createForm.step].description}
-          actionBtn={
-            <>
-              {createForm.step > 0 && <Button onClick={createForm.handlePrev}>Prev</Button>}
-
-              {createForm.step === Object.keys(createForm.forms).length ? (
-                <Button
-                  onClick={() => {
-                    createForm.handleSubmit();
-                    setIsDialogOpen(false);
-                  }}
-                >
-                  Submit
-                </Button>
-              ) : (
-                <Button onClick={createForm.handleNext}>Next</Button>
-              )}
-            </>
-          }
-        >
-          <div className="max-h-[500px] overflow-auto px-2">
-            <PatientCreateForm {...createForm} />
-          </div>
-        </Modal>
-      </div>
-    </>
+      </Modal>
+    </div>
   );
 }
 

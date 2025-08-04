@@ -1,12 +1,16 @@
 import { useAuth } from '@/app/contexts/auth';
+import { useHeader } from '@/app/contexts/header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/design-system/components/ui/avatar';
 
 export function Header() {
   const { member } = useAuth();
+  const { header } = useHeader();
 
   return (
-    <header className="p-4 border-b flex gap-2">
-      <div id="header-actions" />
+    <header className="p-4 border-b flex items-center gap-10 mb-4">
+      <h2 className="text-xl font-semibold">{header.title}</h2>
+
+      <div className="flex gap-3 items-center">{header.actions}</div>
 
       <div className="ml-auto">
         {member && (
