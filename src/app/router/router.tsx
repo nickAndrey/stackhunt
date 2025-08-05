@@ -2,14 +2,17 @@ import LoginPage from '@/domains/login/Page';
 import PatientDetailsPage from '@/domains/patients/details/Page';
 import PatientsListPage from '@/domains/patients/list/Page';
 import RegisterPage from '@/domains/register/Page';
+
+import { ProfileLoader } from '@/domains/settings/profile';
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import AuthLayout from '../layout/AuthLayout';
 import RouteGuard from '../layout/RouteGuard';
 
-const SettingsPage = lazy(() => import('@/domains/settings/Page'));
 const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
 const MembersPage = lazy(() => import('@/domains/members/Page'));
+
+const SettingsLayout = lazy(() => import('@/domains/settings/Layout'));
 
 const PatientPageLoader = lazy(
   () => import('@/domains/patients/details/components/patient-page-loader/PatientPageLoader')
@@ -60,7 +63,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/settings',
-        element: <SettingsPage />,
+        element: <SettingsLayout />,
         children: [
           {
             index: true,
@@ -68,7 +71,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/settings/profile',
-            element: 'profile',
+            element: <ProfileLoader />,
           },
           {
             path: '/settings/appearance',
