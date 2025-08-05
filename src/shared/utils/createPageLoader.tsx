@@ -22,7 +22,7 @@ export function createPageLoader<T>(
 
     if (status === 'pending')
       return (
-        <div className="flex items-center justify-center w-full h-screen">
+        <div className="flex items-center justify-center w-full h-full">
           <Loader text="•••" />
         </div>
       );

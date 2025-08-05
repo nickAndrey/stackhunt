@@ -61,6 +61,24 @@ export const router = createBrowserRouter([
       {
         path: '/settings',
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/settings/profile" />,
+          },
+          {
+            path: '/settings/profile',
+            element: 'profile',
+          },
+          {
+            path: '/settings/appearance',
+            element: 'Appearance',
+          },
+          {
+            path: '/settings/security',
+            element: 'Security and password',
+          },
+        ],
       },
     ],
   },
