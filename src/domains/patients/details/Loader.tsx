@@ -3,6 +3,7 @@ import { getPatientWithRelatedData } from '@/shared/services/patients/get-patien
 import type { Patient } from '@/shared/types/patient';
 import type { Staff } from '@/shared/types/staff';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
+import { PatientPage } from './Page';
 
 async function fetchPatientFromIndexedDB(
   id?: string
@@ -17,6 +18,7 @@ async function fetchPatientFromIndexedDB(
   });
 }
 
-const PatientPageLoader = createPageLoader('patient', fetchPatientFromIndexedDB);
-
-export default PatientPageLoader;
+export function PatientPageLoader() {
+  const Loader = createPageLoader('patient', fetchPatientFromIndexedDB);
+  return <Loader>{(data) => <PatientPage data={data} />}</Loader>;
+}

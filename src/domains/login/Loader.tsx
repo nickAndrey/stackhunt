@@ -1,5 +1,6 @@
 import { db } from '@/shared/db/db';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
+import { LoginPage } from './Page';
 
 async function checkForAdminRoleUsers(): Promise<boolean> {
   const usersWithAdminRole = await db.staff.where('role').equals('admin').count();
@@ -9,6 +10,7 @@ async function checkForAdminRoleUsers(): Promise<boolean> {
   });
 }
 
-const LoginPageLoader = createPageLoader('login-page', checkForAdminRoleUsers);
-
-export default LoginPageLoader;
+export function LoginPageLoader() {
+  const Loader = createPageLoader('login-page', checkForAdminRoleUsers);
+  return <Loader>{(data) => <LoginPage isAdminUser={data} />}</Loader>;
+}

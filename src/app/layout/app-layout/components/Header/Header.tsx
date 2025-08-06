@@ -7,7 +7,7 @@ export function Header() {
   const { header } = useHeader();
 
   return (
-    <header className="p-4 border-b flex items-center gap-10 mb-4">
+    <header className="p-4 border-b flex items-center gap-10">
       <h2 className="text-xl font-semibold">{header.title}</h2>
 
       <div className="flex gap-3 items-center">{header.actions}</div>

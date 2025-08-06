@@ -11,11 +11,11 @@ import { usePatientCreateForm } from './components/patient-create-form/hooks/use
 import { PatientsTable } from './components/patients-table';
 import { useSearchPatient } from './hooks/useSearchPatient';
 
-type PageProps = {
+type PatientsPageProps = {
   data: Patient[];
 };
 
-function Page({ data }: PageProps) {
+export function PatientsPage({ data }: PatientsPageProps) {
   const { setHeader } = useHeader();
 
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
@@ -141,5 +141,3 @@ function Page({ data }: PageProps) {
     </div>
   );
 }
-
-export default Page;

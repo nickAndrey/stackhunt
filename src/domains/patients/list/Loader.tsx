@@ -2,6 +2,7 @@ import { db } from '@/shared/db/db';
 import { getPatientWithRelatedData } from '@/shared/services/patients/get-patient-with-related-data';
 import type { Patient } from '@/shared/types/patient';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
+import { PatientsPage } from './Page';
 
 async function getPatients(): Promise<Patient[]> {
   const patients = await db.patients.toArray();
@@ -15,6 +16,7 @@ async function getPatients(): Promise<Patient[]> {
   });
 }
 
-const PatientsPageLoader = createPageLoader('patients', getPatients);
-
-export default PatientsPageLoader;
+export function PatientsPageLoader() {
+  const Loader = createPageLoader('patients', getPatients);
+  return <Loader>{(data) => <PatientsPage data={data} />}</Loader>;
+}

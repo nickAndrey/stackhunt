@@ -1,8 +1,7 @@
-import LoginPage from '@/domains/login/Page';
-import PatientDetailsPage from '@/domains/patients/details/Page';
-import PatientsListPage from '@/domains/patients/list/Page';
-import RegisterPage from '@/domains/register/Page';
-
+import { LoginPageLoader } from '@/domains/login';
+import { PatientPageLoader } from '@/domains/patients/details';
+import { PatientsPageLoader } from '@/domains/patients/list';
+import { RegisterPageLoader } from '@/domains/register';
 import { ProfileLoader } from '@/domains/settings/profile';
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
@@ -10,19 +9,8 @@ import AuthLayout from '../layout/AuthLayout';
 import RouteGuard from '../layout/RouteGuard';
 
 const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
-const MembersPage = lazy(() => import('@/domains/members/Page'));
 
 const SettingsLayout = lazy(() => import('@/domains/settings/Layout'));
-
-const PatientPageLoader = lazy(
-  () => import('@/domains/patients/details/components/patient-page-loader/PatientPageLoader')
-);
-const PatientsPageLoader = lazy(
-  () => import('@/domains/patients/list/components/patient-page-loader/PatientsPageLoader')
-);
-const LoginPageLoader = lazy(
-  () => import('@/domains/login/components/login-page-loader/LoginPageLoader')
-);
 
 export const router = createBrowserRouter([
   {
@@ -35,27 +23,19 @@ export const router = createBrowserRouter([
       },
       {
         path: '/patients',
-        element: (
-          <PatientsPageLoader>
-            {(patients) => <PatientsListPage data={patients} />}
-          </PatientsPageLoader>
-        ),
+        element: <PatientsPageLoader />,
       },
       {
         path: '/patients/:id',
-        element: (
-          <PatientPageLoader>
-            {(patient) => <PatientDetailsPage data={patient} />}
-          </PatientPageLoader>
-        ),
+        element: <PatientPageLoader />,
       },
       {
         path: '/members',
-        element: <MembersPage />,
+        element: <h1>members list</h1>,
       },
       {
         path: '/members/:id',
-        element: <h1>doctor details</h1>,
+        element: <h1>member details</h1>,
       },
       {
         path: '/appointments',
@@ -95,19 +75,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/auth/login',
-        element: (
-          <LoginPageLoader>
-            {(isAdminUser) => <LoginPage isAdminUser={isAdminUser} />}
-          </LoginPageLoader>
-        ),
+        element: <LoginPageLoader />,
       },
       {
         path: '/auth/register',
-        element: (
-          <LoginPageLoader>
-            {(isAdminUser) => <RegisterPage isAdminUser={isAdminUser} />}
-          </LoginPageLoader>
-        ),
+        element: <RegisterPageLoader />,
       },
     ],
   },

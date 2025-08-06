@@ -21,5 +21,5 @@ async function fetchStaffMemberFromIndexedDB(): Promise<{ staff: Staff }> {
 
 export function ProfileLoader() {
   const PageLoader = createPageLoader('settings/profile', fetchStaffMemberFromIndexedDB);
-  return <PageLoader>{(data) => <ProfilePage data={data} />}</PageLoader>;
+  return <PageLoader>{(data) => <ProfilePage data={data.staff} />}</PageLoader>;
 }

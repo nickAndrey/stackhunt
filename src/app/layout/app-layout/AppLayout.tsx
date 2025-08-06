@@ -13,7 +13,7 @@ export function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="w-full min-h-screen">
+    <ResizablePanelGroup direction="horizontal" className="h-screen!">
       <ResizablePanel
         defaultSize={currentWidth}
         maxSize={30}
@@ -23,9 +23,9 @@ export function AppLayout() {
         <Navigation currentWidth={currentWidth} />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel>
-        <main className="overflow-y-auto">
-          <Header />
+      <ResizablePanel className="flex flex-col h-full">
+        <Header />
+        <main className="overflow-auto">
           <Outlet />
           <Toaster position="top-center" />
         </main>

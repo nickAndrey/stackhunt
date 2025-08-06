@@ -4,11 +4,11 @@ import { AlertCircleIcon, LoaderCircle } from 'lucide-react';
 import { Navigate } from 'react-router';
 import { RegisterForm, useRegisterForm } from './components/register-form';
 
-type PageProps = {
+type RegisterPageProps = {
   isAdminUser: boolean;
 };
 
-export function Page({ isAdminUser }: PageProps) {
+export function RegisterPage({ isAdminUser }: RegisterPageProps) {
   const registerForm = useRegisterForm();
 
   if (isAdminUser) return <Navigate to="/auth/login" />;
@@ -46,5 +46,3 @@ export function Page({ isAdminUser }: PageProps) {
     </div>
   );
 }
-
-export default Page;

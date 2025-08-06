@@ -24,7 +24,7 @@ export function Navigation() {
   };
 
   return (
-    <nav>
+    <nav className="sticky top-0 bg-white py-4">
       <ul className="flex items-center gap-6">
         {links.map((item) => (
           <NavLink key={item.id} to={item.path} className={linkStyles}>

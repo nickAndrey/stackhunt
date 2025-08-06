@@ -14,11 +14,11 @@ import { useState } from 'react';
 import { Navigate } from 'react-router';
 import { useLoginForm } from './hooks/useLoginForm';
 
-type PageProps = {
+type LoginPageProps = {
   isAdminUser: boolean;
 };
 
-function Page({ isAdminUser }: PageProps) {
+export function LoginPage({ isAdminUser }: LoginPageProps) {
   const { loginForm, formStatus, loginErrorMsg, handleSubmit } = useLoginForm();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -123,5 +123,3 @@ function Page({ isAdminUser }: PageProps) {
     </div>
   );
 }
-
-export default Page;

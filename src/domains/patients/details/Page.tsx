@@ -25,14 +25,14 @@ type DialogName =
   | 'sendMessage'
   | 'createAppointment';
 
-type PageProps = {
+type PatientPagePropsProps = {
   data: {
     patient: Patient;
     staff: Staff[];
   };
 };
 
-function Page({ data }: PageProps) {
+export function PatientPage({ data }: PatientPagePropsProps) {
   const { setHeader } = useHeader();
 
   const [patient, setPatient] = useState(data.patient);
@@ -260,5 +260,3 @@ function Page({ data }: PageProps) {
     </>
   );
 }
-
-export default Page;
