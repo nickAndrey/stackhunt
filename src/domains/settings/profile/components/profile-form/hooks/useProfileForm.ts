@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { updateMember } from '../../../services/update-member';
 
 const schema = z.object({
   first_name: z.string(),
@@ -60,13 +61,26 @@ export function useProfileForm({ staff }: Params) {
         zip_code: staff.address?.zip_code || '',
       },
       preferred_contact_method: staff.preferred_contact_method || 'email',
-      tags: '',
+      tags: staff.tags?.map((tag) => tag.tag).join(',') || '',
     },
   });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
-    setFormStatus('processing');
+    try {
+      setFormStatus('processing');
+
+      await new Promise((res) => setTimeout(res, 1000));
+
+      await updateMember({
+        fields: data,
+        memberId: staff.id,
+      });
+
+      setFormStatus('idle');
+    } catch (err) {
+      setFormStatus('error');
+      console.log((err as Error).message);
+    }
   });
 
   return { form, formStatus, schema, handleSubmit };

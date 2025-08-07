@@ -3,10 +3,10 @@ import { createContext } from 'react';
 
 type AuthContextProps = {
   isLoading: boolean;
-  member: Pick<
-    Staff,
-    'first_name' | 'last_name' | 'id' | 'profile_image' | 'status' | 'role'
-  > | null;
+  member:
+    | Pick<Staff, 'first_name' | 'last_name' | 'id' | 'profile_image' | 'status' | 'role'>
+    | null
+    | undefined;
   login: (params: {
     email: string;
     password: string;

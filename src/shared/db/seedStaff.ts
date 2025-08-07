@@ -27,7 +27,8 @@ export async function seedStaff(withDBReset = false) {
       await db.notes.bulkAdd(
         notes.map((n) => ({
           ...n,
-          staff_id: staffId,
+          entity_type: 'staff',
+          entity_id: staffId,
         }))
       );
     }
@@ -38,7 +39,8 @@ export async function seedStaff(withDBReset = false) {
         tags.map((t) => ({
           id: crypto.randomUUID(),
           tag: t.tag,
-          staff_id: staffId,
+          entity_type: 'staff',
+          entity_id: staffId,
         }))
       );
     }

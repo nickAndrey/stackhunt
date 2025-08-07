@@ -1,6 +1,8 @@
+import { useHeader } from '@/app/contexts/header';
 import { Button } from '@/design-system/components/ui/button';
 import type { Staff } from '@/shared/types/staff';
 import { LoaderCircle } from 'lucide-react';
+import { useEffect } from 'react';
 import { ProfileForm } from './components/profile-form';
 import { useProfileForm } from './components/profile-form/hooks/useProfileForm';
 
@@ -10,6 +12,13 @@ type PageProps = {
 
 export function ProfilePage({ data }: PageProps) {
   const profileForm = useProfileForm({ staff: data });
+  const { setHeader } = useHeader();
+
+  useEffect(() => {
+    setHeader({ title: 'Settings: Profile' });
+
+    return () => setHeader({});
+  }, [setHeader]);
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import { db } from '@/shared/db/db';
-import { getPatientWithRelatedData } from '@/shared/services/patients/get-patient-with-related-data';
+import { getPatientWithRelatedData } from '@/shared/services/get-patient-with-related-data';
 import type { Patient } from '@/shared/types/patient';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';

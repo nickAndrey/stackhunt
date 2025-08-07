@@ -1,25 +1,22 @@
-import { loginMember } from '@/shared/services/members/login-member';
 import { useEffect, useState, type ReactNode } from 'react';
 import { AuthContext, type AuthContextProps } from './auth-context';
+import { checkMemberExist } from './services/check-member-exist';
+import { loginMember } from './services/login-member';
 
 type AuthProviderProps = { children: ReactNode };
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [member, setMember] = useState<AuthContextProps['member']>(null);
+  const [member, setMember] = useState<AuthContextProps['member'] | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLogin = async (params: { email: string; password: string }) => {
     try {
-      const member = await loginMember(params);
+      const { id, role, status, first_name, last_name, profile_image } = await loginMember(params);
 
-      setMember({
-        id: member.id,
-        role: member.role,
-        status: member.status,
-        first_name: member.first_name,
-        last_name: member.last_name,
-        profile_image: member.profile_image,
-      });
+      const initialMember = { id, role, status, first_name, last_name, profile_image };
+
+      setMember(initialMember);
+      localStorage.setItem('auth', JSON.stringify(initialMember));
 
       return {
         success: true,
@@ -42,18 +39,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem('auth');
-    if (stored) setMember(JSON.parse(stored));
-    setIsLoading(false);
-  }, []);
+    const checkStaffMember = async () => {
+      try {
+        const stored = localStorage.getItem('auth');
 
-  useEffect(() => {
-    if (member) {
-      localStorage.setItem('auth', JSON.stringify(member));
-    } else {
-      localStorage.removeItem('auth');
-    }
-  }, [member]);
+        if (stored) {
+          const parsedStored = JSON.parse(stored);
+          const exists = await checkMemberExist(parsedStored.id);
+
+          if (exists) {
+            setMember(parsedStored);
+          } else {
+            localStorage.removeItem('auth');
+            setMember(null);
+          }
+        } else {
+          setMember(null);
+        }
+      } catch (err) {
+        console.error('Error checking auth:', err);
+        setMember(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkStaffMember();
+  }, []);
 
   return (
     <AuthContext.Provider

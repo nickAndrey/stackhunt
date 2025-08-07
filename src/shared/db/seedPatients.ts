@@ -38,14 +38,16 @@ export async function seedPatients(withDBReset = false) {
     await db.notes.bulkAdd(
       notes.map((n) => ({
         ...n,
-        patient_id: patientId,
+        entity_type: 'patient',
+        entity_id: patientId,
       }))
     );
 
     await db.appointments.bulkAdd(
       appointments.map((a) => ({
         ...a,
-        patient_id: patientId,
+        entity_type: 'patient',
+        entity_id: patientId,
       }))
     );
 
@@ -77,7 +79,8 @@ export async function seedPatients(withDBReset = false) {
       tags.map((t) => ({
         id: crypto.randomUUID(),
         tag: t,
-        patient_id: patientId,
+        entity_type: 'patient',
+        entity_id: patientId,
       }))
     );
 
@@ -85,7 +88,8 @@ export async function seedPatients(withDBReset = false) {
       files.map((f) => ({
         id: crypto.randomUUID(),
         url: f,
-        patient_id: patientId,
+        entity_type: 'patient',
+        entity_id: patientId,
       }))
     );
 
