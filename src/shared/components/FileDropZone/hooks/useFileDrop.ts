@@ -1,18 +1,41 @@
-import type { File } from '@/shared/types/patient';
+import type { FileRecord } from '@/shared/types/file-record';
 import { useRef, useState } from 'react';
+import { resizeAndCompressImage } from '../utils/resize-and-compress-iamge';
 
-export function useFileDrop() {
+type Params = {
+  image?: {
+    quality?: number;
+    maxWidth?: number;
+  };
+};
+
+export function useFileDrop(params?: Params) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [files, setFiles] = useState<File[]>([]);
+
+  const [files, setFiles] = useState<(FileRecord & { previewUrl?: string })[]>([]);
   const [isDragActive, setIsDragActive] = useState(false);
 
-  const handleFiles = (fileList: FileList | null) => {
+  const handleFiles = async (fileList: FileList | null) => {
     if (!fileList) return;
-    setFiles(
-      Array.from(fileList).map((item) => {
-        return { id: crypto.randomUUID(), url: item.name };
+
+    const files = await Promise.all(
+      Array.from(fileList).map(async (file) => {
+        const compressedImg = await resizeAndCompressImage({
+          file,
+          quality: params?.image?.quality || 1,
+          maxWidth: params?.image?.maxWidth || 100,
+        });
+
+        return {
+          id: crypto.randomUUID(),
+          name: compressedImg.name,
+          previewUrl: URL.createObjectURL(compressedImg),
+          file: compressedImg,
+        };
       })
     );
+
+    setFiles(files);
   };
 
   const onResetFiles = () => {
@@ -50,6 +73,7 @@ export function useFileDrop() {
     fileInputRef,
     files,
     isDragActive,
+    maxWidth: params?.image?.maxWidth,
     onClick,
     onChange,
     onDrop,

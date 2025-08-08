@@ -1,3 +1,5 @@
+import { getStaffMemberWithRelatedData } from '@/shared/services/get-staff-member-with-related-data';
+import type { Staff } from '@/shared/types/staff';
 import { useEffect, useState, type ReactNode } from 'react';
 import { AuthContext, type AuthContextProps } from './auth-context';
 import { checkMemberExist } from './services/check-member-exist';
@@ -11,9 +13,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const handleLogin = async (params: { email: string; password: string }) => {
     try {
-      const { id, role, status, first_name, last_name, profile_image } = await loginMember(params);
+      const memberRecord = await loginMember(params);
+      const profileImage = memberRecord.files?.find((item) => item.name === 'profile-image');
 
-      const initialMember = { id, role, status, first_name, last_name, profile_image };
+      const initialMember = {
+        id: memberRecord.id,
+        role: memberRecord.role,
+        status: memberRecord.status,
+        first_name: memberRecord.first_name,
+        last_name: memberRecord.last_name,
+        profile_image: profileImage?.file,
+      };
 
       setMember(initialMember);
       localStorage.setItem('auth', JSON.stringify(initialMember));
@@ -38,6 +48,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setMember(null);
   };
 
+  const handleUpdateMember = <K extends 'profile_image' | 'status' | 'role'>(
+    key: K,
+    value: Staff[K]
+  ) => {
+    if (!member) return;
+
+    const memberUpdated: AuthContextProps['member'] = {
+      ...member,
+      [key]: value,
+    };
+
+    setMember(memberUpdated);
+  };
+
   useEffect(() => {
     const checkStaffMember = async () => {
       try {
@@ -48,7 +72,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const exists = await checkMemberExist(parsedStored.id);
 
           if (exists) {
-            setMember(parsedStored);
+            const memberRecord = await getStaffMemberWithRelatedData(parsedStored.id);
+            const profileImage = memberRecord.files?.find((item) => item.name === 'profile-image');
+
+            setMember({
+              id: memberRecord.id,
+              role: memberRecord.role,
+              status: memberRecord.status,
+              first_name: memberRecord.first_name,
+              last_name: memberRecord.last_name,
+              profile_image: profileImage?.file,
+            });
           } else {
             localStorage.removeItem('auth');
             setMember(null);
@@ -74,6 +108,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isLoading,
         login: handleLogin,
         logout: handleLogout,
+        handleUpdateMember,
       }}
     >
       {children}

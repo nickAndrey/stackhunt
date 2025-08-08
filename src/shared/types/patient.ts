@@ -1,5 +1,6 @@
 import type { Address } from './address';
 import type { ContactPreference } from './contact-preference';
+import type { FileRecord } from './file-record';
 import type { Flag } from './flag';
 import type { Gender } from './gender';
 import type { Note } from './note';
@@ -47,11 +48,6 @@ type EmergencyContact = {
   phone: string;
 };
 
-type File = {
-  id: string;
-  url: string;
-};
-
 type Medication = {
   id: string;
   name: string;
@@ -83,7 +79,7 @@ type Patient = {
   contact_preference?: ContactPreference;
   emergency_contact?: EmergencyContact;
   notes?: Note[];
-  files: File[];
+  files: FileRecord[];
   appointments: Appointment[];
   medical_flags: Flag[];
   allergies: Allergy[];
@@ -103,7 +99,6 @@ export type {
   AppointmentType,
   Condition,
   EmergencyContact,
-  File,
   Medication,
   Patient,
   PatientStatus,

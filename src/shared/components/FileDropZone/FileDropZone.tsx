@@ -1,13 +1,31 @@
 import { Button } from '@/design-system/components/ui/button';
 import { FileText, Trash2 } from 'lucide-react';
+import type { ReactNode } from 'react';
 import type { useFileDrop } from './hooks/useFileDrop';
 
-type FileDropZoneProps = ReturnType<typeof useFileDrop> & {};
+type FileDropZoneBase = ReturnType<typeof useFileDrop> & {
+  inputAccept?: string;
+};
 
+type WithPreview = {
+  withPreview: true;
+  renderPreviewElement: (imgWidth: number | undefined) => ReactNode;
+};
+
+type WithoutPreview = {
+  withPreview?: false;
+  renderPreviewElement?: null;
+};
+
+type FileDropZoneProps = FileDropZoneBase & (WithPreview | WithoutPreview);
 export function FileDropZone({
   fileInputRef,
   files,
   isDragActive,
+  withPreview,
+  inputAccept,
+  maxWidth,
+  renderPreviewElement,
   onClick,
   onChange,
   onDrop,
@@ -16,7 +34,9 @@ export function FileDropZone({
   onRemoveFile,
 }: FileDropZoneProps) {
   return (
-    <div className="w-full max-w-xl mx-auto">
+    <div className="w-full max-w-xl">
+      {withPreview && renderPreviewElement(maxWidth)}
+
       <div
         onClick={onClick}
         onDragOver={onDragOver}
@@ -30,7 +50,15 @@ export function FileDropZone({
       >
         <p className="text-lg font-medium">Drag & drop files here</p>
         <p className="text-sm mt-1">or click to browse</p>
-        <input type="file" multiple className="hidden" ref={fileInputRef} onChange={onChange} />
+
+        <input
+          type="file"
+          multiple
+          className="hidden"
+          ref={fileInputRef}
+          onChange={onChange}
+          accept={inputAccept}
+        />
       </div>
 
       {files.length > 0 && (
@@ -40,7 +68,7 @@ export function FileDropZone({
             {files.map((file) => (
               <li key={file.id} className="flex items-center gap-2">
                 <FileText size={16} />
-                {file.url}
+                {file.name}
 
                 <Button
                   variant="ghost"

@@ -7,10 +7,14 @@ type AuthContextProps = {
     | Pick<Staff, 'first_name' | 'last_name' | 'id' | 'profile_image' | 'status' | 'role'>
     | null
     | undefined;
-  login: (params: {
-    email: string;
-    password: string;
-  }) => Promise<{ success: boolean; msg: string }>;
+  handleUpdateMember: <K extends 'profile_image' | 'status' | 'role'>(
+    key: K,
+    value: Staff[K]
+  ) => void;
+  login: (params: { email: string; password: string }) => Promise<{
+    success: boolean;
+    msg: string;
+  }>;
   logout: () => void;
 };
 

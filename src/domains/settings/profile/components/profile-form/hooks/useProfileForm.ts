@@ -1,9 +1,13 @@
+import { useAuth } from '@/app/contexts/auth';
+import { uploadFiles } from '@/shared/services/upload-files';
+import type { FileRecord } from '@/shared/types/file-record';
 import { type FormStatus } from '@/shared/types/form-status';
 import type { Staff } from '@/shared/types/staff';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import z from 'zod';
 import { updateMember } from '../../../services/update-member';
 
@@ -16,7 +20,6 @@ const schema = z.object({
   phone: z.string(),
   gender: z.enum(['male', 'female', 'other', 'undisclosed']),
   status: z.enum(['active', 'inactive', 'terminated', 'on_leave']),
-  profile_image: z.string(),
   department: z.string(),
   specialty: z.string(),
   license_number: z.string(),
@@ -36,6 +39,7 @@ type Params = {
 };
 
 export function useProfileForm({ staff }: Params) {
+  const { handleUpdateMember } = useAuth();
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   const form = useForm<z.infer<typeof schema>>({
@@ -49,7 +53,6 @@ export function useProfileForm({ staff }: Params) {
       phone: staff.phone || '',
       gender: staff.gender || 'other',
       status: staff.status || 'active',
-      profile_image: staff.profile_image || '',
       department: staff.department || '',
       specialty: staff.specialty || '',
       license_number: staff.license_number || '',
@@ -65,23 +68,32 @@ export function useProfileForm({ staff }: Params) {
     },
   });
 
-  const handleSubmit = form.handleSubmit(async (data) => {
-    try {
-      setFormStatus('processing');
+  const handleSubmit = (files: FileRecord[]) => {
+    return form.handleSubmit(async (data) => {
+      try {
+        setFormStatus('processing');
+        await new Promise((res) => setTimeout(res, 2000));
 
-      await new Promise((res) => setTimeout(res, 1000));
+        await updateMember({
+          fields: data,
+          memberId: staff.id,
+        });
 
-      await updateMember({
-        fields: data,
-        memberId: staff.id,
-      });
+        uploadFiles({
+          files: files.map((file) => ({ ...file, name: 'profile-image' })),
+          entityType: 'staff',
+          entityId: staff.id,
+        }).then(() => handleUpdateMember('profile_image', files[0].file));
 
-      setFormStatus('idle');
-    } catch (err) {
-      setFormStatus('error');
-      console.log((err as Error).message);
-    }
-  });
+        setFormStatus('idle');
+
+        toast.success('The profile was successfully updated');
+      } catch (err) {
+        setFormStatus('error');
+        console.log((err as Error).message);
+      }
+    });
+  };
 
   return { form, formStatus, schema, handleSubmit };
 }

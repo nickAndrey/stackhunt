@@ -1,16 +1,9 @@
 import Dexie, { type Table } from 'dexie';
 import type { AuthCredentials } from '../types/auth-credentials';
+import type { FileRecord } from '../types/file-record';
 import type { Flag } from '../types/flag';
 import type { Note } from '../types/note';
-import type {
-  Allergy,
-  Appointment,
-  Condition,
-  File,
-  Medication,
-  Patient,
-  Tag,
-} from '../types/patient';
+import type { Allergy, Appointment, Condition, Medication, Patient, Tag } from '../types/patient';
 import type { Staff } from '../types/staff';
 
 type WithPatientId<T> = T & {
@@ -52,7 +45,7 @@ export class ClinicCRMDatabase extends Dexie {
   conditions!: Table<WithPatientId<Condition>>;
   tags!: Table<WithEntity<Tag>>;
   notes!: Table<WithEntity<Note>>;
-  files!: Table<WithEntity<File>>;
+  files!: Table<WithEntity<FileRecord>>;
   appointments!: Table<WithEntity<Appointment>>;
   staff!: Table<Staff>;
   auth_credentials!: Table<AuthCredentials>;
@@ -67,7 +60,7 @@ export class ClinicCRMDatabase extends Dexie {
       conditions: `id, condition, patient_id`,
       tags: `id, tag, entity_type, entity_id, [entity_type+entity_id]`,
       notes: `id, author_id, author_name, content, created_at, updated_at, updated_by, updated_by_name, content_before, entity_type, entity_id, [entity_type+entity_id]`,
-      files: `id, url, entity_type, entity_id, [entity_type+entity_id]`,
+      files: `id, name, file, entity_type, entity_id, [entity_type+entity_id]`,
       appointments: `id, type, date, duration_minutes, location, notes, status, patient, staff, entity_type, entity_id, [entity_type+entity_id]`,
       staff: `id, first_name, last_name, &email, phone, gender, role, status, profile_image, department, specialty, &license_number, &employee_id, start_date, end_date, bio, address, preferred_contact_method`,
       auth_credentials: `id, staff_id, email, hashed_password, role, last_login`,

@@ -26,7 +26,6 @@ export async function seedPatients(withDBReset = false) {
       conditions = [],
       allergies = [],
       tags = [],
-      files = [],
       medical_flags = [],
       ...patientCore
     } = patient;
@@ -79,15 +78,6 @@ export async function seedPatients(withDBReset = false) {
       tags.map((t) => ({
         id: crypto.randomUUID(),
         tag: t,
-        entity_type: 'patient',
-        entity_id: patientId,
-      }))
-    );
-
-    await db.files.bulkAdd(
-      files.map((f) => ({
-        id: crypto.randomUUID(),
-        url: f,
         entity_type: 'patient',
         entity_id: patientId,
       }))

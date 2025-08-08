@@ -1,4 +1,5 @@
 import { db } from '@/shared/db/db';
+import { getStaffMemberWithRelatedData } from '@/shared/services/get-staff-member-with-related-data';
 import bcrypt from 'bcryptjs';
 
 type LoginParams = {
@@ -16,5 +17,7 @@ export async function loginMember({ email, password }: LoginParams) {
   const staffMember = await db.staff.where('id').equals(auth.staff_id).first();
   if (!staffMember) throw new Error(`Auth/Staff mismatch for staff_id: ${auth.staff_id}`);
 
-  return staffMember;
+  const memberData = await getStaffMemberWithRelatedData(staffMember.id);
+
+  return memberData;
 }

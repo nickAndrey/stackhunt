@@ -1,5 +1,6 @@
 import type { Address } from './address';
 import type { ContactPreference } from './contact-preference';
+import type { FileRecord } from './file-record';
 import type { Gender } from './gender';
 import type { Note } from './note';
 import type { Tag } from './patient';
@@ -25,7 +26,7 @@ type Staff = {
   phone?: string;
   gender?: Gender;
   status?: StaffStatus;
-  profile_image?: string;
+  profile_image?: File;
   department?: string;
   specialty?: string;
   license_number?: string;
@@ -35,6 +36,7 @@ type Staff = {
   notes?: Note[];
   tags?: Tag[];
   address?: Address;
+  files?: FileRecord[];
   preferred_contact_method?: ContactPreference;
 };
 
