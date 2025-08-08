@@ -2,6 +2,7 @@ import { LoginPageLoader } from '@/domains/login';
 import { PatientPageLoader } from '@/domains/patients/details';
 import { PatientsPageLoader } from '@/domains/patients/list';
 import { RegisterPageLoader } from '@/domains/register';
+import { AppearancePage } from '@/domains/settings/appearance';
 import { ProfileLoader } from '@/domains/settings/profile';
 import { SecurityAndPasswordLoader } from '@/domains/settings/security-and-password';
 import { lazy } from 'react';
@@ -56,7 +57,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/settings/appearance',
-            element: 'Appearance',
+            element: <AppearancePage />,
           },
           {
             path: '/settings/security',

@@ -23,9 +23,9 @@ export function AppLayout() {
         <Navigation currentWidth={currentWidth} />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel className="flex flex-col h-full">
+      <ResizablePanel className="flex-col-grow">
         <Header />
-        <main className="overflow-auto">
+        <main className="overflow-auto flex-col-grow">
           <Outlet />
           <Toaster position="top-center" />
         </main>

@@ -6,16 +6,19 @@ export function Navigation() {
       id: 0,
       label: 'Profile',
       path: '/settings/profile',
+      disabled: false,
     },
     {
       id: 1,
       label: 'Security & Password',
       path: '/settings/security',
+      disabled: false,
     },
     {
       id: 2,
       label: 'Appearance',
       path: '/settings/appearance',
+      disabled: true,
     },
   ];
 
@@ -24,13 +27,16 @@ export function Navigation() {
   };
 
   return (
-    <nav className="sticky top-0 bg-white py-4">
+    <nav className="sticky top-0 bg-white py-4 z-10">
       <ul className="flex items-center gap-6">
-        {links.map((item) => (
-          <NavLink key={item.id} to={item.path} className={linkStyles}>
-            {item.label}
-          </NavLink>
-        ))}
+        {links.map(
+          (item) =>
+            !item.disabled && (
+              <NavLink key={item.id} to={item.path} className={linkStyles}>
+                {item.label}
+              </NavLink>
+            )
+        )}
       </ul>
     </nav>
   );

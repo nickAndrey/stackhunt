@@ -21,10 +21,10 @@ export function SecurityAndPasswordPage({ data }: PageProps) {
   }, [setHeader]);
 
   return (
-    <div className="md:w-1/2">
+    <div className="md:w-1/2 flex-1 grid grid-rows-[1fr_auto]">
       <CredentialsForm {...credentialsForm} />
 
-      <footer className="py-3 sticky bottom-0 bg-white col-span-full">
+      <footer className="py-3 sticky bottom-0 bg-white col-span-full mb-auto">
         <Button
           variant="secondary"
           className="w-full"
