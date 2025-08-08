@@ -9,13 +9,13 @@ export function Navigation() {
     },
     {
       id: 1,
-      label: 'Appearance',
-      path: '/settings/appearance',
+      label: 'Security & Password',
+      path: '/settings/security',
     },
     {
       id: 2,
-      label: 'Security & Password',
-      path: '/settings/security',
+      label: 'Appearance',
+      path: '/settings/appearance',
     },
   ];
 

@@ -14,8 +14,6 @@ import { updateMember } from '../../../services/update-member';
 const schema = z.object({
   first_name: z.string(),
   last_name: z.string(),
-  email: z.email(),
-  role: z.enum(['doctor', 'nurse', 'technician', 'admin', 'receptionist', 'lab', 'pharmacist']),
   employee_id: z.string(),
   phone: z.string(),
   gender: z.enum(['male', 'female', 'other', 'undisclosed']),
@@ -47,8 +45,6 @@ export function useProfileForm({ staff }: Params) {
     defaultValues: {
       first_name: staff.first_name || '',
       last_name: staff.last_name || '',
-      email: staff.email || '',
-      role: staff.role || 'admin',
       employee_id: staff.employee_id || '',
       phone: staff.phone || '',
       gender: staff.gender || 'other',
@@ -87,7 +83,7 @@ export function useProfileForm({ staff }: Params) {
 
         setFormStatus('idle');
 
-        toast.success('The profile was successfully updated');
+        toast.success('The profile was successfully updated.');
       } catch (err) {
         setFormStatus('error');
         console.log((err as Error).message);

@@ -3,6 +3,7 @@ import { PatientPageLoader } from '@/domains/patients/details';
 import { PatientsPageLoader } from '@/domains/patients/list';
 import { RegisterPageLoader } from '@/domains/register';
 import { ProfileLoader } from '@/domains/settings/profile';
+import { SecurityAndPasswordLoader } from '@/domains/settings/security-and-password';
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import AuthLayout from '../layout/AuthLayout';
@@ -59,7 +60,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/settings/security',
-            element: 'Security and password',
+            element: <SecurityAndPasswordLoader />,
           },
         ],
       },
