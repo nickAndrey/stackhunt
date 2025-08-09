@@ -7,11 +7,11 @@ import {
   CardTitle,
 } from '@/design-system/components/ui/card';
 import { NoData } from '@/shared/components/NoData';
-import type { Patient } from '@/shared/types/patient';
+import type { FileRecord } from '@/shared/types/file-record';
 import { FileText, Plus, Trash2 } from 'lucide-react';
 
 type PatientFilesCardProps = {
-  files: Patient['files'];
+  files: FileRecord[];
   onClickFilesUpload: () => void;
   onClickDeleteFile: (id: string) => void;
 };

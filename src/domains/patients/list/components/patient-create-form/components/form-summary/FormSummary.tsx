@@ -11,7 +11,6 @@ export function FormSummary(forms: FormSummaryProps) {
     ...forms.step4Form.getValues(),
     ...forms.step5Form.getValues(),
     ...forms.step6Form.getValues(),
-    ...forms.step7Form.getValues(),
   };
 
   return (
@@ -98,24 +97,6 @@ export function FormSummary(forms: FormSummaryProps) {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <b>Files And Notes:</b>
-        <div className="pl-2 flex flex-col gap-3">
-          <div>
-            <p>Files:</p>
-            {finalData.files.length > 0 ? (
-              <ul>
-                {finalData.files.map((item) => (
-                  <li key={item.url}>{item.url}</li>
-                ))}
-              </ul>
-            ) : (
-              '--'
-            )}
           </div>
         </div>
       </div>

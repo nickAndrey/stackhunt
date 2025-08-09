@@ -1,9 +1,12 @@
+import type { PatientCore, WithEntity, WithPatientId } from '@/shared/db/db';
+import type { Flag } from '@/shared/types/flag';
+import type { Allergy, Condition, Medication, Tag } from '@/shared/types/patient';
+import type { Dayjs } from 'dayjs';
 import type { CreatePatientForm } from '../types/create-patient-form';
 
 export function transformCreatePatientFormData(data: CreatePatientForm) {
-  const patientCore = {
+  const patientCore: PatientCore = {
     id: crypto.randomUUID(),
-    profile_image: '',
     first_name: data.first_name,
     last_name: data.last_name,
     email: data.email,
@@ -26,49 +29,61 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
     status: data.status,
   };
 
-  const conditions = data.conditions
+  const conditions: WithPatientId<Condition>[] = data.conditions
     .split(',')
-    .map((item) => item.trim())
+    .map((item: string) => item.trim())
     .filter(Boolean)
-    .map((item) => ({
+    .map((item: string) => ({
+      id: crypto.randomUUID(),
       condition: item,
-      id: crypto.randomUUID(),
+      patient_id: patientCore.id,
     }));
 
-  const medical_flags = data.medical_flags
+  const medical_flags: WithPatientId<Flag>[] = data.medical_flags
     .split(',')
-    .map((item) => item.trim())
+    .map((item: string) => item.trim())
     .filter(Boolean)
-    .map((item) => ({
+    .map((item: string) => ({
+      id: crypto.randomUUID(),
+      patient_id: patientCore.id,
       flag: item,
-      id: crypto.randomUUID(),
     }));
 
-  const tags = data.tags
+  const tags: WithEntity<Tag>[] = data.tags
     .split(',')
-    .map((item) => item.trim())
+    .map((item: string) => item.trim())
     .filter(Boolean)
-    .map((item) => ({
-      tag: item,
+    .map((item: string) => ({
       id: crypto.randomUUID(),
+      entity_type: 'patient',
+      entity_id: patientCore.id,
+      tag: item,
     }));
 
-  const allergies = data.allergies.map((item) => ({
-    ...item,
-    id: crypto.randomUUID(),
-  }));
+  const allergies: WithPatientId<Allergy>[] = data.allergies.map(
+    (item: Record<string, unknown>) => ({
+      ...item,
+      id: crypto.randomUUID(),
+      patient_id: patientCore.id,
+    })
+  );
 
-  const medications = data.medications.map((item) => ({
-    ...item,
-    id: crypto.randomUUID(),
-    start_date: item.start_date.toISOString(),
-    end_date: item.end_date.toISOString(),
-  }));
+  const medications: WithPatientId<Medication>[] = data.medications.map(
+    (item: Record<string, unknown>) => ({
+      ...item,
+      id: crypto.randomUUID(),
+      patient_id: patientCore.id,
+      start_date: (item.start_date as Dayjs).toISOString(),
+      end_date: (item.end_date as Dayjs).toISOString(),
+    })
+  );
 
-  const files = data.files.map((item) => ({
-    ...item,
-    id: crypto.randomUUID(),
-  }));
+  // const files: WithEntity<FileRecord>[] = data.files.map((item: Record<string, unknown>) => ({
+  //   ...item,
+  //   id: crypto.randomUUID(),
+  //   entity_type: 'patient',
+  //   entity_id: patientCore.id,
+  // }));
 
-  return { patientCore, conditions, medical_flags, tags, allergies, medications, files };
+  return { patientCore, conditions, medical_flags, tags, allergies, medications };
 }

@@ -1,5 +1,5 @@
 import { LoginPageLoader } from '@/domains/login';
-import { PatientPageLoader } from '@/domains/patients/details';
+import { PatientPageLoader } from '@/domains/patients/details_v2';
 import { PatientsPageLoader } from '@/domains/patients/list';
 import { RegisterPageLoader } from '@/domains/register';
 import { AppearancePage } from '@/domains/settings/appearance';

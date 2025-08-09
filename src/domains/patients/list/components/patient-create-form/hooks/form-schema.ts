@@ -44,14 +44,6 @@ export const medicalInfoSchema = z.object({
   ),
 });
 
-export const filesAndNotesSchema = z.object({
-  files: z.array(
-    z.object({
-      url: z.string(),
-    })
-  ),
-});
-
 export const emergencySchema = z.object({
   emergency_contact: z.object({
     name: z.string(),

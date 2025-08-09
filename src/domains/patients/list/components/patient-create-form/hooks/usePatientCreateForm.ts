@@ -9,7 +9,6 @@ import { transformCreatePatientFormData } from '../../../utils/transform-create-
 import {
   contactInfoSchema,
   emergencySchema,
-  filesAndNotesSchema,
   identificationSchema,
   medicalInfoSchema,
   personalInfoSchema,
@@ -77,14 +76,7 @@ export function usePatientCreateForm() {
     },
   });
 
-  const step6Form = useForm<z.infer<typeof filesAndNotesSchema>>({
-    resolver: zodResolver(filesAndNotesSchema),
-    defaultValues: {
-      files: [],
-    },
-  });
-
-  const step7Form = useForm<z.infer<typeof tagsSchema>>({
+  const step6Form = useForm<z.infer<typeof tagsSchema>>({
     resolver: zodResolver(tagsSchema),
     defaultValues: {
       status: 'active',
@@ -99,7 +91,6 @@ export function usePatientCreateForm() {
     step4Form,
     step5Form,
     step6Form,
-    step7Form,
   };
 
   const handleNext = async () => {
@@ -127,16 +118,12 @@ export function usePatientCreateForm() {
       ...step4Form.getValues(),
       ...step5Form.getValues(),
       ...step6Form.getValues(),
-      ...step7Form.getValues(),
     };
 
     try {
       const transformedData = transformCreatePatientFormData(finalData);
-
-      console.log(JSON.stringify(transformedData));
-
       const newPatient = await createPatient(transformedData);
-      toast.success('New patient was successfully added');
+      toast.success('New patient was successfully added.');
       setNewPatient(newPatient);
     } catch (err) {
       console.error('Error creating patient:', err);

@@ -7,6 +7,26 @@ type Params = {
     quality?: number;
     maxWidth?: number;
   };
+  initialValues?: {
+    files?: FileRecord[];
+    inputAccept?:
+      | '.pdf'
+      | 'application/pdf'
+      | '.jpg'
+      | '.jpeg'
+      | '.png'
+      | '.doc'
+      | '.docx'
+      | 'application/msword'
+      | 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      | '.xls'
+      | '.xlsx'
+      | 'application/vnd.ms-excel'
+      | 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      | 'image/*'
+      | 'audio/*'
+      | 'video/*';
+  };
 };
 
 export function useFileDrop(params?: Params) {
@@ -20,17 +40,24 @@ export function useFileDrop(params?: Params) {
 
     const files = await Promise.all(
       Array.from(fileList).map(async (file) => {
-        const compressedImg = await resizeAndCompressImage({
-          file,
-          quality: params?.image?.quality || 1,
-          maxWidth: params?.image?.maxWidth || 100,
-        });
+        let fileObj: File = file;
+
+        if (
+          params?.initialValues?.inputAccept &&
+          ['image/*', '.jpg', '.jpeg', '.png'].includes(params?.initialValues?.inputAccept)
+        ) {
+          fileObj = await resizeAndCompressImage({
+            file,
+            quality: params?.image?.quality || 1,
+            maxWidth: params?.image?.maxWidth || 100,
+          });
+        }
 
         return {
           id: crypto.randomUUID(),
-          name: compressedImg.name,
-          previewUrl: URL.createObjectURL(compressedImg),
-          file: compressedImg,
+          name: fileObj.name,
+          previewUrl: URL.createObjectURL(fileObj),
+          file: fileObj,
         };
       })
     );
@@ -74,6 +101,7 @@ export function useFileDrop(params?: Params) {
     files,
     isDragActive,
     maxWidth: params?.image?.maxWidth,
+    inputAccept: params?.initialValues?.inputAccept,
     onClick,
     onChange,
     onDrop,

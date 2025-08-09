@@ -6,59 +6,26 @@ import type { transformCreatePatientFormData } from '../utils/transform-create-p
 type TransformedCreatePatientFormData = ReturnType<typeof transformCreatePatientFormData>;
 
 export async function createPatient(data: TransformedCreatePatientFormData): Promise<Patient> {
-  const { patientCore, conditions, medical_flags, tags, allergies, medications, files } = data;
+  const { patientCore, conditions, medical_flags, tags, allergies, medications } = data;
 
   const patientId = patientCore.id;
 
   const tables = [
-    db.patients,
+    db.medical_flags,
     db.medications,
     db.conditions,
     db.allergies,
+    db.patients,
     db.tags,
-    db.files,
-    db.medical_flags,
   ];
 
   await db.transaction('rw', [...tables], async () => {
+    await db.medical_flags.bulkAdd(medical_flags);
+    await db.medications.bulkAdd(medications);
+    await db.conditions.bulkAdd(conditions);
+    await db.allergies.bulkAdd(allergies);
     await db.patients.add(patientCore);
-
-    await db.medications.bulkAdd(
-      medications.map((m) => ({
-        ...m,
-        patient_id: patientId,
-      }))
-    );
-    await db.conditions.bulkAdd(
-      conditions.map((c) => ({
-        ...c,
-        patient_id: patientId,
-      }))
-    );
-    await db.allergies.bulkAdd(
-      allergies.map((a) => ({
-        ...a,
-        patient_id: patientId,
-      }))
-    );
-    await db.tags.bulkAdd(
-      tags.map((t) => ({
-        ...t,
-        patient_id: patientId,
-      }))
-    );
-    await db.files.bulkAdd(
-      files.map((f) => ({
-        ...f,
-        patient_id: patientId,
-      }))
-    );
-    await db.medical_flags.bulkAdd(
-      medical_flags.map((flag) => ({
-        ...flag,
-        patient_id: patientId,
-      }))
-    );
+    await db.tags.bulkAdd(tags);
   });
 
   const newPatient = await getPatientWithRelatedData(patientId);

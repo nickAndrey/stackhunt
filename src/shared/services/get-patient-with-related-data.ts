@@ -3,7 +3,6 @@ import type { Patient } from '@/shared/types/patient';
 
 export async function getPatientWithRelatedData(patientId: string): Promise<Patient> {
   const patient = await db.patients.where('id').equals(patientId).first();
-
   if (!patient) throw new Error(`Patient with id ${patientId} not found`);
 
   const [tags, files, notes, appointments, medications, conditions, allergies, medical_flags] =
@@ -18,8 +17,11 @@ export async function getPatientWithRelatedData(patientId: string): Promise<Pati
       db.medical_flags.where('patient_id').equals(patientId).toArray(),
     ]);
 
+  const profileImage = files.find((item) => item.name === 'profile-image')?.file;
+
   return {
     ...patient,
+    profile_image: profileImage,
     notes,
     appointments,
     medications,

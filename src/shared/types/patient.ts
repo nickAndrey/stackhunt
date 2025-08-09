@@ -71,10 +71,10 @@ type Patient = {
   gender: Gender;
   birth_date: string;
   address: Address;
+  registration_date: string;
   national_id?: string;
   insurance_number?: string;
-  registration_date: string;
-  profile_image?: string;
+  profile_image?: File;
   preferred_language?: string;
   contact_preference?: ContactPreference;
   emergency_contact?: EmergencyContact;
