@@ -3,6 +3,7 @@ import { Button } from '@/design-system/components/ui/button';
 import { Card } from '@/design-system/components/ui/card';
 import type { Patient } from '@/shared/types/patient';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { SendMessageModal, useSendMessageModal } from './components/send-message-modal';
 import {
   SetPatientProfileImageModal,
@@ -16,6 +17,16 @@ type PatientInfoCardProps = {
 export function PatientInfoCard({ patient }: PatientInfoCardProps) {
   const sendMessageModal = useSendMessageModal();
   const setProfileImageModal = useSetPatientProfileImageModal(patient.id);
+
+  const [profileImg, setProfileImg] = useState(
+    patient.profile_image ? URL.createObjectURL(patient.profile_image) : ''
+  );
+
+  useEffect(() => {
+    if (setProfileImageModal.newAvatar) {
+      setProfileImg(URL.createObjectURL(setProfileImageModal.newAvatar));
+    }
+  }, [setProfileImageModal.newAvatar]);
 
   const patientDetails = [
     {
@@ -60,12 +71,6 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
     },
   ];
 
-  const avatarImg = patient.profile_image
-    ? URL.createObjectURL(patient.profile_image)
-    : setProfileImageModal.fileDropState.files[0]
-      ? URL.createObjectURL(setProfileImageModal.fileDropState.files[0].file)
-      : '';
-
   return (
     <>
       <Card className="grid grid-cols-[1fr] gap-0">
@@ -75,7 +80,7 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
             onClick={() => setProfileImageModal.toggleModal(true)}
           >
             <AvatarImage
-              src={avatarImg}
+              src={profileImg}
               className="object-cover"
               alt={`patient: ${patient.first_name} ${patient.last_name}`}
             />

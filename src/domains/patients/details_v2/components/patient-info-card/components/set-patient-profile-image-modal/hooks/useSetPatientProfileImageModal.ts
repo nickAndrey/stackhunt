@@ -7,6 +7,7 @@ import { updatePatientProfileImage } from '../services/update-patient-profile-im
 export function useSetPatientProfileImageModal(patientId: string) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [newAvatar, setNewAvatar] = useState<File | null>(null);
 
   const fileDropState = useFileDrop({
     image: {
@@ -25,13 +26,15 @@ export function useSetPatientProfileImageModal(patientId: string) {
     await new Promise((res) => setTimeout(res, 2000));
 
     try {
-      await updatePatientProfileImage({
+      const updatedImgAvatar = await updatePatientProfileImage({
         file: fileDropState.files[0],
         patientId,
       });
 
+      setNewAvatar(updatedImgAvatar);
       setFormStatus('idle');
       toggleModal(false);
+      fileDropState.onResetFiles();
 
       toast.success('Profile image was successfully updated.');
     } catch (error) {
@@ -44,6 +47,7 @@ export function useSetPatientProfileImageModal(patientId: string) {
     isModalOpen,
     formStatus,
     fileDropState,
+    newAvatar,
     toggleModal,
     handleSaveProfileImage,
   };

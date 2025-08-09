@@ -11,9 +11,13 @@ export async function updatePatientProfileImage(options: Options) {
   const patientStored = await db.patients.where('id').equals(options.patientId).first();
   if (!patientStored) throw new Error(`Patient with an id ${options.patientId} was not found.`);
 
+  const filesDTO = [{ ...options.file, name: 'profile-image' }];
+
   await uploadFiles({
-    files: [{ ...options.file, name: 'profile-image' }],
+    files: filesDTO,
     entityType: 'patient',
     entityId: options.patientId,
   });
+
+  return filesDTO[0].file;
 }
