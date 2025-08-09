@@ -2,6 +2,7 @@ import { useHeader } from '@/app/contexts/header';
 import type { Patient } from '@/shared/types/patient';
 import type { Staff } from '@/shared/types/staff';
 import { useEffect } from 'react';
+import { PatientFilesCard } from './components/patient-files-card';
 import { PatientInfoCard } from './components/patient-info-card';
 import { PatientNotesCard } from './components/patient-notes-card';
 
@@ -27,7 +28,7 @@ export function PatientPage({ data }: PatientPagePropsProps) {
     <div className="grid sm:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] xl:grid-cols-[minmax(350px,1fr)_repeat(2,minmax(250px,1fr))] gap-3 px-4 py-3">
       <PatientInfoCard patient={data.patient} />
       <PatientNotesCard notes={data.patient.notes} patientId={data.patient.id} />
-      <div>3</div>
+      <PatientFilesCard files={data.patient.files} patientId={data.patient.id} />
       <div>4</div>
     </div>
   );
