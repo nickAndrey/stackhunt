@@ -6,10 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/design-system/components/ui/card';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import { NoData } from '@/shared/components/NoData';
 import type { FileRecord } from '@/shared/types/file-record';
-import { FileText, Plus, Trash2 } from 'lucide-react';
+import { CircleQuestionMark, FileText, Plus, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import {
+  RemoveFileConfirmationModal,
+  useRemoveFileConfirmationModal,
+} from './components/remove-file-confirmation-modal';
 import { UploadFilesModal, useUploadFilesModal } from './components/upload-files-modal';
 
 type PatientFilesCardProps = {
@@ -19,6 +24,7 @@ type PatientFilesCardProps = {
 
 export function PatientFilesCard({ files, patientId }: PatientFilesCardProps) {
   const uploadFilesModal = useUploadFilesModal(patientId);
+  const removeFileConfirmationModal = useRemoveFileConfirmationModal(patientId);
 
   const [filesRecords, setFilesRecords] = useState(files);
 
@@ -27,6 +33,14 @@ export function PatientFilesCard({ files, patientId }: PatientFilesCardProps) {
       setFilesRecords((prev) => [...prev, ...uploadFilesModal.uploadedFiles]);
     }
   }, [uploadFilesModal.uploadedFiles]);
+
+  useEffect(() => {
+    if (removeFileConfirmationModal.removedFileId) {
+      setFilesRecords((prev) =>
+        prev.filter((item) => item.id !== removeFileConfirmationModal.removedFileId)
+      );
+    }
+  }, [removeFileConfirmationModal.removedFileId]);
 
   return (
     <>
@@ -64,16 +78,26 @@ export function PatientFilesCard({ files, patientId }: PatientFilesCardProps) {
                     {item.name}
                   </a>
 
-                  <div className="ml-auto">
+                  <div className="ml-auto flex gap-1 items-center">
                     <Button
                       variant="ghost"
                       size="icon"
                       className="size-8 rounded-4xl"
                       disabled={item.name === 'profile-image'}
-                      onClick={() => {}}
+                      onClick={() => removeFileConfirmationModal.toggleModal(true, item.id)}
                     >
                       <Trash2 />
                     </Button>
+                    {item.name === 'profile-image' && (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <CircleQuestionMark size={14} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Profile avatar can only be changed from the profile panel.</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                   </div>
                 </li>
               ))
@@ -87,6 +111,7 @@ export function PatientFilesCard({ files, patientId }: PatientFilesCardProps) {
       </Card>
 
       <UploadFilesModal {...uploadFilesModal} />
+      <RemoveFileConfirmationModal {...removeFileConfirmationModal} />
     </>
   );
 }

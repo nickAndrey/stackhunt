@@ -46,7 +46,7 @@ export function FileDropZone({
       >
         {withPreview && renderPreviewElement(maxWidth)}
 
-        {files.length === 0 && (
+        {files.length > 0 && withPreview ? null : (
           <>
             <p className="text-lg font-medium">Drag & drop files here</p>
             <p className="text-sm mt-1">or click to browse</p>
