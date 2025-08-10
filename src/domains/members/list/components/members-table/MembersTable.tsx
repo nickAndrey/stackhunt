@@ -1,6 +1,5 @@
 import { DataTable } from '@/shared/components/DataTable';
 import type { Staff } from '@/shared/types/staff';
-import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { columnsConfig } from './columns-config';
 import {
@@ -15,18 +14,14 @@ type MembersTableProps = {
 export function MembersTable({ staff }: MembersTableProps) {
   const navigate = useNavigate();
 
-  const [selectedStaffId, setSelectedStaffId] = useState('');
-  const createAppointmentModal = useCreateAppointmentModal(selectedStaffId);
+  const createAppointmentModal = useCreateAppointmentModal();
 
   return (
     <>
       <DataTable
         columns={columnsConfig({
           actions: {
-            createAppointment: (staff) => {
-              setSelectedStaffId(staff.id);
-              createAppointmentModal.toggleModal(true);
-            },
+            createAppointment: (staff) => createAppointmentModal.toggleModal(true, staff.id),
             viewDetails: ({ id }) => navigate(`/members/${id}`),
           },
         })}

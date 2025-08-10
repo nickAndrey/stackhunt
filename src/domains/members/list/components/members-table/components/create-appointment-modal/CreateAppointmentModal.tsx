@@ -8,7 +8,7 @@ import type { useCreateAppointmentModal } from './hooks/useCreateAppointmentModa
 type CreateAppointmentModalProps = ReturnType<typeof useCreateAppointmentModal> & {};
 
 export function CreateAppointmentModal(params: CreateAppointmentModalProps) {
-  const formState = useCreateAppointmentForm(params.staffId);
+  const formState = useCreateAppointmentForm(params.selectedStaffId);
 
   useEffect(() => {
     if (formState.formStatus === 'success') {
