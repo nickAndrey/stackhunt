@@ -13,6 +13,7 @@ export function CreateAppointmentModal(params: CreateAppointmentModalProps) {
   useEffect(() => {
     if (formState.formStatus === 'success') {
       params.toggleModal(false);
+      params.setIsAppointmentCreated(true);
     }
   }, [formState.formStatus]);
 

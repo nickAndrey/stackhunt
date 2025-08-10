@@ -34,6 +34,12 @@ type Appointment = {
   location?: string;
   notes?: string;
   status: AppointmentStatus;
+  assignedStaff?: {
+    id: string;
+    role: string;
+    first_name: string;
+    last_name: string;
+  };
 };
 
 type Condition = {

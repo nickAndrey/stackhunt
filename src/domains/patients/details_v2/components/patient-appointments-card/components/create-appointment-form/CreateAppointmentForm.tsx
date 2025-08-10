@@ -77,7 +77,6 @@ export function CreateAppointmentForm(params: CreateAppointmentFormProps) {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel htmlFor="date">Date</FormLabel>
-
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
