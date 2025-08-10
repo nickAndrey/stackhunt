@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from '@/design-system/components/ui/card';
 import { NoData } from '@/shared/components/NoData';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import type { Note } from '@/shared/types/note';
 import dayjs from 'dayjs';
 import { Pencil, Plus } from 'lucide-react';
@@ -69,7 +70,7 @@ export function PatientNotesCard({ patientId, notes }: PatientNotesCardProps) {
                 <AccordionItem value={note.id} key={note.id}>
                   <AccordionTrigger>
                     <div className="flex gap-2 items-center w-full">
-                      <span>{dayjs(note.created_at).format('MMMM D, YYYY')}</span>
+                      <span>{dayjs(note.created_at).format(DAYJS_FORMAT)}</span>
                     </div>
                   </AccordionTrigger>
 

@@ -1,4 +1,5 @@
 import { LoginPageLoader } from '@/domains/login';
+import { MembersPageLoader } from '@/domains/members/list';
 import { PatientPageLoader } from '@/domains/patients/details_v2';
 import { PatientsPageLoader } from '@/domains/patients/list';
 import { RegisterPageLoader } from '@/domains/register';
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/members',
-        element: <h1>members list</h1>,
+        element: <MembersPageLoader />,
       },
       {
         path: '/members/:id',

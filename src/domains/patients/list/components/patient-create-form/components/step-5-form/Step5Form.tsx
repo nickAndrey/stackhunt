@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/design-system/components/ui/select';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { CalendarIcon, Trash2 } from 'lucide-react';
 import { useFieldArray } from 'react-hook-form';
@@ -209,7 +210,7 @@ export function Step5Form(form: Step5FormProps) {
                                 <FormControl>
                                   <Button variant="outline" id="start_date">
                                     {field.value ? (
-                                      dayjs(field.value).format('MMMM D, YYYY')
+                                      dayjs(field.value).format(DAYJS_FORMAT)
                                     ) : (
                                       <span>Pick a date</span>
                                     )}
@@ -240,7 +241,7 @@ export function Step5Form(form: Step5FormProps) {
                                 <FormControl>
                                   <Button variant="outline" id="end_date">
                                     {field.value ? (
-                                      dayjs(field.value).format('MMMM D, YYYY')
+                                      dayjs(field.value).format(DAYJS_FORMAT)
                                     ) : (
                                       <span>Pick a date</span>
                                     )}

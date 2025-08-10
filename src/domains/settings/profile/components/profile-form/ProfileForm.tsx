@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/design-system/components/ui/select';
 import { Textarea } from '@/design-system/components/ui/textarea';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import type { useProfileForm } from './hooks/useProfileForm';
@@ -206,7 +207,7 @@ export function ProfileForm(props: ProfileFormProps) {
                   <FormControl>
                     <Button variant="outline" id="start_date">
                       {field.value ? (
-                        dayjs(field.value).format('MMMM D, YYYY')
+                        dayjs(field.value).format(DAYJS_FORMAT)
                       ) : (
                         <span>Pick a date</span>
                       )}

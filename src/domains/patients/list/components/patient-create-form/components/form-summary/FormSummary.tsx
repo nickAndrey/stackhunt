@@ -1,3 +1,4 @@
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
 
@@ -22,7 +23,7 @@ export function FormSummary(forms: FormSummaryProps) {
             Name: {finalData.first_name} {finalData.last_name}
           </p>
           <p>Gender: {finalData.gender}</p>
-          <p>Date of birth: {dayjs(finalData.birth_date).format('MMMM D, YYYY')}</p>
+          <p>Date of birth: {dayjs(finalData.birth_date).format(DAYJS_FORMAT)}</p>
         </div>
       </div>
 
@@ -57,7 +58,7 @@ export function FormSummary(forms: FormSummaryProps) {
         <div className="pl-2">
           <p>National ID: {finalData.national_id || '--'}</p>
           <p>Insurance Number: {finalData.insurance_number || '--'}</p>
-          <p>Registration Date: {dayjs(finalData.registration_date).format('MMMM D, YYYY')}</p>
+          <p>Registration Date: {dayjs(finalData.registration_date).format(DAYJS_FORMAT)}</p>
         </div>
       </div>
 
@@ -91,8 +92,8 @@ export function FormSummary(forms: FormSummaryProps) {
                 <li key={item.name} className="border-b mb-2">
                   <p>Name: {item.name}</p>
                   <p>Dosage: {item.dosage}</p>
-                  <p>Start Date: {dayjs(item.start_date).format('MMMM D, YYYY')}</p>
-                  <p>End Date: {dayjs(item.end_date).format('MMMM D, YYYY')}</p>
+                  <p>Start Date: {dayjs(item.start_date).format(DAYJS_FORMAT)}</p>
+                  <p>End Date: {dayjs(item.end_date).format(DAYJS_FORMAT)}</p>
                   <p>Prescribed By: {item.prescribed_by}</p>
                 </li>
               ))}

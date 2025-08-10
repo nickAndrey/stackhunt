@@ -1,3 +1,4 @@
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
 
@@ -31,7 +32,7 @@ export function FormSummary(forms: FormSummaryProps) {
           <p>Specialty: {finalData.specialty || '--'}</p>
           <p>License Number: {finalData.license_number || '--'}</p>
           <p>Employee Id: {finalData.employee_id || '--'}</p>
-          <p>Start Date: {dayjs(finalData.start_date).format('MMMM D, YYYY')}</p>
+          <p>Start Date: {dayjs(finalData.start_date).format(DAYJS_FORMAT)}</p>
         </div>
       </div>
 

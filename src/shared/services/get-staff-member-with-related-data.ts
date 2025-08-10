@@ -12,8 +12,11 @@ export async function getStaffMemberWithRelatedData(staffId: string): Promise<St
     db.appointments.where('[entity_type+entity_id]').equals(['staff', staffId]).toArray(),
   ]);
 
+  const profileImage = files.find((item) => item.name === 'profile-image')?.file;
+
   return {
     ...staffMember,
+    profile_image: profileImage,
     tags,
     files,
     notes,

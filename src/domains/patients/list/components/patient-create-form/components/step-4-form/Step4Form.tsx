@@ -9,6 +9,7 @@ import {
 } from '@/design-system/components/ui/form';
 import { Input } from '@/design-system/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/components/ui/popover';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import type { usePatientCreateForm } from '../../hooks/usePatientCreateForm';
@@ -62,7 +63,7 @@ export function Step4Form(form: Step4FormProps) {
                   <FormControl>
                     <Button variant="outline" id="registration_date">
                       {field.value ? (
-                        dayjs(field.value).format('MMMM D, YYYY')
+                        dayjs(field.value).format(DAYJS_FORMAT)
                       ) : (
                         <span>Pick a date</span>
                       )}

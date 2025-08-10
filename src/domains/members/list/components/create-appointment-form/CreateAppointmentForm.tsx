@@ -25,24 +25,24 @@ import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import type { useCreateAppointmentForm } from './hooks/useCreateAppointmentForm';
-import { searchOverStaff } from './services/search-over-staff';
+import { searchOverPatients } from './services/search-over-patients';
 
 type CreateAppointmentFormProps = ReturnType<typeof useCreateAppointmentForm> & {};
 
 export function CreateAppointmentForm(params: CreateAppointmentFormProps) {
-  const comboboxState = useCombobox(searchOverStaff);
+  const comboboxState = useCombobox(searchOverPatients);
 
-  useEffect(() => params.form.setValue('staffId', comboboxState.value), [comboboxState.value]);
+  useEffect(() => params.form.setValue('patientId', comboboxState.value), [comboboxState.value]);
 
   return (
     <Form {...params.form}>
       <form className="flex flex-col gap-3">
         <FormField
           control={params.form.control}
-          name="staffId"
+          name="patientId"
           render={() => (
             <FormItem>
-              <FormLabel htmlFor="staff_id">Staff member</FormLabel>
+              <FormLabel htmlFor="staff_id">Patient</FormLabel>
               <FormControl>
                 <Combobox {...comboboxState} id="staff_id" />
               </FormControl>

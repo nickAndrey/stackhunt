@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/design-system/components/ui/avatar';
 import { Button } from '@/design-system/components/ui/button';
 import { Card } from '@/design-system/components/ui/card';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import type { Patient } from '@/shared/types/patient';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -37,7 +38,7 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
     {
       id: 'birth_date',
       label: 'Birthday',
-      value: dayjs(patient.birth_date).format('MMMM D, YYYY'),
+      value: dayjs(patient.birth_date).format(DAYJS_FORMAT),
     },
     {
       id: 'phone',
@@ -62,7 +63,7 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
     {
       id: 'registration_date',
       label: 'Registration Date',
-      value: dayjs(patient.registration_date).format('MMMM D, YYYY'),
+      value: dayjs(patient.registration_date).format(DAYJS_FORMAT),
     },
     {
       id: 'preferred_language',

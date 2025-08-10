@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/design-system/components/ui/select';
+import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import type { useCreateMemberForm } from '../../hooks/useCreateMemberForm';
@@ -157,7 +158,7 @@ export function Step2Form({ form, schema }: Step2FormProps) {
                   <FormControl>
                     <Button variant="outline" id="start_date">
                       {field.value ? (
-                        dayjs(field.value).format('MMMM D, YYYY')
+                        dayjs(field.value).format(DAYJS_FORMAT)
                       ) : (
                         <span>Pick a date</span>
                       )}
