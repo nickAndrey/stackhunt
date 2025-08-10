@@ -1,3 +1,4 @@
+import { createAppointment } from '@/shared/services/create-appointment';
 import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -5,7 +6,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { createAppointment } from '../../../../../../shared/services/create-appointment';
 
 const schema = z.object({
   patientId: z.string().min(1, 'You have to select a patient to create an appointment.'),
