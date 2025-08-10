@@ -27,14 +27,13 @@ type AppointmentStatus = 'scheduled' | 'completed' | 'cancelled';
 
 type Appointment = {
   id: string;
+  group_id: string;
   type: AppointmentType;
   date: string;
   duration_minutes?: number;
   location?: string;
   notes?: string;
   status: AppointmentStatus;
-  patient_id: string;
-  staff_id: string;
 };
 
 type Condition = {

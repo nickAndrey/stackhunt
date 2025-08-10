@@ -1,1 +1,1 @@
-export type FormStatus = 'idle' | 'processing' | 'error';
+export type FormStatus = 'idle' | 'processing' | 'error' | 'success';

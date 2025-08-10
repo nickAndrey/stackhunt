@@ -1,7 +1,7 @@
 import { useHeader } from '@/app/contexts/header';
 import type { Patient } from '@/shared/types/patient';
-import type { Staff } from '@/shared/types/staff';
 import { useEffect } from 'react';
+import { PatientAppointmentsCard } from './components/patient-appointments-card';
 import { PatientFilesCard } from './components/patient-files-card';
 import { PatientInfoCard } from './components/patient-info-card';
 import { PatientNotesCard } from './components/patient-notes-card';
@@ -9,7 +9,6 @@ import { PatientNotesCard } from './components/patient-notes-card';
 type PatientPagePropsProps = {
   data: {
     patient: Patient;
-    staff: Staff[];
   };
 };
 
@@ -29,7 +28,10 @@ export function PatientPage({ data }: PatientPagePropsProps) {
       <PatientInfoCard patient={data.patient} />
       <PatientNotesCard notes={data.patient.notes} patientId={data.patient.id} />
       <PatientFilesCard files={data.patient.files} patientId={data.patient.id} />
-      <div>4</div>
+      <PatientAppointmentsCard
+        appointments={data.patient.appointments}
+        patientId={data.patient.id}
+      />
     </div>
   );
 }
