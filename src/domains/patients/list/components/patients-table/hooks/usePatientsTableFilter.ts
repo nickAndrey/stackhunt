@@ -61,12 +61,12 @@ export function usePatientsTableFilter(initialPatients: Patient[]) {
         filterIdSets.push(new Set(patients.map((p) => p.id)));
       }
 
-      // Tags (related table)
-      if (filterColumnDebounced.tags.trim() !== '') {
-        const value = filterColumnDebounced.tags.trim();
-        const tags = await db.tags.where('tag').startsWithIgnoreCase(value).toArray();
-        filterIdSets.push(new Set(tags.map((t) => t.patient_id)));
-      }
+      // // Tags (related table)
+      // if (filterColumnDebounced.tags.trim() !== '') {
+      //   const value = filterColumnDebounced.tags.trim();
+      //   const tags = await db.tags.where('tag').startsWithIgnoreCase(value).toArray();
+      //   filterIdSets.push(new Set(tags.map((t) => t.patient_id)));
+      // }
 
       // Flags (related table)
       if (filterColumnDebounced.flags.trim() !== '') {

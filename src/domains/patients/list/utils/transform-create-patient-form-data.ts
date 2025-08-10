@@ -1,7 +1,6 @@
 import type { PatientCore, WithEntity, WithPatientId } from '@/shared/db/db';
 import type { Flag } from '@/shared/types/flag';
 import type { Allergy, Condition, Medication, Tag } from '@/shared/types/patient';
-import type { Dayjs } from 'dayjs';
 import type { CreatePatientForm } from '../types/create-patient-form';
 
 export function transformCreatePatientFormData(data: CreatePatientForm) {
@@ -60,30 +59,22 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
       tag: item,
     }));
 
-  const allergies: WithPatientId<Allergy>[] = data.allergies.map(
-    (item: Record<string, unknown>) => ({
-      ...item,
-      id: crypto.randomUUID(),
-      patient_id: patientCore.id,
-    })
-  );
+  const allergies: WithPatientId<Allergy>[] = data.allergies.map((item) => ({
+    ...item,
+    id: crypto.randomUUID(),
+    patient_id: patientCore.id,
+    substance: item.substance,
+    reaction: item.reaction,
+    severity: item.severity,
+  }));
 
-  const medications: WithPatientId<Medication>[] = data.medications.map(
-    (item: Record<string, unknown>) => ({
-      ...item,
-      id: crypto.randomUUID(),
-      patient_id: patientCore.id,
-      start_date: (item.start_date as Dayjs).toISOString(),
-      end_date: (item.end_date as Dayjs).toISOString(),
-    })
-  );
-
-  // const files: WithEntity<FileRecord>[] = data.files.map((item: Record<string, unknown>) => ({
-  //   ...item,
-  //   id: crypto.randomUUID(),
-  //   entity_type: 'patient',
-  //   entity_id: patientCore.id,
-  // }));
+  const medications: WithPatientId<Medication>[] = data.medications.map((item) => ({
+    ...item,
+    id: crypto.randomUUID(),
+    patient_id: patientCore.id,
+    start_date: item.start_date.toISOString(),
+    end_date: item.end_date.toISOString(),
+  }));
 
   return { patientCore, conditions, medical_flags, tags, allergies, medications };
 }
