@@ -1,19 +1,58 @@
-import { LoginPageLoader } from '@/domains/login';
-import { MembersPageLoader } from '@/domains/members/list';
-import { PatientPageLoader } from '@/domains/patients/details_v2';
-import { PatientsPageLoader } from '@/domains/patients/list';
-import { RegisterPageLoader } from '@/domains/register';
-import { AppearancePage } from '@/domains/settings/appearance';
-import { ProfileLoader } from '@/domains/settings/profile';
-import { SecurityAndPasswordLoader } from '@/domains/settings/security-and-password';
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import AuthLayout from '../layout/AuthLayout';
 import RouteGuard from '../layout/RouteGuard';
 
-const AppointmentsPage = lazy(() => import('@/domains/appointments/Page'));
-
-const SettingsLayout = lazy(() => import('@/domains/settings/Layout'));
+const PatientPageLoader = lazy(() =>
+  import('@/domains/patients/details_v2').then((module) => ({
+    default: module.PatientPageLoader,
+  }))
+);
+const PatientsPageLoader = lazy(() =>
+  import('@/domains/patients/list').then((module) => ({
+    default: module.PatientsPageLoader,
+  }))
+);
+const MembersPageLoader = lazy(() =>
+  import('@/domains/members/list').then((module) => ({
+    default: module.MembersPageLoader,
+  }))
+);
+const AppointmentsPage = lazy(() =>
+  import('@/domains/appointments/Page').then((module) => ({
+    default: module.AppointmentsPage,
+  }))
+);
+const SettingsLayout = lazy(() =>
+  import('@/domains/settings/Layout').then((module) => ({
+    default: module.SettingsLayout,
+  }))
+);
+const ProfilePageLoader = lazy(() =>
+  import('@/domains/settings/profile').then((module) => ({
+    default: module.ProfilePageLoader,
+  }))
+);
+const AppearancePage = lazy(() =>
+  import('@/domains/settings/appearance').then((module) => ({
+    default: module.AppearancePage,
+  }))
+);
+const SP_PageLoader = lazy(() =>
+  import('@/domains/settings/security').then((module) => ({
+    default: module.SP_PageLoader,
+  }))
+);
+const LoginPageLoader = lazy(() =>
+  import('@/domains/login').then((module) => ({
+    default: module.LoginPageLoader,
+  }))
+);
+const RegisterPageLoader = lazy(() =>
+  import('@/domains/register').then((module) => ({
+    default: module.RegisterPageLoader,
+  }))
+);
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +93,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/settings/profile',
-            element: <ProfileLoader />,
+            element: <ProfilePageLoader />,
           },
           {
             path: '/settings/appearance',
@@ -62,7 +101,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/settings/security',
-            element: <SecurityAndPasswordLoader />,
+            element: <SP_PageLoader />,
           },
         ],
       },

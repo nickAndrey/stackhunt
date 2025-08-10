@@ -1,5 +1,5 @@
-function Page() {
+// type PageProps = {}
+
+export function AppointmentsPage() {
   return <div>Page</div>;
 }
-
-export default Page;

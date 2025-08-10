@@ -18,15 +18,11 @@ async function getAuthCredentialsFromIndexedDB(): Promise<{ credentials: AuthCre
   });
 }
 
-export function SecurityAndPasswordLoader() {
-  const SecurityAndPasswordPageLoader = createPageLoader(
+export function SP_PageLoader() {
+  const PageLoader = createPageLoader(
     'settings/security-and-password',
     getAuthCredentialsFromIndexedDB
   );
 
-  return (
-    <SecurityAndPasswordPageLoader>
-      {(data) => <SecurityAndPasswordPage data={data.credentials} />}
-    </SecurityAndPasswordPageLoader>
-  );
+  return <PageLoader>{(data) => <SecurityAndPasswordPage data={data.credentials} />}</PageLoader>;
 }
