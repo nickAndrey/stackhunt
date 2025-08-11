@@ -109,9 +109,9 @@ export function useCreateMemberForm() {
     await new Promise((res) => setTimeout(res, 2000));
 
     try {
+      await createStubMembers();
       toast.success('New members have been successfully created');
       setFormStatus('success');
-      await createStubMembers();
 
       return true;
     } catch (error) {
