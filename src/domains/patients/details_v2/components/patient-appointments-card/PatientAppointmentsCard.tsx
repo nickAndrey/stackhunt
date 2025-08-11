@@ -6,16 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/design-system/components/ui/card';
+import {
+  CreateAppointmentModal,
+  useCreateAppointmentModal,
+} from '@/domains/patients/shared/components/create-appointment-modal';
 import { Loader } from '@/shared/components/Loader';
 import { NoData } from '@/shared/components/NoData';
 import type { Appointment } from '@/shared/types/patient';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { enhanceAppointmentsWithAssignedStaff } from '../../utils/enhance-appointments-with-assigned-staff';
-import {
-  CreateAppointmentModal,
-  useCreateAppointmentModal,
-} from './components/create-appointment-modal';
 import { TimeLine } from './components/time-line';
 import { getPatientAppointments } from './services/get-patient-appointments';
 
@@ -25,7 +25,7 @@ type PatientAppointmentsCardProps = {
 };
 
 export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
-  const createAppointmentModal = useCreateAppointmentModal(props.patientId);
+  const createAppointmentModal = useCreateAppointmentModal();
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
               variant="ghost"
               size="icon"
               className="size-8 rounded-2xl"
-              onClick={() => toggleModal(true)}
+              onClick={() => toggleModal(true, props.patientId)}
             >
               <Plus />
             </Button>
