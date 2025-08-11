@@ -102,5 +102,213 @@
       "city": "San Mateo",
       "zip_code": "94401"
     }
+  },
+  {
+    "first_name": "Daniel",
+    "last_name": "Kim",
+    "email": "daniel.kim@hospital.org",
+    "phone": "+14155550123",
+    "gender": "male",
+    "preferred_contact_method": "email",
+    "role": "doctor",
+    "status": "active",
+    "department": "Neurology",
+    "specialty": "Stroke Specialist",
+    "license_number": "NY987654",
+    "employee_id": "D-2102",
+    "start_date": "2022-01-10T08:00:00.000Z",
+    "bio": "Dr. Kim focuses on stroke treatment and recovery with 8 years experience.",
+    "address": {
+      "street": "101 Elm Street",
+      "city": "New York",
+      "zip_code": "10001"
+    }
+  },
+  {
+    "first_name": "Isabella",
+    "last_name": "Garcia",
+    "email": "isabella.garcia@hospital.org",
+    "phone": "+14155554455",
+    "gender": "female",
+    "preferred_contact_method": "phone",
+    "role": "nurse",
+    "status": "active",
+    "department": "Pediatrics",
+    "specialty": "Neonatal Care",
+    "license_number": "RN123987",
+    "employee_id": "N-4521",
+    "start_date": "2019-05-15T08:00:00.000Z",
+    "bio": "Isabella provides compassionate neonatal care with a background in pediatric nursing.",
+    "address": {
+      "street": "202 Birch Road",
+      "city": "Chicago",
+      "zip_code": "60614"
+    }
+  },
+  {
+    "first_name": "Ethan",
+    "last_name": "Wang",
+    "email": "ethan.wang@hospital.org",
+    "phone": "+14155557678",
+    "gender": "male",
+    "preferred_contact_method": "email",
+    "role": "technician",
+    "status": "active",
+    "department": "Laboratory",
+    "specialty": "Pathology Technician",
+    "license_number": "LAB789456",
+    "employee_id": "T-3310",
+    "start_date": "2020-08-25T08:00:00.000Z",
+    "bio": "Ethan specializes in pathology lab work, ensuring accurate test results.",
+    "address": {
+      "street": "303 Cedar Lane",
+      "city": "Seattle",
+      "zip_code": "98101"
+    }
+  },
+  {
+    "first_name": "Mia",
+    "last_name": "Lopez",
+    "email": "mia.lopez@hospital.org",
+    "phone": "+14155551222",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "pharmacist",
+    "status": "active",
+    "department": "Pharmacy",
+    "specialty": "Oncology Pharmacy",
+    "license_number": "PH654321",
+    "employee_id": "P-2207",
+    "start_date": "2021-04-12T08:00:00.000Z",
+    "bio": "Mia manages medication therapy for cancer patients and advises clinical teams.",
+    "address": {
+      "street": "404 Willow Street",
+      "city": "Denver",
+      "zip_code": "80203"
+    }
+  },
+  {
+    "first_name": "Alexander",
+    "last_name": "Smith",
+    "email": "alexander.smith@hospital.org",
+    "phone": "+14155553444",
+    "gender": "male",
+    "preferred_contact_method": "phone",
+    "role": "admin",
+    "status": "active",
+    "department": "Human Resources",
+    "specialty": "Recruitment",
+    "employee_id": "A-5010",
+    "start_date": "2018-11-20T08:00:00.000Z",
+    "bio": "Alexander oversees recruitment and staffing for the hospital.",
+    "address": {
+      "street": "505 Maple Avenue",
+      "city": "Boston",
+      "zip_code": "02118"
+    }
+  },
+  {
+    "first_name": "Natalie",
+    "last_name": "Brown",
+    "email": "natalie.brown@hospital.org",
+    "phone": "+14155556777",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "doctor",
+    "status": "on_leave",
+    "department": "Oncology",
+    "specialty": "Radiation Oncology",
+    "license_number": "ONC789123",
+    "employee_id": "D-3420",
+    "start_date": "2017-03-01T08:00:00.000Z",
+    "bio": "Natalie is currently on leave but specializes in radiation treatments for cancer patients.",
+    "address": {
+      "street": "606 Birchwood Drive",
+      "city": "Austin",
+      "zip_code": "78701"
+    }
+  },
+  {
+    "first_name": "Christopher",
+    "last_name": "Green",
+    "email": "christopher.green@hospital.org",
+    "phone": "+14155559999",
+    "gender": "male",
+    "preferred_contact_method": "phone",
+    "role": "lab",
+    "status": "active",
+    "department": "Laboratory",
+    "specialty": "Microbiology",
+    "license_number": "LAB123987",
+    "employee_id": "L-1102",
+    "start_date": "2016-07-15T08:00:00.000Z",
+    "bio": "Christopher leads the microbiology lab and oversees quality control.",
+    "address": {
+      "street": "707 Oak Street",
+      "city": "Portland",
+      "zip_code": "97205"
+    }
+  },
+  {
+    "first_name": "Grace",
+    "last_name": "Evans",
+    "email": "grace.evans@hospital.org",
+    "phone": "+14155557889",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "receptionist",
+    "status": "active",
+    "department": "Front Desk",
+    "specialty": "Patient Relations",
+    "employee_id": "R-7001",
+    "start_date": "2019-12-01T08:00:00.000Z",
+    "bio": "Grace welcomes patients and assists with scheduling and inquiries.",
+    "address": {
+      "street": "808 Cedar Street",
+      "city": "Miami",
+      "zip_code": "33101"
+    }
+  },
+  {
+    "first_name": "Benjamin",
+    "last_name": "Hall",
+    "email": "benjamin.hall@hospital.org",
+    "phone": "+14155552345",
+    "gender": "male",
+    "preferred_contact_method": "phone",
+    "role": "doctor",
+    "status": "active",
+    "department": "Orthopedics",
+    "specialty": "Sports Medicine",
+    "license_number": "OR456123",
+    "employee_id": "D-1456",
+    "start_date": "2020-10-10T08:00:00.000Z",
+    "bio": "Benjamin specializes in sports-related injuries and rehabilitation.",
+    "address": {
+      "street": "909 Pine Avenue",
+      "city": "Dallas",
+      "zip_code": "75201"
+    }
+  },
+  {
+    "first_name": "Victoria",
+    "last_name": "Cruz",
+    "email": "victoria.cruz@hospital.org",
+    "phone": "+14155553221",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "nurse",
+    "status": "active",
+    "department": "Maternity",
+    "specialty": "Labor and Delivery",
+    "license_number": "RN456789",
+    "employee_id": "N-5500",
+    "start_date": "2018-03-22T08:00:00.000Z",
+    "bio": "Victoria supports expectant mothers through labor and delivery with compassion.",
+    "address": {
+      "street": "1010 Spruce Lane",
+      "city": "Atlanta",
+      "zip_code": "30303"
+    }
   }
 ]

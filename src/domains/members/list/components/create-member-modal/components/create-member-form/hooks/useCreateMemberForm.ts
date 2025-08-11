@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 import { createMember } from '../services/create-member';
+import { createStubMembers } from '../services/create-stub-members';
 import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './schemas';
 
 export function useCreateMemberForm() {
@@ -14,10 +15,11 @@ export function useCreateMemberForm() {
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      first_name: 'test',
-      last_name: 'test',
-      email: 'test@test.com',
-      phone: '+1234567890',
+      isAutoGenerate: false,
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
       gender: 'other',
       preferred_contact_method: 'email',
     },
@@ -28,10 +30,10 @@ export function useCreateMemberForm() {
     defaultValues: {
       role: 'doctor',
       status: 'active',
-      department: 'test',
-      specialty: 'test',
-      license_number: '123',
-      employee_id: '123',
+      department: '',
+      specialty: '',
+      license_number: '',
+      employee_id: '',
       start_date: new Date(),
     },
   });
@@ -39,11 +41,11 @@ export function useCreateMemberForm() {
   const step3Form = useForm<z.infer<typeof addressAndBioSchema>>({
     resolver: zodResolver(addressAndBioSchema),
     defaultValues: {
-      bio: 'tesst',
+      bio: '',
       address: {
-        street: 'test',
-        city: 'test',
-        zip_code: '1234',
+        street: '',
+        city: '',
+        zip_code: '',
       },
     },
   });
@@ -102,5 +104,33 @@ export function useCreateMemberForm() {
     }
   };
 
-  return { step, schemas, forms, formStatus, handleNext, handlePrev, handleSubmit };
+  const handleAutoGenerate = async () => {
+    setFormStatus('processing');
+    await new Promise((res) => setTimeout(res, 2000));
+
+    try {
+      toast.success('New members have been successfully created');
+      setFormStatus('success');
+      await createStubMembers();
+
+      return true;
+    } catch (error) {
+      console.error((error as Error).message);
+      toast.error((error as Error).message);
+      setFormStatus('error');
+
+      return false;
+    }
+  };
+
+  return {
+    step,
+    schemas,
+    forms,
+    formStatus,
+    handleNext,
+    handlePrev,
+    handleSubmit,
+    handleAutoGenerate,
+  };
 }

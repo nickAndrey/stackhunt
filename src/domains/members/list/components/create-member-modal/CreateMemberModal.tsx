@@ -9,6 +9,11 @@ type CreateMemberModalProps = ReturnType<typeof useCreateMemberModal> & {};
 export function CreateMemberModal(props: CreateMemberModalProps) {
   const createMemberForm = useCreateMemberForm();
 
+  const { step, formStatus, forms, handleSubmit, handleAutoGenerate, handlePrev, handleNext } =
+    createMemberForm;
+
+  const isAutoGenerate = forms.step1Form.getValues('isAutoGenerate');
+
   return (
     <Modal
       open={props.isModalOpen}
@@ -16,25 +21,41 @@ export function CreateMemberModal(props: CreateMemberModalProps) {
       title="Create a Member"
       description="Enter the details to create a new hospital staff member."
       actionBtn={
-        <>
-          {createMemberForm.step > 0 && <Button onClick={createMemberForm.handlePrev}>Prev</Button>}
+        isAutoGenerate ? (
+          <Button
+            variant="default"
+            onClick={async () => {
+              const isMemberCreated = await handleAutoGenerate();
+              if (isMemberCreated) props.toggleModal(false);
+            }}
+            disabled={formStatus === 'processing'}
+          >
+            {formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
+            {formStatus === 'processing' ? 'Generating...' : 'Generate'}
+          </Button>
+        ) : (
+          <>
+            {step > 0 && (
+              <Button variant="default" onClick={handlePrev} disabled={formStatus === 'processing'}>
+                Prev
+              </Button>
+            )}
 
-          {createMemberForm.step === Object.keys(createMemberForm.forms).length ? (
-            <Button
-              onClick={async () => {
-                const isMemberCreated = await createMemberForm.handleSubmit();
-                if (isMemberCreated) props.toggleModal(false);
-              }}
-            >
-              {createMemberForm.formStatus === 'processing' && (
-                <LoaderCircle className="animate-spin" />
-              )}
-              {createMemberForm.formStatus === 'processing' ? 'Creating...' : 'Create'}
-            </Button>
-          ) : (
-            <Button onClick={createMemberForm.handleNext}>Next</Button>
-          )}
-        </>
+            {step === Object.keys(forms).length ? (
+              <Button
+                onClick={async () => {
+                  const isMemberCreated = await handleSubmit();
+                  if (isMemberCreated) props.toggleModal(false);
+                }}
+              >
+                {formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
+                {formStatus === 'processing' ? 'Creating...' : 'Create'}
+              </Button>
+            ) : (
+              <Button onClick={handleNext}>Next</Button>
+            )}
+          </>
+        )
       }
     >
       <CreateMemberForm {...createMemberForm} />
