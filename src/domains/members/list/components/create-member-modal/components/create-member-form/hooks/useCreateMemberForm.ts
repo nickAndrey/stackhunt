@@ -1,3 +1,4 @@
+import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,15 +7,16 @@ import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './sch
 
 export function useCreateMemberForm() {
   const [step, setStep] = useState(0);
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      first_name: 'John',
-      last_name: 'Doe',
-      email: 'john.doe@hospital.test',
-      phone: '+1234567890',
-      gender: 'male',
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
+      gender: 'other',
       preferred_contact_method: 'email',
     },
   });
@@ -22,12 +24,12 @@ export function useCreateMemberForm() {
   const step2Form = useForm<z.infer<typeof jobDetailsSchema>>({
     resolver: zodResolver(jobDetailsSchema),
     defaultValues: {
-      role: 'admin',
+      role: 'doctor',
       status: 'active',
-      department: 'General Medicine',
-      specialty: 'Internal Medicine',
-      license_number: 'MD-123456',
-      employee_id: 'EMP-0001',
+      department: '',
+      specialty: '',
+      license_number: '',
+      employee_id: '',
       start_date: new Date(),
     },
   });
@@ -35,11 +37,11 @@ export function useCreateMemberForm() {
   const step3Form = useForm<z.infer<typeof addressAndBioSchema>>({
     resolver: zodResolver(addressAndBioSchema),
     defaultValues: {
-      bio: 'Experienced general practitioner with administrative responsibilities.',
+      bio: '',
       address: {
-        street: '123 Health Blvd',
-        city: 'MediCity',
-        zip_code: '12345',
+        street: '',
+        city: '',
+        zip_code: '',
       },
     },
   });
@@ -75,5 +77,5 @@ export function useCreateMemberForm() {
 
   const handleSubmit = async () => {};
 
-  return { step, schemas, forms, handleNext, handlePrev, handleSubmit };
+  return { step, schemas, forms, formStatus, handleNext, handlePrev, handleSubmit };
 }
