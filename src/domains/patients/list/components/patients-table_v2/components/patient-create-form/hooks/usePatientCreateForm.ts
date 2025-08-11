@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type z from 'zod';
-import { createPatient } from '../../../services/create-patient';
-import { transformCreatePatientFormData } from '../../../utils/transform-create-patient-form-data';
+
+import { createPatient } from '@/domains/patients/list/services/create-patient';
+
+import { transformCreatePatientFormData } from '@/domains/patients/list/utils/transform-create-patient-form-data';
 import {
   contactInfoSchema,
   emergencySchema,

@@ -1,14 +1,17 @@
 import { useHeader } from '@/app/contexts/header';
 import { Button } from '@/design-system/components/ui/button';
+import { Card } from '@/design-system/components/ui/card';
 import { Input } from '@/design-system/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import { Modal } from '@/shared/components/Modal';
 import type { Patient } from '@/shared/types/patient';
 import { Plus, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { PatientCreateForm } from './components/patient-create-form';
-import { usePatientCreateForm } from './components/patient-create-form/hooks/usePatientCreateForm';
-import { PatientsTable } from './components/patients-table';
+import { PatientsDataTable } from './components/patients-table_v2';
+import {
+  PatientCreateForm,
+  usePatientCreateForm,
+} from './components/patients-table_v2/components/patient-create-form';
 import { useSearchPatient } from './hooks/useSearchPatient';
 
 type PatientsPageProps = {
@@ -103,8 +106,10 @@ export function PatientsPage({ data }: PatientsPageProps) {
   ];
 
   return (
-    <div>
-      <PatientsTable patients={searchResults ?? initialData} />
+    <div className="px-4 py-3">
+      <Card>
+        <PatientsDataTable patients={searchResults ?? initialData} />
+      </Card>
 
       <Modal
         open={isDialogOpen}

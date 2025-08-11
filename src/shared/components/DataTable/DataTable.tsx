@@ -7,6 +7,7 @@ import {
   TableRow,
 } from '@/design-system/components/ui/table';
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table';
+import { NoData } from '../NoData';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -51,7 +52,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         ) : (
           <TableRow>
             <TableCell colSpan={columns.length} className="h-24 text-center">
-              No results.
+              <NoData />
             </TableCell>
           </TableRow>
         )}
