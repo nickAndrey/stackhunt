@@ -1,16 +1,10 @@
 import z from 'zod';
 
 const personalInfoSchema = z.object({
-  first_name: z.string({
-    error: 'First name is required',
-  }),
-  last_name: z.string({
-    error: 'Last name is required',
-  }),
+  first_name: z.string().min(1, 'First name is required'),
+  last_name: z.string().min(1, 'Last name is required'),
   email: z.email({ error: 'Please provide a valid email' }),
-  phone: z.string({
-    error: 'Phone number is required',
-  }),
+  phone: z.string().min(1, 'Phone number is required'),
   gender: z.enum(['male', 'female', 'other', 'undisclosed'], {
     error: 'Please select a gender',
   }),

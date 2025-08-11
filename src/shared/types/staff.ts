@@ -40,4 +40,9 @@ type Staff = {
   preferred_contact_method?: ContactPreference;
 };
 
-export type { Staff, StaffRole, StaffStatus };
+type StaffForm = Omit<Staff, 'start_date' | 'end_date'> & {
+  start_date?: string | Date;
+  end_date?: string | Date;
+};
+
+export type { Staff, StaffForm, StaffRole, StaffStatus };

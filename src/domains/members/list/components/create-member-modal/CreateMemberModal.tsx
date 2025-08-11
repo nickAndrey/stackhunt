@@ -16,12 +16,25 @@ export function CreateMemberModal(props: CreateMemberModalProps) {
       title="Create a Member"
       description="Enter the details to create a new hospital staff member."
       actionBtn={
-        <Button type="button" onClick={createMemberForm.handleSubmit}>
-          {createMemberForm.formStatus === 'processing' && (
-            <LoaderCircle className="animate-spin" />
+        <>
+          {createMemberForm.step > 0 && <Button onClick={createMemberForm.handlePrev}>Prev</Button>}
+
+          {createMemberForm.step === Object.keys(createMemberForm.forms).length ? (
+            <Button
+              onClick={async () => {
+                const isMemberCreated = await createMemberForm.handleSubmit();
+                if (isMemberCreated) props.toggleModal(false);
+              }}
+            >
+              {createMemberForm.formStatus === 'processing' && (
+                <LoaderCircle className="animate-spin" />
+              )}
+              {createMemberForm.formStatus === 'processing' ? 'Creating...' : 'Create'}
+            </Button>
+          ) : (
+            <Button onClick={createMemberForm.handleNext}>Next</Button>
           )}
-          {createMemberForm.formStatus === 'processing' ? 'Creating...' : 'Create'}
-        </Button>
+        </>
       }
     >
       <CreateMemberForm {...createMemberForm} />

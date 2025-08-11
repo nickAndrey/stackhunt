@@ -1,0 +1,106 @@
+[
+  {
+    "first_name": "Emily",
+    "last_name": "Rodriguez",
+    "email": "emily.rodriguez@hospital.org",
+    "phone": "+14155552671",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "doctor",
+    "status": "active",
+    "department": "Cardiology",
+    "specialty": "Pediatric Cardiology",
+    "license_number": "CA123456",
+    "employee_id": "D-1001",
+    "start_date": "2021-06-15T08:00:00.000Z",
+    "bio": "Dr. Rodriguez has 10 years of experience in pediatric cardiology, specializing in congenital heart defects.",
+    "address": {
+      "street": "123 Maple Street",
+      "city": "San Francisco",
+      "zip_code": "94103"
+    }
+  },
+  {
+    "first_name": "James",
+    "last_name": "Nguyen",
+    "email": "james.nguyen@hospital.org",
+    "phone": "+14155553412",
+    "gender": "male",
+    "preferred_contact_method": "phone",
+    "role": "nurse",
+    "status": "active",
+    "department": "Emergency",
+    "specialty": "Trauma Nursing",
+    "license_number": "RN789654",
+    "employee_id": "N-2305",
+    "start_date": "2019-02-01T08:00:00.000Z",
+    "bio": "James is a dedicated trauma nurse with extensive experience in emergency care and patient support.",
+    "address": {
+      "street": "456 Oak Avenue",
+      "city": "Oakland",
+      "zip_code": "94607"
+    }
+  },
+  {
+    "first_name": "Sophia",
+    "last_name": "Patel",
+    "email": "sophia.patel@hospital.org",
+    "phone": "+14155559876",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "pharmacist",
+    "status": "active",
+    "department": "Pharmacy",
+    "specialty": "Clinical Pharmacy",
+    "license_number": "PH345789",
+    "employee_id": "P-1202",
+    "start_date": "2020-09-20T08:00:00.000Z",
+    "bio": "Sophia specializes in clinical pharmacy, ensuring the safe use of medications for patients.",
+    "address": {
+      "street": "789 Pine Road",
+      "city": "San Jose",
+      "zip_code": "95112"
+    }
+  },
+  {
+    "first_name": "Michael",
+    "last_name": "Johnson",
+    "email": "michael.johnson@hospital.org",
+    "phone": "+14155551234",
+    "gender": "male",
+    "preferred_contact_method": "phone",
+    "role": "technician",
+    "status": "active",
+    "department": "Radiology",
+    "specialty": "MRI Technician",
+    "license_number": "TECH456321",
+    "employee_id": "T-4500",
+    "start_date": "2018-04-10T08:00:00.000Z",
+    "bio": "Michael is an experienced MRI technician with over 7 years in diagnostic imaging.",
+    "address": {
+      "street": "321 Cedar Blvd",
+      "city": "Berkeley",
+      "zip_code": "94704"
+    }
+  },
+  {
+    "first_name": "Olivia",
+    "last_name": "Martinez",
+    "email": "olivia.martinez@hospital.org",
+    "phone": "+14155556789",
+    "gender": "female",
+    "preferred_contact_method": "email",
+    "role": "admin",
+    "status": "active",
+    "department": "Administration",
+    "specialty": "Medical Records",
+    "employee_id": "A-3101",
+    "start_date": "2017-11-01T08:00:00.000Z",
+    "bio": "Olivia manages medical records and ensures smooth administrative operations across departments.",
+    "address": {
+      "street": "654 Spruce Street",
+      "city": "San Mateo",
+      "zip_code": "94401"
+    }
+  }
+]
