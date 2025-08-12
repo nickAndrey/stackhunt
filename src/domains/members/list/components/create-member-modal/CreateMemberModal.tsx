@@ -26,7 +26,11 @@ export function CreateMemberModal(props: CreateMemberModalProps) {
             variant="default"
             onClick={async () => {
               const isMemberCreated = await handleAutoGenerate();
-              if (isMemberCreated) props.toggleModal(false);
+
+              if (isMemberCreated) {
+                props.toggleModal(false);
+                props.setIsNewMemberCreated(true);
+              }
             }}
             disabled={formStatus === 'processing'}
           >

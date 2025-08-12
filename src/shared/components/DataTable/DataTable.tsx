@@ -23,7 +23,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="sticky top-0 bg-white z-10">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {

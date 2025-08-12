@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { CreateMemberModal, useCreateMemberModal } from './components/create-member-modal';
 import { MembersTable } from './components/members-table';
 import { QuickSearchInput, useQuickSearchInput } from './components/quick-search-input';
+import { fetchStaffFromIndexedDB } from './services/fetch-staff';
 
 type MembersPageProps = {
   data: Staff[];
@@ -21,7 +22,13 @@ export function MembersPage(props: MembersPageProps) {
 
   const [initialData, setInitialData] = useState(props.data);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (createMemberModal.isNewMemberCreated) {
+      fetchStaffFromIndexedDB()
+        .then((data) => setInitialData(data))
+        .finally(() => createMemberModal.setIsNewMemberCreated(false));
+    }
+  }, [createMemberModal.isNewMemberCreated]);
 
   useEffect(() => {
     setHeader({
@@ -29,6 +36,7 @@ export function MembersPage(props: MembersPageProps) {
       actions: (
         <>
           <QuickSearchInput {...quickSearchInput} />
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="secondary" onClick={() => createMemberModal.toggleModal(true)}>
@@ -45,8 +53,8 @@ export function MembersPage(props: MembersPageProps) {
   }, [setHeader, quickSearchInput.searchValue]);
 
   return (
-    <div className="px-4 py-3">
-      <Card>
+    <div className="px-4 py-3 flex-col-grow">
+      <Card className="max-h-[100%]">
         <MembersTable staff={quickSearchInput.searchResults ?? initialData} />
       </Card>
 
