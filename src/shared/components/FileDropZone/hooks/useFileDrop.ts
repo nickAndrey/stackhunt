@@ -1,6 +1,6 @@
 import type { FileRecord } from '@/shared/types/file-record';
-import { useRef, useState } from 'react';
-import { resizeAndCompressImage } from '../utils/resize-and-compress-iamge';
+import { useEffect, useRef, useState } from 'react';
+import { processSelectedFiles } from '../utils/process-selected-files';
 
 type Params = {
   image?: {
@@ -8,7 +8,7 @@ type Params = {
     maxWidth?: number;
   };
   initialValues?: {
-    files?: FileRecord[];
+    files?: File[];
     inputAccept?:
       | '.pdf'
       | 'application/pdf'
@@ -35,34 +35,35 @@ export function useFileDrop(params?: Params) {
   const [files, setFiles] = useState<(FileRecord & { previewUrl?: string })[]>([]);
   const [isDragActive, setIsDragActive] = useState(false);
 
+  useEffect(() => {
+    const processFile = async () => {
+      if (params?.initialValues?.files) {
+        const files = await processSelectedFiles({
+          fileList: params?.initialValues?.files,
+          inputAccept: params.initialValues.inputAccept,
+          imageQuality: params.image?.quality,
+          imageMaxWidth: params.image?.maxWidth,
+        });
+
+        setFiles(files);
+      }
+    };
+
+    processFile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleFiles = async (fileList: FileList | null) => {
     if (!fileList) return;
 
-    const files = await Promise.all(
-      Array.from(fileList).map(async (file) => {
-        let fileObj: File = file;
+    const processedFiles = await processSelectedFiles({
+      fileList,
+      inputAccept: params?.initialValues?.inputAccept,
+      imageQuality: params?.image?.quality,
+      imageMaxWidth: params?.image?.maxWidth,
+    });
 
-        if (
-          params?.initialValues?.inputAccept &&
-          ['image/*', '.jpg', '.jpeg', '.png'].includes(params?.initialValues?.inputAccept)
-        ) {
-          fileObj = await resizeAndCompressImage({
-            file,
-            quality: params?.image?.quality || 1,
-            maxWidth: params?.image?.maxWidth || 100,
-          });
-        }
-
-        return {
-          id: crypto.randomUUID(),
-          name: fileObj.name,
-          previewUrl: URL.createObjectURL(fileObj),
-          file: fileObj,
-        };
-      })
-    );
-
-    setFiles(files);
+    setFiles(processedFiles);
   };
 
   const onResetFiles = () => {

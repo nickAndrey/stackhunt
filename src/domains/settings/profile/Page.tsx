@@ -19,7 +19,10 @@ export function ProfilePage({ data }: PageProps) {
   const dropZone = useFileDrop({
     image: {
       quality: 0.8,
-      maxWidth: 200,
+      maxWidth: 100,
+    },
+    initialValues: {
+      files: data?.profile_image ? [data.profile_image] : undefined,
     },
   });
 
