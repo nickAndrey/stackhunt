@@ -12,5 +12,5 @@ async function getAppointments(): Promise<boolean> {
 
 export function AppointmentsPageLoader() {
   const Loader = createPageLoader('appointments', getAppointments);
-  return <Loader>{(data) => <AppointmentsPage />}</Loader>;
+  return <Loader>{() => <AppointmentsPage />}</Loader>;
 }

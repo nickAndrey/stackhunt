@@ -12,7 +12,7 @@ const routes = [
   {
     id: 1,
     href: '/members',
-    label: 'Doctors',
+    label: 'Members',
     icon: <BriefcaseMedical width={20} height={20} />,
   },
   {
