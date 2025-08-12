@@ -1,7 +1,7 @@
+import type { transformCreatePatientFormData } from '@/domains/patients/list/utils/transform-create-patient-form-data';
 import { db } from '@/shared/db/db';
 import { getPatientWithRelatedData } from '@/shared/services/get-patient-with-related-data';
 import type { Patient } from '@/shared/types/patient';
-import type { transformCreatePatientFormData } from '../utils/transform-create-patient-form-data';
 
 type TransformedCreatePatientFormData = ReturnType<typeof transformCreatePatientFormData>;
 

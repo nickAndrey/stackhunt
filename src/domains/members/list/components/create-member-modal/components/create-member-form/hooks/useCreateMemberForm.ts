@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 import { createMember } from '../services/create-member';
-import { createStubMembers } from '../services/create-stub-members';
+import { createDemoStaff } from '../services/create-demo-staff';
 import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './schemas';
 
 export function useCreateMemberForm() {
@@ -109,7 +109,7 @@ export function useCreateMemberForm() {
     await new Promise((res) => setTimeout(res, 2000));
 
     try {
-      await createStubMembers();
+      await createDemoStaff();
       toast.success('New members have been successfully created');
       setFormStatus('success');
 

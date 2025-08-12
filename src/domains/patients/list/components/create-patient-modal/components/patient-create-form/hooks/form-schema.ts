@@ -1,6 +1,7 @@
 import z from 'zod';
 
 export const personalInfoSchema = z.object({
+  isAutoGenerate: z.boolean().optional(),
   first_name: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
   last_name: z.string().min(1, { error: 'This field is required and cannot be empty.' }),
   gender: z.enum(['male', 'female', 'other', 'undisclosed']),

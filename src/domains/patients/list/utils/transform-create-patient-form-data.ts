@@ -1,7 +1,7 @@
 import type { PatientCore, WithEntity, WithPatientId } from '@/shared/db/db';
 import type { Flag } from '@/shared/types/flag';
 import type { Allergy, Condition, Medication, Tag } from '@/shared/types/patient';
-import type { CreatePatientForm } from '../components/patients-table_v2/components/patient-create-form';
+import type { CreatePatientForm } from '../components/create-patient-modal/components/patient-create-form';
 
 export function transformCreatePatientFormData(data: CreatePatientForm) {
   const patientCore: PatientCore = {

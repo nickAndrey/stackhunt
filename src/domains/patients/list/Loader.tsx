@@ -1,22 +1,8 @@
-import { db } from '@/shared/db/db';
-import { getPatientWithRelatedData } from '@/shared/services/get-patient-with-related-data';
-import type { Patient } from '@/shared/types/patient';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
 import { PatientsPage } from './Page';
-
-async function getPatients(): Promise<Patient[]> {
-  const patients = await db.patients.toArray();
-
-  const mutatedPatients = await Promise.all(
-    patients.map(async (patient) => await getPatientWithRelatedData(patient.id))
-  );
-
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(mutatedPatients), 2000);
-  });
-}
+import { fetchPatients } from './services/fetch-patients';
 
 export function PatientsPageLoader() {
-  const Loader = createPageLoader('patients', getPatients);
+  const Loader = createPageLoader('patients', fetchPatients);
   return <Loader>{(data) => <PatientsPage data={data} />}</Loader>;
 }

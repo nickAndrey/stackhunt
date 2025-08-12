@@ -1,13 +1,13 @@
-import type { Patient } from '@/shared/types/patient';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type z from 'zod';
 
-import { createPatient } from '@/domains/patients/list/services/create-patient';
-
 import { transformCreatePatientFormData } from '@/domains/patients/list/utils/transform-create-patient-form-data';
+import type { FormStatus } from '@/shared/types/form-status';
+import { createDemoPatients } from '../services/create-demo-patients';
+import { createPatient } from '../services/create-patient';
 import {
   contactInfoSchema,
   emergencySchema,
@@ -19,11 +19,12 @@ import {
 
 export function usePatientCreateForm() {
   const [step, setStep] = useState(0);
-  const [newPatient, setNewPatient] = useState<Patient | null>(null);
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
+      isAutoGenerate: false,
       first_name: '',
       last_name: '',
       gender: 'other',
@@ -113,6 +114,9 @@ export function usePatientCreateForm() {
   };
 
   const handleSubmit = async () => {
+    setFormStatus('processing');
+    await new Promise((res) => setTimeout(res, 2000));
+
     const finalData = {
       ...step1Form.getValues(),
       ...step2Form.getValues(),
@@ -124,12 +128,34 @@ export function usePatientCreateForm() {
 
     try {
       const transformedData = transformCreatePatientFormData(finalData);
-      const newPatient = await createPatient(transformedData);
+      await createPatient(transformedData);
       toast.success('New patient was successfully added.');
-      setNewPatient(newPatient);
-    } catch (err) {
-      console.error('Error creating patient:', err);
-      toast.error('Failed to create patient. Please try again.');
+
+      return true;
+    } catch (error) {
+      console.error((error as Error).message);
+      toast.error((error as Error).message);
+
+      return false;
+    }
+  };
+
+  const handleAutoGenerate = async () => {
+    setFormStatus('processing');
+    await new Promise((res) => setTimeout(res, 2000));
+
+    try {
+      await createDemoPatients();
+      toast.success('New members have been successfully created');
+      setFormStatus('success');
+
+      return true;
+    } catch (error) {
+      console.error((error as Error).message);
+      toast.error((error as Error).message);
+      setFormStatus('error');
+
+      return false;
     }
   };
 
@@ -144,10 +170,11 @@ export function usePatientCreateForm() {
   return {
     step,
     forms,
-    newPatient,
+    formStatus,
     handleNext,
     handlePrev,
     handleSubmit,
+    handleAutoGenerate,
     handleReset,
   };
 }
