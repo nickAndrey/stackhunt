@@ -1,5 +1,3 @@
-import { seedPatients } from '@/shared/db/seedPatients';
-import { seedStaff } from '@/shared/db/seedStaff';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router';
@@ -13,8 +11,8 @@ const queryClient = new QueryClient();
  * @description
  * ## Create DB and predefine patients, doctors, appointments and settings
  */
-seedPatients();
-seedStaff();
+// seedPatients();
+// seedStaff();
 
 function App() {
   const fallBackElement = (
