@@ -1,5 +1,6 @@
 import { DataTable } from '@/shared/components/DataTable';
 import type { Staff } from '@/shared/types/staff';
+import { memo } from 'react';
 import { useNavigate } from 'react-router';
 import { columnsConfig } from './columns-config';
 import {
@@ -11,7 +12,7 @@ type MembersTableProps = {
   staff: Staff[];
 };
 
-export function MembersTable({ staff }: MembersTableProps) {
+function MembersTableMemoized({ staff }: MembersTableProps) {
   const navigate = useNavigate();
 
   const createAppointmentModal = useCreateAppointmentModal();
@@ -31,3 +32,5 @@ export function MembersTable({ staff }: MembersTableProps) {
     </>
   );
 }
+
+export const MembersTable = memo(MembersTableMemoized);

@@ -4,9 +4,10 @@ import { Card } from '@/design-system/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import type { Staff } from '@/shared/types/staff';
 import { Plus } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CreateMemberModal, useCreateMemberModal } from './components/create-member-modal';
 import { MembersTable } from './components/members-table';
+import { QuickSearchInput, useQuickSearchInput } from './components/quick-search-input';
 
 type MembersPageProps = {
   data: Staff[];
@@ -16,12 +17,18 @@ export function MembersPage(props: MembersPageProps) {
   const { setHeader } = useHeader();
 
   const createMemberModal = useCreateMemberModal();
+  const quickSearchInput = useQuickSearchInput();
+
+  const [initialData, setInitialData] = useState(props.data);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     setHeader({
       title: 'Members',
       actions: (
         <>
+          <QuickSearchInput {...quickSearchInput} />
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="secondary" onClick={() => createMemberModal.toggleModal(true)}>
@@ -33,13 +40,14 @@ export function MembersPage(props: MembersPageProps) {
         </>
       ),
     });
+
     return () => setHeader({});
-  }, [setHeader]);
+  }, [setHeader, quickSearchInput.searchValue]);
 
   return (
     <div className="px-4 py-3">
       <Card>
-        <MembersTable staff={props.data} />
+        <MembersTable staff={quickSearchInput.searchResults ?? initialData} />
       </Card>
 
       <CreateMemberModal {...createMemberModal} />
