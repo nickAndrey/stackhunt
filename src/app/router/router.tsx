@@ -18,6 +18,11 @@ const MembersPageLoader = lazy(() =>
     default: module.MembersPageLoader,
   }))
 );
+const MemberPageLoader = lazy(() =>
+  import('@/domains/members/details').then((module) => ({
+    default: module.MemberPageLoader,
+  }))
+);
 const AppointmentsPage = lazy(() =>
   import('@/domains/appointments/Page').then((module) => ({
     default: module.AppointmentsPage,
@@ -77,7 +82,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/members/:id',
-        element: <h1>member details</h1>,
+        element: <MemberPageLoader />,
       },
       {
         path: '/appointments',
