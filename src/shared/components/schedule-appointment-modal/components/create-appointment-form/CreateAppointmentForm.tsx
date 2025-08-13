@@ -26,30 +26,57 @@ import { CalendarIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import type { useCreateAppointmentForm } from './hooks/useCreateAppointmentForm';
 import { searchOverPatients } from './services/search-over-patients';
+import { searchOverStaff } from './services/search-over-staff';
 
 type CreateAppointmentFormProps = ReturnType<typeof useCreateAppointmentForm> & {};
 
 export function CreateAppointmentForm(params: CreateAppointmentFormProps) {
-  const comboboxState = useCombobox(searchOverPatients);
+  const comboboxStatePatient = useCombobox(searchOverPatients);
+  const comboboxStateMember = useCombobox(searchOverStaff);
 
-  useEffect(() => params.form.setValue('patientId', comboboxState.value), [comboboxState.value]);
+  useEffect(() => {
+    if (params.createFrom === 'patient') {
+      params.form.setValue('staffId', comboboxStateMember.value);
+    }
+
+    if (params.createFrom === 'member') {
+      params.form.setValue('patientId', comboboxStatePatient.value);
+    }
+  }, [comboboxStateMember.value, comboboxStatePatient.value]);
 
   return (
     <Form {...params.form}>
       <form className="flex flex-col gap-3">
-        <FormField
-          control={params.form.control}
-          name="patientId"
-          render={() => (
-            <FormItem>
-              <FormLabel htmlFor="staff_id">Patient</FormLabel>
-              <FormControl>
-                <Combobox {...comboboxState} id="staff_id" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {params.createFrom === 'patient' && (
+          <FormField
+            control={params.form.control}
+            name="staffId"
+            render={() => (
+              <FormItem>
+                <FormLabel htmlFor="staff_id">Staff member</FormLabel>
+                <FormControl>
+                  <Combobox {...comboboxStateMember} id="staff_id" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        {params.createFrom === 'member' && (
+          <FormField
+            control={params.form.control}
+            name="patientId"
+            render={() => (
+              <FormItem>
+                <FormLabel htmlFor="patient_id">Patient</FormLabel>
+                <FormControl>
+                  <Combobox {...comboboxStatePatient} id="patient_id" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <FormField
           control={params.form.control}
           name="type"

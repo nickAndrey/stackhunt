@@ -1,18 +1,21 @@
 import { Button } from '@/design-system/components/ui/button';
-import { Modal } from '@/shared/components/Modal';
 import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
-import { CreateAppointmentForm, useCreateAppointmentForm } from '../create-appointment-form';
-import type { useCreateAppointmentModal } from './hooks/useCreateAppointmentModal';
+import { Modal } from '../Modal';
+import {
+  CreateAppointmentForm,
+  useCreateAppointmentForm,
+} from './components/create-appointment-form';
+import type { useScheduleAppointmentModal } from './hooks/useScheduleAppointmentModal';
 
-type CreateAppointmentModalProps = ReturnType<typeof useCreateAppointmentModal> & {};
+type ScheduleAppointmentModalProps = ReturnType<typeof useScheduleAppointmentModal> & {};
 
-export function CreateAppointmentModal(params: CreateAppointmentModalProps) {
-  const formState = useCreateAppointmentForm(params.selectedStaffId);
+export function ScheduleAppointmentModal(params: ScheduleAppointmentModalProps) {
+  const formState = useCreateAppointmentForm(params.transferredParams);
 
   useEffect(() => {
     if (formState.formStatus === 'success') {
-      params.toggleModal(false);
+      params.setIsModalOpen(false);
       params.setIsAppointmentCreated(true);
     }
   }, [formState.formStatus]);
@@ -20,7 +23,7 @@ export function CreateAppointmentModal(params: CreateAppointmentModalProps) {
   return (
     <Modal
       open={params.isModalOpen}
-      onOpenChange={params.toggleModal}
+      onOpenChange={params.setIsModalOpen}
       title="Create an Appointment"
       description="Provide the appointment details to schedule a meeting."
       actionBtn={

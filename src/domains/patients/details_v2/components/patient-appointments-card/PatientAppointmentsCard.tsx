@@ -6,12 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/design-system/components/ui/card';
-import {
-  CreateAppointmentModal,
-  useCreateAppointmentModal,
-} from '@/domains/patients/shared/components/create-appointment-modal';
+
 import { Loader } from '@/shared/components/Loader';
 import { NoData } from '@/shared/components/NoData';
+import {
+  ScheduleAppointmentModal,
+  useScheduleAppointmentModal,
+} from '@/shared/components/schedule-appointment-modal';
 import type { Appointment } from '@/shared/types/patient';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -25,11 +26,11 @@ type PatientAppointmentsCardProps = {
 };
 
 export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
-  const createAppointmentModal = useCreateAppointmentModal();
+  const createAppointmentModal = useScheduleAppointmentModal();
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
-  const { isAppointmentCreated, setIsAppointmentCreated, toggleModal } = createAppointmentModal;
+  const { isAppointmentCreated, setIsAppointmentCreated, handleOpenModal } = createAppointmentModal;
 
   useEffect(() => {
     if (isAppointmentCreated) {
@@ -59,7 +60,12 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
               variant="ghost"
               size="icon"
               className="size-8 rounded-2xl"
-              onClick={() => toggleModal(true, props.patientId)}
+              onClick={() => {
+                handleOpenModal(true, {
+                  createFrom: 'patient',
+                  id: props.patientId,
+                });
+              }}
             >
               <Plus />
             </Button>
@@ -84,7 +90,7 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
         </CardContent>
       </Card>
 
-      <CreateAppointmentModal {...createAppointmentModal} />
+      <ScheduleAppointmentModal {...createAppointmentModal} />
     </>
   );
 }

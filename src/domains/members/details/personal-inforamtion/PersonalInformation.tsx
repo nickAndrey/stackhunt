@@ -15,7 +15,7 @@ type PersonalInformationProps = {
 };
 
 export function PersonalInformation({ staff }: PersonalInformationProps) {
-  const rows = [
+  const detailsRows = [
     {
       label: 'Role',
       value: staff.role ?? '—',
@@ -50,6 +50,31 @@ export function PersonalInformation({ staff }: PersonalInformationProps) {
     },
   ];
 
+  const contactRows = [
+    {
+      label: 'Phone',
+      value: staff.phone ? (
+        <a href={`tel:${staff.phone}`} className="hover:underline">
+          {staff.phone}
+        </a>
+      ) : (
+        '—'
+      ),
+    },
+    {
+      label: 'Email',
+      value: (
+        <a href={`mailto:${staff.email}`} className="hover:underline">
+          {staff.email}
+        </a>
+      ),
+    },
+    {
+      label: 'Preferred Contact',
+      value: staff.preferred_contact_method ?? '—',
+    },
+  ];
+
   return (
     <Card>
       <CardHeader>
@@ -70,10 +95,21 @@ export function PersonalInformation({ staff }: PersonalInformationProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <CardTitle className="mb-3">Professional Details</CardTitle>
+        <div className="mb-10">
+          <CardTitle className="mb-3">Professional Details</CardTitle>
+          <div className="divide-y divide-border">
+            {detailsRows.map(({ label, value }) => (
+              <div key={label} className="flex justify-between py-1">
+                <span className="font-medium">{label}</span>
+                <span>{value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
+        <CardTitle className="mb-3">Contact</CardTitle>
         <div className="divide-y divide-border">
-          {rows.map(({ label, value }) => (
+          {contactRows.map(({ label, value }) => (
             <div key={label} className="flex justify-between py-1">
               <span className="font-medium">{label}</span>
               <span>{value}</span>

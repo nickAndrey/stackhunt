@@ -2,23 +2,30 @@ import { createAppointment } from '@/shared/services/create-appointment';
 import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
 const schema = z.object({
   staffId: z.string().min(1, 'You have to select a staff member to create an appointment.'),
+  patientId: z.string().min(1, 'You have to select a patient to create an appointment.'),
   type: z.enum(['consultation', 'follow_up', 'surgery', 'lab_test', 'vaccination', 'emergency']),
   date: z.date(),
   time: z.string(),
   notes: z.string().optional(),
 });
 
-export function useCreateAppointmentForm(patientId: string) {
+type Params = {
+  createFrom: 'member' | 'patient';
+  id: string;
+};
+
+export function useCreateAppointmentForm(params: Params) {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
+      patientId: '',
       staffId: '',
       type: 'consultation',
       date: new Date(),
@@ -29,12 +36,22 @@ export function useCreateAppointmentForm(patientId: string) {
 
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
+  useEffect(() => {
+    if (params.createFrom === 'member') {
+      form.setValue('staffId', params.id);
+      form.setValue('patientId', '');
+    } else if (params.createFrom === 'patient') {
+      form.setValue('patientId', params.id);
+      form.setValue('staffId', '');
+    }
+  }, [form, params.createFrom, params.id]);
+
   const handleCreateAppointment = form.handleSubmit(async (data) => {
     setFormStatus('processing');
     await new Promise((res) => setTimeout(res, 2000));
 
     try {
-      if (!patientId) throw new Error('Patient Id was not provided.');
+      if (!params.id) throw new Error('Id was not provided.');
 
       const timeFractions = data.time.split(':').map((val) => parseFloat(val));
       const appointmentDate = dayjs(data.date)
@@ -43,7 +60,7 @@ export function useCreateAppointmentForm(patientId: string) {
         .set('seconds', timeFractions[2]);
 
       await createAppointment({
-        patientId,
+        patientId: data.patientId,
         staffId: data.staffId,
         type: data.type,
         notes: data.notes,
@@ -58,5 +75,11 @@ export function useCreateAppointmentForm(patientId: string) {
     }
   });
 
-  return { form, formStatus, schema, handleCreateAppointment };
+  return {
+    form,
+    formStatus,
+    createFrom: params.createFrom,
+    schema,
+    handleCreateAppointment,
+  };
 }

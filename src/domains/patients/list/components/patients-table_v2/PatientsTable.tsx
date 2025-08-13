@@ -1,8 +1,8 @@
-import {
-  CreateAppointmentModal,
-  useCreateAppointmentModal,
-} from '@/domains/patients/shared/components/create-appointment-modal';
 import { DataTable } from '@/shared/components/DataTable';
+import {
+  ScheduleAppointmentModal,
+  useScheduleAppointmentModal,
+} from '@/shared/components/schedule-appointment-modal';
 import type { Patient } from '@/shared/types/patient';
 import { useNavigate } from 'react-router';
 import { columnsConfig } from './columns-config';
@@ -13,11 +13,16 @@ type PatientsDataTableProps = {
 
 export function PatientsDataTable({ patients }: PatientsDataTableProps) {
   const navigate = useNavigate();
-  const createAppointmentModal = useCreateAppointmentModal();
+  const createAppointmentModal = useScheduleAppointmentModal();
 
   const columns = columnsConfig({
     actions: {
-      createAppointment: (patient) => createAppointmentModal.toggleModal(true, patient.id),
+      createAppointment: (patient) => {
+        createAppointmentModal.handleOpenModal(true, {
+          createFrom: 'patient',
+          id: patient.id,
+        });
+      },
       viewDetails: (patient) => navigate(`/patients/${patient.id}`),
     },
   });
@@ -25,7 +30,7 @@ export function PatientsDataTable({ patients }: PatientsDataTableProps) {
   return (
     <>
       <DataTable columns={columns} data={patients} />
-      <CreateAppointmentModal {...createAppointmentModal} />
+      <ScheduleAppointmentModal {...createAppointmentModal} />
     </>
   );
 }

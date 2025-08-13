@@ -4,6 +4,7 @@ import type { FileRecord } from './file-record';
 import type { Flag } from './flag';
 import type { Gender } from './gender';
 import type { Note } from './note';
+import type { Staff } from './staff';
 
 type PatientStatus = 'active' | 'inactive' | 'deceased' | 'blocked';
 type AllergySeverity = 'mild' | 'moderate' | 'severe';
@@ -77,12 +78,14 @@ type Patient = {
   birth_date: string;
   address: Address;
   registration_date: string;
+  assigned_staff_id?: string;
   national_id?: string;
   insurance_number?: string;
   profile_image?: File;
   preferred_language?: string;
   contact_preference?: ContactPreference;
   emergency_contact?: EmergencyContact;
+  assigned_staff?: Staff;
   notes?: Note[];
   files: FileRecord[];
   appointments: Appointment[];

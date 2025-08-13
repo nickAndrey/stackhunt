@@ -1,12 +1,12 @@
 import { DataTable } from '@/shared/components/DataTable';
+import {
+  ScheduleAppointmentModal,
+  useScheduleAppointmentModal,
+} from '@/shared/components/schedule-appointment-modal';
 import type { Staff } from '@/shared/types/staff';
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 import { columnsConfig } from './columns-config';
-import {
-  CreateAppointmentModal,
-  useCreateAppointmentModal,
-} from './components/create-appointment-modal';
 
 type MembersTableProps = {
   staff: Staff[];
@@ -15,20 +15,25 @@ type MembersTableProps = {
 function MembersTableMemoized({ staff }: MembersTableProps) {
   const navigate = useNavigate();
 
-  const createAppointmentModal = useCreateAppointmentModal();
+  const createAppointmentModal = useScheduleAppointmentModal();
 
   return (
     <>
       <DataTable
         columns={columnsConfig({
           actions: {
-            createAppointment: (staff) => createAppointmentModal.toggleModal(true, staff.id),
+            createAppointment: (staff) => {
+              createAppointmentModal.handleOpenModal(true, {
+                createFrom: 'member',
+                id: staff.id,
+              });
+            },
             viewDetails: ({ id }) => navigate(`/members/${id}`),
           },
         })}
         data={staff}
       />
-      <CreateAppointmentModal {...createAppointmentModal} />
+      <ScheduleAppointmentModal {...createAppointmentModal} />
     </>
   );
 }
