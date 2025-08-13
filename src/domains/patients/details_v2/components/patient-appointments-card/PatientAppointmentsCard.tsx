@@ -6,18 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/design-system/components/ui/card';
-
 import { Loader } from '@/shared/components/Loader';
 import { NoData } from '@/shared/components/NoData';
 import {
   ScheduleAppointmentModal,
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
+import { TimeLine } from '@/shared/components/time-line';
 import type { Appointment } from '@/shared/types/patient';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { enhanceAppointmentsWithAssignedStaff } from '../../utils/enhance-appointments-with-assigned-staff';
-import { TimeLine } from './components/time-line';
 import { getPatientAppointments } from './services/get-patient-appointments';
 
 type PatientAppointmentsCardProps = {
