@@ -1,5 +1,5 @@
 import { db } from '@/shared/db/db';
-import type { Appointment } from '@/shared/types/patient';
+import type { Appointment } from '../types/appointment';
 
 type Options = {
   patientId: string;

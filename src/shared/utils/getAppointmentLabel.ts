@@ -1,4 +1,4 @@
-import type { AppointmentType } from '../types/patient';
+import type { AppointmentType } from '../types/appointment';
 
 export function getAppointmentLabel(key: AppointmentType) {
   return {

@@ -5,18 +5,20 @@ type Params = {
   appointments: Appointment[];
 };
 
-export async function enhanceAppointmentsWithAssignedStaff(params: Params) {
+export async function enhanceAppointmentsWithAssignedPatients(params: Params) {
   return await Promise.all(
     params.appointments.map(async (appointment) => {
       const res = await getAppointmentWithEntity({
-        entityType: 'staff',
+        entityType: 'patient',
         groupId: appointment.group_id,
       });
+
+      const { id, first_name, last_name } = res.assignedEntity;
 
       if (res.assignedEntity) {
         return {
           ...appointment,
-          assignedStaff: res.assignedEntity as Appointment['assignedStaff'],
+          assignedPatient: { id, first_name, last_name },
         };
       }
 

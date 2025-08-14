@@ -13,19 +13,22 @@ import {
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
 import { TimeLine } from '@/shared/components/time-line';
+
 import type { Appointment } from '@/shared/types/appointment';
+import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { enhanceAppointmentsWithAssignedStaff } from '../../utils/enhance-appointments-with-assigned-staff';
-import { getPatientAppointments } from './services/get-patient-appointments';
+import { enhanceAppointmentsWithAssignedPatients } from '../../utils/enhance-appointments-with-assigned-patients';
+import { getStaffAppointments } from './services/get-staff-appointments';
 
 type PatientAppointmentsCardProps = {
-  patientId: string;
+  staffId: string;
   appointments: Appointment[];
 };
 
-export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
+export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
   const createAppointmentModal = useScheduleAppointmentModal();
+
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
@@ -35,9 +38,9 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
     if (isAppointmentCreated) {
       setLoading(true);
 
-      getPatientAppointments(props.patientId)
+      getStaffAppointments(props.staffId)
         .then(async (data) => {
-          const updatedData = await enhanceAppointmentsWithAssignedStaff({
+          const updatedData = await enhanceAppointmentsWithAssignedPatients({
             appointments: data,
           });
           setAppointmentsList(updatedData);
@@ -61,8 +64,8 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
               className="size-8 rounded-2xl"
               onClick={() => {
                 handleOpenModal(true, {
-                  createFrom: 'patient',
-                  id: props.patientId,
+                  createFrom: 'member',
+                  id: props.staffId,
                 });
               }}
             >
@@ -78,10 +81,10 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
 
           {!loading && (
             <TimeLine
-              items={appointmentsList.map(({ id, date, type, notes, assignedStaff }) => ({
+              items={appointmentsList.map(({ id, date, type, notes, assignedPatient }) => ({
                 id,
                 date,
-                title: `There will be ${type} with a ${assignedStaff?.role} ${assignedStaff?.first_name} ${assignedStaff?.last_name}`,
+                title: `There will be ${getAppointmentLabel(type)} with a ${assignedPatient?.first_name} ${assignedPatient?.last_name}`,
                 description: notes,
               }))}
             />

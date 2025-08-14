@@ -1,4 +1,5 @@
 import type { Address } from './address';
+import type { Appointment } from './appointment';
 import type { ContactPreference } from './contact-preference';
 import type { FileRecord } from './file-record';
 import type { Gender } from './gender';
@@ -37,6 +38,7 @@ type Staff = {
   tags?: Tag[];
   address?: Address;
   files?: FileRecord[];
+  appointments: Appointment[];
   preferred_contact_method?: ContactPreference;
 };
 

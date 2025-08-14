@@ -1,9 +1,10 @@
 import Dexie, { type Table } from 'dexie';
+import type { Appointment } from '../types/appointment';
 import type { AuthCredentials } from '../types/auth-credentials';
 import type { FileRecord } from '../types/file-record';
 import type { Flag } from '../types/flag';
 import type { Note } from '../types/note';
-import type { Allergy, Appointment, Condition, Medication, Patient, Tag } from '../types/patient';
+import type { Allergy, Condition, Medication, Patient, Tag } from '../types/patient';
 import type { Staff } from '../types/staff';
 
 export type WithPatientId<T> = T & {

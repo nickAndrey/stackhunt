@@ -1,4 +1,5 @@
 import type { Address } from './address';
+import type { Appointment } from './appointment';
 import type { ContactPreference } from './contact-preference';
 import type { FileRecord } from './file-record';
 import type { Flag } from './flag';
@@ -14,33 +15,6 @@ type Allergy = {
   substance: string;
   reaction: string;
   severity: AllergySeverity;
-};
-
-type AppointmentType =
-  | 'consultation'
-  | 'follow_up'
-  | 'surgery'
-  | 'lab_test'
-  | 'vaccination'
-  | 'emergency';
-
-type AppointmentStatus = 'scheduled' | 'completed' | 'cancelled';
-
-type Appointment = {
-  id: string;
-  group_id: string;
-  type: AppointmentType;
-  date: string;
-  duration_minutes?: number;
-  location?: string;
-  notes?: string;
-  status: AppointmentStatus;
-  assignedStaff?: {
-    id: string;
-    role: string;
-    first_name: string;
-    last_name: string;
-  };
 };
 
 type Condition = {
@@ -102,9 +76,6 @@ type Patient = {
 export type {
   Allergy,
   AllergySeverity,
-  Appointment,
-  AppointmentStatus,
-  AppointmentType,
   Condition,
   EmergencyContact,
   Medication,

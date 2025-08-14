@@ -1,7 +1,8 @@
 import { useHeader } from '@/app/contexts/header';
 import type { Staff } from '@/shared/types/staff';
 import { useEffect, useState } from 'react';
-import { PersonalInformation } from './personal-inforamtion';
+import { PersonalInformation } from './components/personal-inforamtion';
+import { StaffAppointmentsCard } from './components/staff-appointments-card';
 
 type MembersPageProps = {
   data: Staff;
@@ -22,6 +23,7 @@ export function MemberPage(props: MembersPageProps) {
     <div className="px-4 py-3 flex-col-grow">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-3 items-start">
         <PersonalInformation staff={initialData} />
+        <StaffAppointmentsCard appointments={initialData.appointments} staffId={initialData.id} />
       </div>
     </div>
   );
