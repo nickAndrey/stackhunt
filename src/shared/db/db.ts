@@ -5,6 +5,7 @@ import type { FileRecord } from '../types/file-record';
 import type { Flag } from '../types/flag';
 import type { Note } from '../types/note';
 import type { Allergy, Condition, Medication, Patient, Tag } from '../types/patient';
+import type { PatientStaffAssignment } from '../types/patient-staff-assignment';
 import type { Staff } from '../types/staff';
 
 export type WithPatientId<T> = T & {
@@ -50,6 +51,7 @@ export class ClinicCRMDatabase extends Dexie {
   appointments!: Table<WithEntity<Appointment>>;
   staff!: Table<Staff>;
   auth_credentials!: Table<AuthCredentials>;
+  patient_staff_assignments!: Table<PatientStaffAssignment>;
 
   constructor() {
     super('ClinicCRM');
@@ -65,6 +67,7 @@ export class ClinicCRMDatabase extends Dexie {
       appointments: `id, group_id, type, date, duration_minutes, location, notes, status, patient, staff, entity_type, entity_id, [entity_type+entity_id], [entity_type+group_id]`,
       staff: `id, first_name, last_name, &email, phone, gender, role, status, profile_image, department, specialty, &license_number, &employee_id, start_date, end_date, bio, address, preferred_contact_method, [first_name+last_name]`,
       auth_credentials: `id, staff_id, email, hashed_password, role, last_login`,
+      patient_staff_assignments: `id, patient_id, staff_id, role, start_date, end_date, [patient_id+staff_id]`,
     });
   }
 }

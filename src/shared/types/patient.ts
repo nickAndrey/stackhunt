@@ -5,6 +5,7 @@ import type { FileRecord } from './file-record';
 import type { Flag } from './flag';
 import type { Gender } from './gender';
 import type { Note } from './note';
+import type { PatientStaffAssignment } from './patient-staff-assignment';
 import type { Staff } from './staff';
 
 type PatientStatus = 'active' | 'inactive' | 'deceased' | 'blocked';
@@ -52,7 +53,6 @@ type Patient = {
   birth_date: string;
   address: Address;
   registration_date: string;
-  assigned_staff_id?: string;
   national_id?: string;
   insurance_number?: string;
   profile_image?: File;
@@ -71,6 +71,7 @@ type Patient = {
   consent_signed_date?: string;
   status: PatientStatus;
   tags: Tag[];
+  patient_staff_assignments?: PatientStaffAssignment[];
 };
 
 export type {

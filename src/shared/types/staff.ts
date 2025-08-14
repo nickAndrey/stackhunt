@@ -5,6 +5,7 @@ import type { FileRecord } from './file-record';
 import type { Gender } from './gender';
 import type { Note } from './note';
 import type { Tag } from './patient';
+import type { PatientStaffAssignment } from './patient-staff-assignment';
 
 type StaffRole =
   | 'doctor'
@@ -40,6 +41,7 @@ type Staff = {
   files?: FileRecord[];
   appointments: Appointment[];
   preferred_contact_method?: ContactPreference;
+  patient_staff_assignments?: PatientStaffAssignment[];
 };
 
 type StaffForm = Omit<Staff, 'start_date' | 'end_date'> & {

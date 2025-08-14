@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 type Option = {
   label: string;
   value: string;
+  description?: string;
 };
 
 type FetchOptionsFn = (query: string) => Promise<Option[]>;
