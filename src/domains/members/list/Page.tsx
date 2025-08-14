@@ -53,7 +53,7 @@ export function MembersPage(props: MembersPageProps) {
   }, [setHeader, quickSearchInput.searchValue]);
 
   return (
-    <div className="px-4 py-3 flex-col-grow">
+    <div className="px-4 py-3 flex-col-grow h-full">
       <Card className="max-h-[100%]">
         <MembersTable staff={quickSearchInput.searchResults ?? initialData} />
       </Card>

@@ -61,7 +61,7 @@ export function PatientsPage({ data }: PatientsPageProps) {
   }, [searchValue, setHeader, setSearchValue]);
 
   return (
-    <div className="px-4 py-3 flex-col-grow">
+    <div className="px-4 py-3 flex-col-grow h-full">
       <Card className="h-full">
         <PatientsDataTable patients={searchResults ?? initialData} />
       </Card>

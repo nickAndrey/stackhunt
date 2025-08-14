@@ -51,7 +51,10 @@ export function Combobox({
                 onOpenChange(false);
               }}
             >
-              {option.label}
+              <span className="flex flex-col items-start">
+                {option.label}
+                <small>{option.description}</small>
+              </span>
               {value === option.value && <Check className="h-4 w-4" />}
             </button>
           ))}

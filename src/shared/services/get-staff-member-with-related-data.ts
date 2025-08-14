@@ -5,11 +5,12 @@ export async function getStaffMemberWithRelatedData(staffId: string): Promise<St
   const staffMember = await db.staff.where('id').equals(staffId).first();
   if (!staffMember) throw new Error(`Staff member with id ${staffId} was not found`);
 
-  const [tags, files, notes, appointments] = await Promise.all([
+  const [tags, files, notes, appointments, patient_staff_assignments] = await Promise.all([
     db.tags.where('[entity_type+entity_id]').equals(['staff', staffId]).toArray(),
     db.files.where('[entity_type+entity_id]').equals(['staff', staffId]).toArray(),
     db.notes.where('[entity_type+entity_id]').equals(['staff', staffId]).toArray(),
     db.appointments.where('[entity_type+entity_id]').equals(['staff', staffId]).toArray(),
+    db.patient_staff_assignments.where('staff_id').equals(staffId).toArray(),
   ]);
 
   const profileImage = files.find((item) => item.name === 'profile-image')?.file;
@@ -21,5 +22,6 @@ export async function getStaffMemberWithRelatedData(staffId: string): Promise<St
     files,
     notes,
     appointments,
+    patient_staff_assignments,
   } as Staff;
 }
