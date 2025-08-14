@@ -10,12 +10,10 @@ export async function fetchStaffMember(id?: string): Promise<Staff> {
     appointments: staffMember.appointments,
   });
 
-  console.log(appointmentsWithAssignedPatients);
+  const res = {
+    ...staffMember,
+    appointments: appointmentsWithAssignedPatients,
+  };
 
-  return new Promise((resolve) => {
-    setTimeout(
-      () => resolve({ ...staffMember, appointments: appointmentsWithAssignedPatients }),
-      2000
-    );
-  });
+  return new Promise((resolve) => setTimeout(() => resolve(res), 2000));
 }
