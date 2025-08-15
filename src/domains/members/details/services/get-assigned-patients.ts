@@ -29,7 +29,7 @@ export async function getAssignedPatients(
         patient_id: patient.id,
         first_name: patient.first_name,
         last_name: patient.last_name,
-        profile_image: profileImage,
+        profile_image: profileImage?.file,
         start_date: item.start_date,
         role: item.role,
       };
