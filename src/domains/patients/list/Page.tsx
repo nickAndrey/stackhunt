@@ -62,7 +62,7 @@ export function PatientsPage({ data }: PatientsPageProps) {
 
   return (
     <div className="px-4 py-3 flex-col-grow h-full">
-      <Card className="h-full">
+      <Card className="max-h-[100%]">
         <PatientsDataTable patients={searchResults ?? initialData} />
       </Card>
 
