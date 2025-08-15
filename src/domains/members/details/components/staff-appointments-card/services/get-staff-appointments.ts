@@ -6,7 +6,5 @@ export async function getStaffAppointments(staffId: string) {
     .equals(['staff', staffId])
     .toArray();
 
-  console.log(appointments);
-
   return appointments;
 }

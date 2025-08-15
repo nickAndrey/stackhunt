@@ -1,6 +1,7 @@
 import type { PatientStaffRole } from '@/shared/types/patient-staff-assignment';
 
 export type AssignedPatient = {
+  assignment_id: string;
   patient_id: string;
   first_name: string;
   last_name: string;

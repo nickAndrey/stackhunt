@@ -25,6 +25,7 @@ export async function getAssignedPatients(
         .first();
 
       return {
+        assignment_id: item.id,
         patient_id: patient.id,
         first_name: patient.first_name,
         last_name: patient.last_name,

@@ -11,11 +11,12 @@ import { NoData } from '@/shared/components/NoData';
 import { DAYJS_FORMAT } from '@/shared/constants';
 import type { PatientStaffAssignment } from '@/shared/types/patient-staff-assignment';
 import dayjs from 'dayjs';
-import { Plus } from 'lucide-react';
+import { Plus, UserX } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getAssignedPatients } from '../../services/get-assigned-patients';
 import type { AssignedPatient } from '../../types/assigned-patient';
 import { AssignPatientModal, useAssignPatientModal } from './components/assign-patient-modal';
+import { UnassignPatientModal, useUnassignPatientModal } from './components/unassign-patient-modal';
 import { getLabelByRoleAssignment } from './utils/get-label-by-role-assignment';
 
 type AssignedPatientCardProps = {
@@ -25,6 +26,7 @@ type AssignedPatientCardProps = {
 
 export function AssignedPatientCard(props: AssignedPatientCardProps) {
   const assignPatientModal = useAssignPatientModal();
+  const unassignPatientModal = useUnassignPatientModal();
 
   const [assignedPatients, setAssignedPatients] = useState<AssignedPatient[]>([]);
 
@@ -39,6 +41,14 @@ export function AssignedPatientCard(props: AssignedPatientCardProps) {
         .finally(() => assignPatientModal.setIsPatientAssigned(false));
     }
   }, [assignPatientModal.isPatientAssigned]);
+
+  useEffect(() => {
+    if (unassignPatientModal.isPatientUnassigned) {
+      getAssignedPatients(props.staffId)
+        .then((data) => setAssignedPatients(data))
+        .finally(() => unassignPatientModal.setIsPatientUnassigned(false));
+    }
+  }, [unassignPatientModal.isPatientUnassigned]);
 
   return (
     <>
@@ -76,6 +86,13 @@ export function AssignedPatientCard(props: AssignedPatientCardProps) {
                       {dayjs(item.start_date).format(DAYJS_FORMAT)}.
                     </small>
                   </div>
+                  <Button
+                    variant="ghost"
+                    className="rounded-full size-8 ml-auto"
+                    onClick={() => unassignPatientModal.handleToggleModal(true, item.assignment_id)}
+                  >
+                    <UserX />
+                  </Button>
                 </li>
               ))}
             </ul>
@@ -84,6 +101,7 @@ export function AssignedPatientCard(props: AssignedPatientCardProps) {
       </Card>
 
       <AssignPatientModal {...assignPatientModal} />
+      <UnassignPatientModal {...unassignPatientModal} />
     </>
   );
 }

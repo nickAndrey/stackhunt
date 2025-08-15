@@ -21,6 +21,7 @@ import { DAYJS_FORMAT } from '@/shared/constants';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import { useEffect } from 'react';
+import { getLabelByRoleAssignment } from '../../../../utils/get-label-by-role-assignment';
 import type { useAssignPatientForm } from './hooks/useAssignPatientForm';
 import { searchOverPatients } from './services/search-over-patients';
 
@@ -63,7 +64,7 @@ export function AssignPatientForm(props: AssignPatientFormProps) {
                   <SelectContent>
                     {props.schema.shape.role.options.map((role) => (
                       <SelectItem value={role} key={role}>
-                        {role}
+                        {getLabelByRoleAssignment(role)}
                       </SelectItem>
                     ))}
                   </SelectContent>
