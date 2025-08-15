@@ -5,7 +5,13 @@ import { AuthProvider } from './contexts/auth';
 import { HeaderProvider } from './contexts/header';
 import { router } from './router';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 0,
+    },
+  },
+});
 
 /**
  * @description

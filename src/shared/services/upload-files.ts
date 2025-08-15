@@ -12,16 +12,18 @@ export async function uploadFiles({ files, entityType, entityId }: Params) {
 
   const names = files.map((file) => file.name || '');
 
-  await db.files
-    .where('[name+entity_type+entity_id]')
-    .anyOf(names.map((name) => [name, entityType, entityId]))
-    .delete();
+  await db.transaction('rw', db.files, async () => {
+    await db.files
+      .where('[name+entity_type+entity_id]')
+      .anyOf(names.map((name) => [name, entityType, entityId]))
+      .delete();
 
-  await db.files.bulkAdd(
-    files.map((file) => ({
-      ...file,
-      entity_type: entityType,
-      entity_id: entityId,
-    }))
-  );
+    await db.files.bulkAdd(
+      files.map((file) => ({
+        ...file,
+        entity_type: entityType,
+        entity_id: entityId,
+      }))
+    );
+  });
 }

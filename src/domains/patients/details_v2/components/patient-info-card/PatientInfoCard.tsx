@@ -77,7 +77,7 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
       <Card className="grid grid-cols-[1fr] gap-0">
         <div className="grid sm:grid-cols-[auto_1fr] sm:px-4 pb-4 gap-4 border-b-1">
           <Avatar
-            className="w-24 h-24 sm:mb-3 m-auto"
+            className="w-24 h-24 sm:mb-3 m-auto  group hover:cursor-pointer"
             onClick={() => setProfileImageModal.toggleModal(true)}
           >
             <AvatarImage
@@ -85,7 +85,7 @@ export function PatientInfoCard({ patient }: PatientInfoCardProps) {
               className="object-cover"
               alt={`patient: ${patient.first_name} ${patient.last_name}`}
             />
-            <AvatarFallback>
+            <AvatarFallback className="border-dashed border-2 group-hover:bg-gray-300 transition-all">
               {patient.first_name[0]}
               {patient.last_name[0]}
             </AvatarFallback>

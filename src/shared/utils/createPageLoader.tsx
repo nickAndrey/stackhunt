@@ -17,7 +17,8 @@ export function createPageLoader<T>(
     const { data, status, error } = useQuery<T | undefined>({
       queryKey: [id ? `${queryKeyPrefix}_${id}` : queryKeyPrefix],
       queryFn: () => fetchFn(id),
-      staleTime: 1000,
+      staleTime: 0,
+      refetchOnMount: 'always',
     });
 
     if (status === 'pending')
