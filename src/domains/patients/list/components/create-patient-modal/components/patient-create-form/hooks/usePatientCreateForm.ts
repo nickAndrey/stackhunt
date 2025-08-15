@@ -115,7 +115,7 @@ export function usePatientCreateForm() {
 
   const handleSubmit = async () => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     const finalData = {
       ...step1Form.getValues(),
@@ -142,7 +142,7 @@ export function usePatientCreateForm() {
 
   const handleAutoGenerate = async () => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       await createDemoPatients();

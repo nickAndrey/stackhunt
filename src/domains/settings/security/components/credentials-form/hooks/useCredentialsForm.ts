@@ -47,7 +47,7 @@ export function useCredentialsForm({ initialValues }: Params) {
   const handleSubmit = form.handleSubmit(async (formData) => {
     try {
       setFormStatus('processing');
-      await new Promise((res) => setTimeout(res, 2000));
+      await new Promise((res) => setTimeout(res, 1000));
 
       await updateCredentials({
         memberId: initialValues.staff_id,
@@ -58,7 +58,7 @@ export function useCredentialsForm({ initialValues }: Params) {
       toast.success('The profile credentials was successfully updated.');
     } catch (err) {
       setFormStatus('error');
-      console.log((err as Error).message);
+      console.error((err as Error).message);
       toast.error((err as Error).message);
     }
   });

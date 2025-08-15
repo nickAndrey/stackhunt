@@ -68,7 +68,7 @@ export function useProfileForm({ staff }: Params) {
     return form.handleSubmit(async (data) => {
       try {
         setFormStatus('processing');
-        await new Promise((res) => setTimeout(res, 2000));
+        await new Promise((res) => setTimeout(res, 1000));
 
         await updateMember({
           fields: data,
@@ -86,7 +86,7 @@ export function useProfileForm({ staff }: Params) {
         toast.success('The profile was successfully updated.');
       } catch (err) {
         setFormStatus('error');
-        console.log((err as Error).message);
+        console.error((err as Error).message);
       }
     });
   };

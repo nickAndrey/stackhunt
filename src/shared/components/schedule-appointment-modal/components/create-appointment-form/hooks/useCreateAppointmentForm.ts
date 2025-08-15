@@ -48,7 +48,7 @@ export function useCreateAppointmentForm(params: Params) {
 
   const handleCreateAppointment = form.handleSubmit(async (data) => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       if (!params.id) throw new Error('Id was not provided.');

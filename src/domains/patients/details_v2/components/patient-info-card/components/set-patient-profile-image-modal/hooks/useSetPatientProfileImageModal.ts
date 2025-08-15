@@ -23,7 +23,7 @@ export function useSetPatientProfileImageModal(patientId: string) {
 
   const handleSaveProfileImage = async () => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       const updatedImgAvatar = await updatePatientProfileImage({
@@ -38,7 +38,7 @@ export function useSetPatientProfileImageModal(patientId: string) {
 
       toast.success('Profile image was successfully updated.');
     } catch (error) {
-      console.log((error as Error).message);
+      console.error((error as Error).message);
       toast.error((error as Error).message);
     }
   };

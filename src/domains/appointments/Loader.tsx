@@ -6,7 +6,7 @@ async function getAppointments(): Promise<boolean> {
   const usersWithAdminRole = await db.staff.where('role').equals('admin').count();
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(usersWithAdminRole > 0), 2000);
+    setTimeout(() => resolve(usersWithAdminRole > 0), 1000);
   });
 }
 

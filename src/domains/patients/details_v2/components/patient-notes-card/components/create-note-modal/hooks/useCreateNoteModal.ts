@@ -35,7 +35,7 @@ export function useCreateNoteModal(patientId: string) {
 
   const handleCreateNote = form.handleSubmit(async (data) => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       if (!patientId) throw new Error('Patient ID was not provided.');

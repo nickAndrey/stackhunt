@@ -30,7 +30,7 @@ export function useLoginForm() {
   const handleSubmit = loginForm.handleSubmit(async (data) => {
     setFormStatus('processing');
 
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     const { success, msg } = await login({
       email: data.email,

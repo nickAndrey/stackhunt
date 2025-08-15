@@ -14,7 +14,7 @@ async function fetchStaffMemberFromIndexedDB(): Promise<{ staff: Staff }> {
   const staffMemberAdditionalData = await getStaffMemberWithRelatedData(authenticatedMember.id);
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve({ staff: staffMemberAdditionalData }), 2000);
+    setTimeout(() => resolve({ staff: staffMemberAdditionalData }), 1000);
   });
 }
 

@@ -14,7 +14,7 @@ async function getAuthCredentialsFromIndexedDB(): Promise<{ credentials: AuthCre
   if (!storedCredentials) throw new Error(`No credentials found for member ID ${id}`);
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve({ credentials: storedCredentials }), 2000);
+    setTimeout(() => resolve({ credentials: storedCredentials }), 1000);
   });
 }
 

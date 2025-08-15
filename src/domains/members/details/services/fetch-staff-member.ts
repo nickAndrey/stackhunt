@@ -15,5 +15,5 @@ export async function fetchStaffMember(id?: string): Promise<Staff> {
     appointments: appointmentsWithAssignedPatients,
   };
 
-  return new Promise((resolve) => setTimeout(() => resolve(res), 2000));
+  return new Promise((resolve) => setTimeout(() => resolve(res), 1000));
 }

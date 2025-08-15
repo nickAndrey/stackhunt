@@ -48,7 +48,7 @@ export function useRegisterForm() {
   const handleSubmit = form.handleSubmit(async (data) => {
     setFormStatus('processing');
 
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     await registerNewMember(data);
     await login({ email: data.email, password: data.password });

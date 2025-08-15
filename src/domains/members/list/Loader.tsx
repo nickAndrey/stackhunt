@@ -5,7 +5,7 @@ import { fetchStaffFromIndexedDB } from './services/fetch-staff';
 
 async function getDataWithDelay(): Promise<Staff[]> {
   const staff = await fetchStaffFromIndexedDB();
-  return new Promise((resolve) => setTimeout(() => resolve(staff), 2000));
+  return new Promise((resolve) => setTimeout(() => resolve(staff), 1000));
 }
 
 export function MembersPageLoader() {

@@ -10,6 +10,6 @@ export async function fetchPatients(): Promise<Patient[]> {
   );
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(mutatedPatients), 2000);
+    setTimeout(() => resolve(mutatedPatients), 1000);
   });
 }

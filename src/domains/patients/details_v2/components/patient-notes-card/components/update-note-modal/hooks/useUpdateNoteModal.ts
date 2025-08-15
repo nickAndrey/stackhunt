@@ -44,7 +44,7 @@ export function useUpdateNoteModal() {
 
   const handleUpdateNote = form.handleSubmit(async (data) => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       if (!member?.id) throw new Error('Staff member ID was not provided.');

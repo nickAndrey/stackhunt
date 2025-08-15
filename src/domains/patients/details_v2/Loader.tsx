@@ -16,7 +16,7 @@ async function fetchPatientFromIndexedDB(id?: string): Promise<{ patient: Patien
   const mutatedPatient = { ...patient, appointments: appointmentsWithAssignedStaff };
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve({ patient: mutatedPatient }), 2000);
+    setTimeout(() => resolve({ patient: mutatedPatient }), 1000);
   });
 }
 

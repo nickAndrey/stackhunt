@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import { createMember } from '../services/create-member';
 import { createDemoStaff } from '../services/create-demo-staff';
+import { createMember } from '../services/create-member';
 import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './schemas';
 
 export function useCreateMemberForm() {
@@ -81,7 +81,7 @@ export function useCreateMemberForm() {
 
   const handleSubmit = async () => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     const data = {
       ...step1Form.getValues(),
@@ -106,7 +106,7 @@ export function useCreateMemberForm() {
 
   const handleAutoGenerate = async () => {
     setFormStatus('processing');
-    await new Promise((res) => setTimeout(res, 2000));
+    await new Promise((res) => setTimeout(res, 1000));
 
     try {
       await createDemoStaff();
