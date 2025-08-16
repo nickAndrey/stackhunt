@@ -4,60 +4,56 @@ import type { Appointment } from '@/shared/types/appointment';
 export async function getStaffAppointments(): Promise<Appointment[]> {
   const appointments = await db.appointments.toArray();
 
-  const appointmentsWithAssigned = await Promise.all(
+  const enriched = await Promise.all(
     appointments.map(async (item) => {
-      let itemModified;
-
-      if (item.entity_type == 'staff') {
-        const staff = await db.staff.where('id').equals(item.entity_id).first();
-        if (staff) {
-          itemModified = {
-            ...item,
-            assignedStaff: {
-              id: staff.id,
-              role: staff.role,
-              first_name: staff.first_name,
-              last_name: staff.last_name,
-            },
-          };
-        }
+      if (item.entity_type === 'staff') {
+        const staff = await db.staff.get(item.entity_id);
+        return staff
+          ? {
+              ...item,
+              assignedStaff: {
+                id: staff.id,
+                role: staff.role,
+                first_name: staff.first_name,
+                last_name: staff.last_name,
+              },
+            }
+          : item;
       }
 
-      if (item.entity_type == 'patient') {
-        const patient = await db.patients.where('id').equals(item.entity_id).first();
-        if (patient) {
-          itemModified = {
-            ...item,
-            assignedPatient: {
-              id: patient.id,
-              first_name: patient.first_name,
-              last_name: patient.last_name,
-            },
-          };
-        }
+      if (item.entity_type === 'patient') {
+        const patient = await db.patients.get(item.entity_id);
+        return patient
+          ? {
+              ...item,
+              assignedPatient: {
+                id: patient.id,
+                first_name: patient.first_name,
+                last_name: patient.last_name,
+              },
+            }
+          : item;
       }
 
-      return itemModified;
+      return item;
     })
   );
 
-  const grouped = new Map<string, Appointment>();
+  const grouped = enriched.reduce((map, app) => {
+    if (!app) return map;
 
-  for (const app of appointmentsWithAssigned) {
-    if (!app) continue;
-
-    const existing = grouped.get(app.group_id);
-
+    const existing = map.get(app.group_id);
     if (!existing) {
-      grouped.set(app.group_id, app);
+      map.set(app.group_id, app);
     } else {
-      grouped.set(app.group_id, {
+      map.set(app.group_id, {
         ...existing,
         assignedStaff: existing.assignedStaff ?? app.assignedStaff,
         assignedPatient: existing.assignedPatient ?? app.assignedPatient,
       });
     }
-  }
+    return map;
+  }, new Map<string, Appointment>());
 
   const uniqueAppointments = Array.from(grouped.values());
 
