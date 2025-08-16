@@ -1,3 +1,4 @@
+import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/components/ui/popover';
 import type { Appointment } from '@/shared/types/appointment';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -55,7 +56,7 @@ export function AppointmentsCalendar({
             </div>
 
             <ul className="flex flex-col gap-1 w-full">
-              {dayObj.appointments.map((item) => (
+              {dayObj.appointments.slice(0, 2).map((item) => (
                 <li key={item.id}>
                   <div
                     className="w-full rounded-md bg-blue-400 text-white py-1 px-2 text-[12px] hover:bg-blue-500 hover:cursor-pointer transition-colors truncate"
@@ -68,6 +69,48 @@ export function AppointmentsCalendar({
                   </div>
                 </li>
               ))}
+              {dayObj.appointments.length > 2 && (
+                <li>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <div
+                        className="w-full rounded-md py-1 px-2 text-[12px] hover:bg-gray-400 hover:text-white hover:cursor-pointer transition-colors truncate"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {`And ${dayObj.appointments.slice(2, -1).length} more ...`}
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="max-w-[200px]">
+                      <div className="flex flex-col mb-2 text-center items-center gap-1">
+                        <small className="text-sm">{dayObj.date.format('ddd')}</small>
+                        <small
+                          className={
+                            'text-sm text-gray-500 w-[25px] h-[25px] rounded-full flex items-center justify-center bg-gray-200'
+                          }
+                        >
+                          {dayObj.date.date()}
+                        </small>
+                      </div>
+
+                      <ul className="flex flex-col gap-1 w-full">
+                        {dayObj.appointments.slice(2, -1).map((item) => (
+                          <li key={item.id}>
+                            <div
+                              className="w-full rounded-md bg-blue-400 text-white py-1 px-2 text-[12px] hover:bg-blue-500 hover:cursor-pointer transition-colors truncate"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onAppointmentClick(item);
+                              }}
+                            >
+                              {item.type}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </PopoverContent>
+                  </Popover>
+                </li>
+              )}
             </ul>
           </div>
         </div>
