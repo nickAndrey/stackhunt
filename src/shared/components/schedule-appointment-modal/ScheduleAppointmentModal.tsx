@@ -19,6 +19,7 @@ export function ScheduleAppointmentModal(params: ScheduleAppointmentModalProps) 
     if (formState.formStatus === 'success') {
       params.setIsModalOpen(false);
       params.setIsAppointmentCreated(true);
+      setTimeout(() => formState.form.reset(), 1000);
     }
   }, [formState.formStatus]);
 
