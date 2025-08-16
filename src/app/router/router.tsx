@@ -23,9 +23,9 @@ const MemberPageLoader = lazy(() =>
     default: module.MemberPageLoader,
   }))
 );
-const AppointmentsPage = lazy(() =>
-  import('@/domains/appointments/Page').then((module) => ({
-    default: module.AppointmentsPage,
+const AppointmentsPageLoader = lazy(() =>
+  import('@/domains/appointments/Loader').then((module) => ({
+    default: module.AppointmentsPageLoader,
   }))
 );
 const SettingsLayout = lazy(() =>
@@ -86,7 +86,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/appointments',
-        element: <AppointmentsPage />,
+        element: <AppointmentsPageLoader />,
       },
       {
         path: '/settings',
