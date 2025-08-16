@@ -32,7 +32,8 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
-  const { isAppointmentCreated, setIsAppointmentCreated, handleOpenModal } = createAppointmentModal;
+  const { isAppointmentCreated, setIsAppointmentCreated, onScheduleAppointmentModalOpen } =
+    createAppointmentModal;
 
   useEffect(() => {
     if (isAppointmentCreated) {
@@ -63,9 +64,8 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
               size="icon"
               className="size-8 rounded-2xl"
               onClick={() => {
-                handleOpenModal(true, {
-                  createFrom: 'member',
-                  id: props.staffId,
+                onScheduleAppointmentModalOpen(true, {
+                  staffId: props.staffId,
                 });
               }}
             >

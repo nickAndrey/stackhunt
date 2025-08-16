@@ -17,8 +17,11 @@ const schema = z.object({
 });
 
 type Params = {
-  createFrom: 'member' | 'patient';
-  id: string;
+  options?: {
+    staffId?: string;
+    patientId?: string;
+    date?: Date;
+  };
 };
 
 export function useCreateAppointmentForm(params: Params) {
@@ -37,22 +40,24 @@ export function useCreateAppointmentForm(params: Params) {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   useEffect(() => {
-    if (params.createFrom === 'member') {
-      form.setValue('staffId', params.id);
-      form.setValue('patientId', '');
-    } else if (params.createFrom === 'patient') {
-      form.setValue('patientId', params.id);
-      form.setValue('staffId', '');
+    if (params.options?.staffId) {
+      form.setValue('staffId', params.options.staffId);
     }
-  }, [form, params.createFrom, params.id]);
+
+    if (params.options?.patientId) {
+      form.setValue('patientId', params.options.patientId);
+    }
+
+    if (params.options?.date) {
+      form.setValue('date', params.options.date);
+    }
+  }, [form, params.options]);
 
   const handleCreateAppointment = form.handleSubmit(async (data) => {
     setFormStatus('processing');
     await new Promise((res) => setTimeout(res, 1000));
 
     try {
-      if (!params.id) throw new Error('Id was not provided.');
-
       const timeFractions = data.time.split(':').map((val) => parseFloat(val));
       const appointmentDate = dayjs(data.date)
         .set('hours', timeFractions[0])
@@ -78,7 +83,6 @@ export function useCreateAppointmentForm(params: Params) {
   return {
     form,
     formStatus,
-    createFrom: params.createFrom,
     schema,
     handleCreateAppointment,
   };

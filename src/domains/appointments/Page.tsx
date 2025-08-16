@@ -29,8 +29,9 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
           console.log(appointment);
         }}
         onDayClick={(dayObj) => {
-          scheduleAppointmentModal.handleOpenModal(true, { createFrom: 'member', id: '' });
-          console.log(dayObj);
+          scheduleAppointmentModal.onScheduleAppointmentModalOpen(true, {
+            date: dayObj.date.toDate(),
+          });
         }}
       />
 

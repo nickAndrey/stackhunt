@@ -30,12 +30,16 @@ export function useCombobox(fetchOptions: FetchOptionsFn) {
     };
   }, [search, fetchOptions]);
 
+  const onValueChange = (value: string) => {
+    setValue(value);
+  };
+
   return {
     value,
     search,
     options,
     open,
-    onValueChange: setValue,
+    onValueChange: onValueChange,
     onSearchChange: setSearch,
     onOpenChange: setOpen,
   };

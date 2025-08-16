@@ -11,7 +11,9 @@ import type { useScheduleAppointmentModal } from './hooks/useScheduleAppointment
 type ScheduleAppointmentModalProps = ReturnType<typeof useScheduleAppointmentModal> & {};
 
 export function ScheduleAppointmentModal(params: ScheduleAppointmentModalProps) {
-  const formState = useCreateAppointmentForm(params.transferredParams);
+  const formState = useCreateAppointmentForm({
+    options: params.appointmentDefaultValues,
+  });
 
   useEffect(() => {
     if (formState.formStatus === 'success') {
