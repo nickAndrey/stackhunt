@@ -38,7 +38,6 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
       <AppointmentsCalendar
         appointments={appointments}
         onAppointmentClick={(appointment) => {
-          console.log(appointment);
           scheduleAppointmentModal.onScheduleAppointmentModalOpen(true, {
             date: dayjs(appointment.date).toDate(),
             patientId: appointment.assignedPatient?.id,

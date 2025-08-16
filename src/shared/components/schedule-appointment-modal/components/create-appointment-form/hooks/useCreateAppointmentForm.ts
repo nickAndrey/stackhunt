@@ -51,6 +51,10 @@ export function useCreateAppointmentForm(params: Params) {
     if (params.options?.date) {
       form.setValue('date', params.options.date);
     }
+
+    return () => {
+      form.reset();
+    };
   }, [form, params.options]);
 
   const handleCreateAppointment = form.handleSubmit(async (data) => {
