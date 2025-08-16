@@ -2,10 +2,12 @@ import { getAppointmentWithEntity } from '@/shared/services/get-appointment-with
 import type { Appointment } from '@/shared/types/appointment';
 
 type Params = {
-  appointments: Appointment[];
+  appointments?: Appointment[];
 };
 
 export async function enhanceAppointmentsWithAssignedPatients(params: Params) {
+  if (!params.appointments) return undefined;
+
   return await Promise.all(
     params.appointments.map(async (appointment) => {
       const res = await getAppointmentWithEntity({

@@ -39,7 +39,7 @@ type Staff = {
   tags?: Tag[];
   address?: Address;
   files?: FileRecord[];
-  appointments: Appointment[];
+  appointments?: Appointment[];
   preferred_contact_method?: ContactPreference;
   patient_staff_assignments?: PatientStaffAssignment[];
 };
