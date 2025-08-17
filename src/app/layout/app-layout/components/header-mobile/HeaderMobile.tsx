@@ -94,7 +94,7 @@ export function HeaderMobile() {
             <img src="/logo.png" alt="Mounting Medical logo" className="mb-4 w-[136px] h-[65px]" />
           </DrawerHeader>
 
-          <Navigation currentWidth={0} />
+          <Navigation currentWidth={100} />
         </DrawerContent>
       </Drawer>
     </header>
