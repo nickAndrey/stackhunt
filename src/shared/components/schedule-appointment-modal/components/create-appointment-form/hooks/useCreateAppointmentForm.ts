@@ -47,7 +47,7 @@ export function useCreateAppointmentForm(params: Params) {
     }
 
     if (params.options?.date) {
-      form.setValue('date', params.options.date);
+      form.setValue('date', dayjs(params.options.date).toDate());
       form.setValue('time', dayjs(params.options.date).format('HH:mm:ss'));
     }
 

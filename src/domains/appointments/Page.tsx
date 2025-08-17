@@ -5,7 +5,6 @@ import {
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
 import type { Appointment } from '@/shared/types/appointment';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { getStaffAppointments } from './services/get-staff-appointments';
 
@@ -39,7 +38,7 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
         appointments={appointments}
         onAppointmentClick={(appointment) => {
           scheduleAppointmentModal.onScheduleAppointmentModalOpen(true, {
-            date: dayjs(appointment.date).toDate(),
+            date: appointment.date,
             patientId: appointment.assignedPatient?.id,
             staffId: appointment.assignedStaff?.id,
             groupId: appointment.group_id,
@@ -48,7 +47,7 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
         }}
         onDayClick={(dayObj) => {
           scheduleAppointmentModal.onScheduleAppointmentModalOpen(true, {
-            date: dayObj.date.toDate(),
+            date: dayObj.date.toISOString(),
           });
         }}
       />
