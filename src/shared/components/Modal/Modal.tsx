@@ -9,6 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/design-system/components/ui/dialog';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/design-system/components/ui/drawer';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import type { ReactNode } from 'react';
 
 type ModalProps = {
@@ -34,24 +45,50 @@ export function Modal({
   className,
   onOpenChange,
 }: ModalProps) {
+  const isDesktop = useMediaQuery('(width >= 48rem)');
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+
+        <DialogContent className={className}>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            {description && <DialogDescription>{description}</DialogDescription>}
+          </DialogHeader>
+
+          {children}
+
+          <DialogFooter>
+            <DialogClose asChild>
+              {closeBtn || <Button variant="outline">Cancel</Button>}
+            </DialogClose>
+            {actionBtn}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
 
-      <DialogContent className={className}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
-        </DialogHeader>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>{title}</DrawerTitle>
+          {description && <DrawerDescription>{description}</DrawerDescription>}
+        </DrawerHeader>
 
-        {children}
+        <div className="px-4 py-3">{children}</div>
 
-        <DialogFooter>
-          <DialogClose asChild>{closeBtn || <Button variant="outline">Cancel</Button>}</DialogClose>
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>{closeBtn || <Button variant="outline">Cancel</Button>}</DrawerClose>
           {actionBtn}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }
 

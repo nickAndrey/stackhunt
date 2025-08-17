@@ -4,6 +4,7 @@ import { Card } from '@/design-system/components/ui/card';
 import { Input } from '@/design-system/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import type { Patient } from '@/shared/types/patient';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { Plus, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { CreatePatientModal, useCreatePatientModal } from './components/create-patient-modal';
@@ -17,6 +18,7 @@ type PatientsPageProps = {
 
 export function PatientsPage({ data }: PatientsPageProps) {
   const { setHeader } = useHeader();
+  const isDesktop = useMediaQuery('(width >= 48rem)');
 
   const { searchResults, searchValue, setSearchValue } = useSearchPatient();
   const createPatientModal = useCreatePatientModal();
@@ -36,7 +38,7 @@ export function PatientsPage({ data }: PatientsPageProps) {
       title: 'Patients',
       actions: (
         <>
-          <div className="relative mr-2">
+          <div className="relative mr-2 w-full">
             <Input
               placeholder="Search for patient..."
               className="peer block w-full rounded-md border py-[9px] pl-10 text-sm"
@@ -61,10 +63,14 @@ export function PatientsPage({ data }: PatientsPageProps) {
   }, [searchValue, setHeader, setSearchValue]);
 
   return (
-    <div className="px-4 py-3 flex-col-grow h-full">
-      <Card className="max-h-[100%]">
+    <div className="md:px-4 py-3 flex-col-grow h-full">
+      {isDesktop ? (
+        <Card className="max-h-[100%]">
+          <PatientsDataTable patients={searchResults ?? initialData} />
+        </Card>
+      ) : (
         <PatientsDataTable patients={searchResults ?? initialData} />
-      </Card>
+      )}
 
       <CreatePatientModal {...createPatientModal} />
     </div>

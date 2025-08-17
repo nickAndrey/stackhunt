@@ -76,6 +76,7 @@ export function AssignedPatientCard(props: AssignedPatientCardProps) {
                   <Avatar>
                     <AvatarImage
                       src={item.profile_image ? URL.createObjectURL(item.profile_image) : ''}
+                      className="object-cover"
                     />
                     <AvatarFallback>{`${item.first_name[0]}${item.last_name[0]}`}</AvatarFallback>
                   </Avatar>
