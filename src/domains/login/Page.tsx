@@ -25,7 +25,7 @@ export function LoginPage({ isAdminUser }: LoginPageProps) {
   if (!isAdminUser) return <Navigate to="/auth/register" />;
 
   return (
-    <div className="h-screen flex flex-col gap-3 items-center justify-center bg-[url(/login-page-bg.webp)] bg-cover bg-center">
+    <div className="flex flex-col gap-3 px-2 py-4 max-w-md w-full max-h-screen overflow-y-auto">
       {loginErrorMsg && (
         <Alert variant="destructive" className="w-md">
           <AlertCircleIcon />
@@ -37,7 +37,7 @@ export function LoginPage({ isAdminUser }: LoginPageProps) {
         </Alert>
       )}
 
-      <div className="w-md rounded-2xl shadow-xl shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
+      <div className="rounded-2xl  shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
         <img
           src="/logo.png"
           alt="Mounting Medical logo"

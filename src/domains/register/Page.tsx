@@ -14,8 +14,8 @@ export function RegisterPage({ isAdminUser }: RegisterPageProps) {
   if (isAdminUser) return <Navigate to="/auth/login" />;
 
   return (
-    <div className="h-screen flex flex-col gap-3 items-center justify-center bg-[url(/login-page-bg.webp)] bg-cover bg-center">
-      <Alert className="w-xl">
+    <div className="flex flex-col gap-3 px-2 py-4 max-w-md w-full max-h-screen overflow-y-auto">
+      <Alert>
         <AlertCircleIcon />
         <AlertTitle>Administrator Setup</AlertTitle>
         <AlertDescription>
@@ -23,7 +23,8 @@ export function RegisterPage({ isAdminUser }: RegisterPageProps) {
           store it safely.
         </AlertDescription>
       </Alert>
-      <div className="w-xl max-h-10/12 rounded-2xl shadow-xl shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
+
+      <div className="rounded-2xl shadow-gray-400 pt-4 px-4 pb-8 space-y-6 bg-white">
         <img
           src="/logo.png"
           alt="Mounting Medical logo"
@@ -34,9 +35,7 @@ export function RegisterPage({ isAdminUser }: RegisterPageProps) {
           <h1 className="text-2xl font-bold">Welcome to Mounting Medical</h1>
         </div>
 
-        <div className="overflow-y-auto max-h-[300px] px-2">
-          <RegisterForm {...registerForm} />
-        </div>
+        <RegisterForm {...registerForm} />
 
         <Button variant="secondary" className="w-full" onClick={registerForm.handleSubmit}>
           {registerForm.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
