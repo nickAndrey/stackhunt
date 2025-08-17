@@ -34,7 +34,7 @@ export function Header() {
   const initials = `${member?.first_name?.[0]}${member?.last_name?.[0]}`;
 
   return (
-    <header className="sm:p-4 border-b flex items-center sm:gap-10">
+    <header className="p-4 border-b flex items-center gap-10">
       <h2 className="text-xl font-semibold">{header.title}</h2>
       <div className="flex gap-3 items-center">{header.actions}</div>
       <div className="ml-auto">

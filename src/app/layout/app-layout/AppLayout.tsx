@@ -1,4 +1,3 @@
-import { useHeader } from '@/app/contexts/header';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,14 +11,13 @@ import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 export function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();
-  const { header } = useHeader();
 
   return (
     <ResizablePanelGroup direction="horizontal" className="h-screen!">
       <ResizablePanel
         defaultSize={currentWidth}
         maxSize={30}
-        className={`min-w-[${header.isMenuOpened ? '60px' : '0px'}] sm:min-w-[60px]`}
+        className="min-w-[60px]"
         onResize={handleResize}
       >
         <Navigation currentWidth={currentWidth} />

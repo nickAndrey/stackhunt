@@ -12,7 +12,7 @@ export function SetPatientProfileImageModal(params: SetPatientProfileImageModalP
       open={params.isModalOpen}
       onOpenChange={params.toggleModal}
       title="Set avatar image"
-      description="Write and send a message directly to the patient."
+      description="Upload a clear photo to personalize the patient’s profile. This image will appear on their records and appointments."
       actionBtn={
         <Button type="button" onClick={params.handleSaveProfileImage}>
           {params.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
