@@ -14,8 +14,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/design-system/components/ui/dropdown-menu';
@@ -57,9 +55,6 @@ export function HeaderMobile() {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-
                 <DropdownMenuItem asChild>
                   <NavLink to="/settings/profile">
                     Profile

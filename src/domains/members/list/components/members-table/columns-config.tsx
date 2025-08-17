@@ -14,6 +14,7 @@ import { AvatarFallback } from '@radix-ui/react-avatar';
 import type { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { MoreVertical } from 'lucide-react';
+import { NavLink } from 'react-router';
 
 type Params = {
   actions: {
@@ -26,7 +27,7 @@ export function columnsConfig(params: Params): ColumnDef<Staff>[] {
   return [
     {
       cell: ({ row }) => {
-        const { profile_image, first_name, last_name } = row.original;
+        const { id, profile_image, first_name, last_name } = row.original;
 
         const img =
           profile_image && typeof profile_image !== 'string'
@@ -34,25 +35,26 @@ export function columnsConfig(params: Params): ColumnDef<Staff>[] {
             : '';
 
         return (
-          <Avatar className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-visible">
-            {img ? (
-              <AvatarImage
-                src={img}
-                alt={`${first_name} ${last_name}`}
-                className="object-cover w-10 h-10 rounded-full"
-              />
-            ) : (
-              <AvatarFallback>{`${first_name[0]}${last_name[0]}`}</AvatarFallback>
-            )}
-          </Avatar>
+          <NavLink to={`/members/${id}`} className="flex items-center gap-2">
+            <Avatar className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-visible">
+              {img ? (
+                <AvatarImage
+                  src={img}
+                  alt={`${first_name} ${last_name}`}
+                  className="object-cover w-10 h-10 rounded-full"
+                />
+              ) : (
+                <AvatarFallback>{`${first_name[0]}${last_name[0]}`}</AvatarFallback>
+              )}
+            </Avatar>
+
+            <p>
+              {first_name} {last_name}
+            </p>
+          </NavLink>
         );
       },
-      header: 'Photo',
-    },
-    {
-      accessorFn: (row) => `${row.first_name} ${row.last_name}`,
-      id: 'fullName',
-      header: 'Name',
+      header: 'Profile',
     },
     {
       accessorKey: 'department',
