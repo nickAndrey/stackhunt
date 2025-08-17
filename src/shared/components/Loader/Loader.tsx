@@ -11,7 +11,7 @@ export function Loader({ text, className }: LoaderProps) {
       {[...text].map((char, idx) => (
         <span
           key={`${char}_${idx}`}
-          className={clsx('animate-bounce text-7xl font-bold', className)}
+          className={clsx('animate-bounce text-7xl font-bold text-gray-600', className)}
           style={{
             animationDelay: `${idx * 0.1}s`,
             animationFillMode: 'both',

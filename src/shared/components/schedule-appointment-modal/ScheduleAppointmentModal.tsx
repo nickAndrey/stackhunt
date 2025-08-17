@@ -27,13 +27,20 @@ export function ScheduleAppointmentModal(params: ScheduleAppointmentModalProps) 
     <Modal
       open={params.isModalOpen}
       onOpenChange={params.setIsModalOpen}
-      title="Create an Appointment"
+      title="Schedule an Appointment"
       description="Provide the appointment details to schedule a meeting."
       actionBtn={
-        <Button type="button" onClick={formState.handleCreateAppointment}>
-          {formState.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
-          {formState.formStatus === 'processing' ? 'Creating...' : 'Create'}
-        </Button>
+        params.appointmentDefaultValues.groupId ? (
+          <Button type="button" onClick={formState.handleUpdateAppointment}>
+            {formState.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
+            {formState.formStatus === 'processing' ? 'Updating...' : 'Update'}
+          </Button>
+        ) : (
+          <Button type="button" onClick={formState.handleCreateAppointment}>
+            {formState.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
+            {formState.formStatus === 'processing' ? 'Creating...' : 'Create'}
+          </Button>
+        )
       }
     >
       <CreateAppointmentForm {...formState} />

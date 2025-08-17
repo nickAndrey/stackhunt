@@ -1,14 +1,12 @@
 import { useState } from 'react';
+import type { ScheduleAppointmentFormOptions } from '../components/create-appointment-form/types/appointment-form-options';
 
 export function useScheduleAppointmentModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAppointmentCreated, setIsAppointmentCreated] = useState(false);
 
-  const [appointmentDefaultValues, setAppointmentDefaultValues] = useState<{
-    staffId?: string;
-    patientId?: string;
-    date?: Date;
-  }>({});
+  const [appointmentDefaultValues, setAppointmentDefaultValues] =
+    useState<ScheduleAppointmentFormOptions>({});
 
   const onScheduleAppointmentModalOpen = (
     isOpened: boolean,

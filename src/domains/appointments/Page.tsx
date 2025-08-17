@@ -42,6 +42,8 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
             date: dayjs(appointment.date).toDate(),
             patientId: appointment.assignedPatient?.id,
             staffId: appointment.assignedStaff?.id,
+            groupId: appointment.group_id,
+            notes: appointment.notes,
           });
         }}
         onDayClick={(dayObj) => {

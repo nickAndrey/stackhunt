@@ -1,4 +1,5 @@
 import { createAppointment } from '@/shared/services/create-appointment';
+import { updateAppointment } from '@/shared/services/update-appointment';
 import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -6,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
+import type { ScheduleAppointmentFormOptions } from '../types/appointment-form-options';
 
 const schema = z.object({
   staffId: z.string().min(1, 'You have to select a staff member to create an appointment.'),
@@ -17,11 +19,7 @@ const schema = z.object({
 });
 
 type Params = {
-  options?: {
-    staffId?: string;
-    patientId?: string;
-    date?: Date;
-  };
+  options?: ScheduleAppointmentFormOptions;
 };
 
 export function useCreateAppointmentForm(params: Params) {
@@ -50,6 +48,11 @@ export function useCreateAppointmentForm(params: Params) {
 
     if (params.options?.date) {
       form.setValue('date', params.options.date);
+      form.setValue('time', dayjs(params.options.date).format('HH:mm:ss'));
+    }
+
+    if (params.options?.notes) {
+      form.setValue('notes', params.options.notes);
     }
 
     return () => {
@@ -84,10 +87,41 @@ export function useCreateAppointmentForm(params: Params) {
     }
   });
 
+  const handleUpdateAppointment = form.handleSubmit(async (data) => {
+    setFormStatus('processing');
+    await new Promise((res) => setTimeout(res, 1000));
+
+    try {
+      if (!params.options?.groupId) throw new Error('Field "group_id" was not provided.');
+
+      const timeFractions = data.time.split(':').map((val) => parseFloat(val));
+      const appointmentDate = dayjs(data.date)
+        .set('hours', timeFractions[0])
+        .set('minutes', timeFractions[1])
+        .set('seconds', timeFractions[2]);
+
+      await updateAppointment({
+        groupId: params.options.groupId,
+        patientId: data.patientId,
+        staffId: data.staffId,
+        type: data.type,
+        notes: data.notes,
+        date: appointmentDate.toISOString(),
+      });
+
+      setFormStatus('success');
+      toast.success('An appointment has been updated.');
+    } catch (error) {
+      console.error((error as Error).message);
+      toast.error((error as Error).message);
+    }
+  });
+
   return {
     form,
     formStatus,
     schema,
     handleCreateAppointment,
+    handleUpdateAppointment,
   };
 }
