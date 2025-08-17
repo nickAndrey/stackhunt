@@ -57,7 +57,7 @@ export function AppointmentsCalendar({
                         className="w-full rounded-md py-1 px-2 text-[12px] hover:bg-gray-400 hover:text-white hover:cursor-pointer transition-colors truncate"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {`And ${dayObj.appointments.slice(2, -1).length} more ...`}
+                        {`And ${dayObj.appointments.slice(2).length} more ...`}
                       </div>
                     </PopoverTrigger>
                     <PopoverContent className="max-w-[200px]">
@@ -73,7 +73,7 @@ export function AppointmentsCalendar({
                       </div>
 
                       <ul className="flex flex-col gap-1 w-full">
-                        {dayObj.appointments.slice(2, -1).map((item) => (
+                        {dayObj.appointments.slice(2).map((item) => (
                           <li key={item.id}>
                             <div
                               className="w-full rounded-md bg-blue-400 text-white py-1 px-2 text-[12px] hover:bg-blue-500 hover:cursor-pointer transition-colors truncate"
