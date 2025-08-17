@@ -23,9 +23,8 @@ function MembersTableMemoized({ staff }: MembersTableProps) {
         columns={columnsConfig({
           actions: {
             createAppointment: (staff) => {
-              createAppointmentModal.handleOpenModal(true, {
-                createFrom: 'member',
-                id: staff.id,
+              createAppointmentModal.onScheduleAppointmentModalOpen(true, {
+                staffId: staff.id,
               });
             },
             viewDetails: ({ id }) => navigate(`/members/${id}`),

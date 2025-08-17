@@ -1,16 +1,8 @@
-import { db } from '@/shared/db/db';
 import { createPageLoader } from '@/shared/utils/createPageLoader';
 import { AppointmentsPage } from './Page';
-
-async function getAppointments(): Promise<boolean> {
-  const usersWithAdminRole = await db.staff.where('role').equals('admin').count();
-
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(usersWithAdminRole > 0), 1000);
-  });
-}
+import { getStaffAppointments } from './services/get-staff-appointments';
 
 export function AppointmentsPageLoader() {
-  const Loader = createPageLoader('appointments', getAppointments);
-  return <Loader>{() => <AppointmentsPage />}</Loader>;
+  const Loader = createPageLoader('appointments', getStaffAppointments);
+  return <Loader>{(data) => <AppointmentsPage data={data} />}</Loader>;
 }

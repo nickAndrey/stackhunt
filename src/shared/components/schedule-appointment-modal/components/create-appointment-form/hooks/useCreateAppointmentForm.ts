@@ -1,4 +1,5 @@
 import { createAppointment } from '@/shared/services/create-appointment';
+import { updateAppointment } from '@/shared/services/update-appointment';
 import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -6,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
+import type { ScheduleAppointmentFormOptions } from '../types/appointment-form-options';
 
 const schema = z.object({
   staffId: z.string().min(1, 'You have to select a staff member to create an appointment.'),
@@ -17,8 +19,7 @@ const schema = z.object({
 });
 
 type Params = {
-  createFrom: 'member' | 'patient';
-  id: string;
+  options?: ScheduleAppointmentFormOptions;
 };
 
 export function useCreateAppointmentForm(params: Params) {
@@ -37,22 +38,33 @@ export function useCreateAppointmentForm(params: Params) {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
   useEffect(() => {
-    if (params.createFrom === 'member') {
-      form.setValue('staffId', params.id);
-      form.setValue('patientId', '');
-    } else if (params.createFrom === 'patient') {
-      form.setValue('patientId', params.id);
-      form.setValue('staffId', '');
+    if (params.options?.staffId) {
+      form.setValue('staffId', params.options.staffId);
     }
-  }, [form, params.createFrom, params.id]);
+
+    if (params.options?.patientId) {
+      form.setValue('patientId', params.options.patientId);
+    }
+
+    if (params.options?.date) {
+      form.setValue('date', dayjs(params.options.date).toDate());
+      form.setValue('time', dayjs(params.options.date).format('HH:mm:ss'));
+    }
+
+    if (params.options?.notes) {
+      form.setValue('notes', params.options.notes);
+    }
+
+    return () => {
+      form.reset();
+    };
+  }, [form, params.options]);
 
   const handleCreateAppointment = form.handleSubmit(async (data) => {
     setFormStatus('processing');
     await new Promise((res) => setTimeout(res, 1000));
 
     try {
-      if (!params.id) throw new Error('Id was not provided.');
-
       const timeFractions = data.time.split(':').map((val) => parseFloat(val));
       const appointmentDate = dayjs(data.date)
         .set('hours', timeFractions[0])
@@ -75,11 +87,41 @@ export function useCreateAppointmentForm(params: Params) {
     }
   });
 
+  const handleUpdateAppointment = form.handleSubmit(async (data) => {
+    setFormStatus('processing');
+    await new Promise((res) => setTimeout(res, 1000));
+
+    try {
+      if (!params.options?.groupId) throw new Error('Field "group_id" was not provided.');
+
+      const timeFractions = data.time.split(':').map((val) => parseFloat(val));
+      const appointmentDate = dayjs(data.date)
+        .set('hours', timeFractions[0])
+        .set('minutes', timeFractions[1])
+        .set('seconds', timeFractions[2]);
+
+      await updateAppointment({
+        groupId: params.options.groupId,
+        patientId: data.patientId,
+        staffId: data.staffId,
+        type: data.type,
+        notes: data.notes,
+        date: appointmentDate.toISOString(),
+      });
+
+      setFormStatus('success');
+      toast.success('An appointment has been updated.');
+    } catch (error) {
+      console.error((error as Error).message);
+      toast.error((error as Error).message);
+    }
+  });
+
   return {
     form,
     formStatus,
-    createFrom: params.createFrom,
     schema,
     handleCreateAppointment,
+    handleUpdateAppointment,
   };
 }

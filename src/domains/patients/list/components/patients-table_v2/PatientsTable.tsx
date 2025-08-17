@@ -18,9 +18,8 @@ export function PatientsDataTable({ patients }: PatientsDataTableProps) {
   const columns = columnsConfig({
     actions: {
       createAppointment: (patient) => {
-        createAppointmentModal.handleOpenModal(true, {
-          createFrom: 'patient',
-          id: patient.id,
+        createAppointmentModal.onScheduleAppointmentModalOpen(true, {
+          patientId: patient.id,
         });
       },
       viewDetails: (patient) => navigate(`/patients/${patient.id}`),

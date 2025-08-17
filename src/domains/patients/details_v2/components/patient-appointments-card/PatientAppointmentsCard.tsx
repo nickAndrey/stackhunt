@@ -29,7 +29,8 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
-  const { isAppointmentCreated, setIsAppointmentCreated, handleOpenModal } = createAppointmentModal;
+  const { isAppointmentCreated, setIsAppointmentCreated, onScheduleAppointmentModalOpen } =
+    createAppointmentModal;
 
   useEffect(() => {
     if (isAppointmentCreated) {
@@ -59,12 +60,7 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
               variant="ghost"
               size="icon"
               className="size-8 rounded-2xl"
-              onClick={() => {
-                handleOpenModal(true, {
-                  createFrom: 'patient',
-                  id: props.patientId,
-                });
-              }}
+              onClick={() => onScheduleAppointmentModalOpen(true, { patientId: props.patientId })}
             >
               <Plus />
             </Button>

@@ -23,7 +23,7 @@ import { getStaffAppointments } from './services/get-staff-appointments';
 
 type PatientAppointmentsCardProps = {
   staffId: string;
-  appointments: Appointment[];
+  appointments?: Appointment[];
 };
 
 export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
@@ -32,7 +32,8 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
   const [appointmentsList, setAppointmentsList] = useState(props.appointments);
   const [loading, setLoading] = useState(false);
 
-  const { isAppointmentCreated, setIsAppointmentCreated, handleOpenModal } = createAppointmentModal;
+  const { isAppointmentCreated, setIsAppointmentCreated, onScheduleAppointmentModalOpen } =
+    createAppointmentModal;
 
   useEffect(() => {
     if (isAppointmentCreated) {
@@ -63,9 +64,8 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
               size="icon"
               className="size-8 rounded-2xl"
               onClick={() => {
-                handleOpenModal(true, {
-                  createFrom: 'member',
-                  id: props.staffId,
+                onScheduleAppointmentModalOpen(true, {
+                  staffId: props.staffId,
                 });
               }}
             >
@@ -75,11 +75,11 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
         </CardHeader>
 
         <CardContent className="max-h-[300px] overflow-y-auto">
-          {appointmentsList.length === 0 && !loading && <NoData />}
+          {!appointmentsList && !loading && <NoData />}
 
           {loading && <Loader text="&#8226;&#8226;&#8226;" className="text-[40px] text-gray-700" />}
 
-          {!loading && (
+          {appointmentsList && !loading && (
             <TimeLine
               items={appointmentsList.map(({ id, date, type, notes, assignedPatient }) => ({
                 id,
