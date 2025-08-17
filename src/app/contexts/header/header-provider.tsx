@@ -10,8 +10,12 @@ export const HeaderProvider = ({ children }: HeaderProviderProps) => {
     setHeader((prev) => ({ ...prev, ...content }));
   };
 
+  const toggleMenu = (isOpened: boolean) => {
+    setHeader((prev) => ({ ...prev, isMenuOpened: isOpened }));
+  };
+
   return (
-    <HeaderContext.Provider value={{ header, setHeader, updateHeader }}>
+    <HeaderContext.Provider value={{ header, setHeader, updateHeader, toggleMenu }}>
       {children}
     </HeaderContext.Provider>
   );

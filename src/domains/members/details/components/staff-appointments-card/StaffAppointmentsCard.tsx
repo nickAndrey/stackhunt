@@ -75,11 +75,11 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
         </CardHeader>
 
         <CardContent className="max-h-[300px] overflow-y-auto">
-          {!appointmentsList && !loading && <NoData />}
+          {(!appointmentsList || !appointmentsList.length) && !loading && <NoData />}
 
           {loading && <Loader text="&#8226;&#8226;&#8226;" className="text-[40px] text-gray-700" />}
 
-          {appointmentsList && !loading && (
+          {appointmentsList && appointmentsList.length > 0 && !loading && (
             <TimeLine
               items={appointmentsList.map(({ id, date, type, notes, assignedPatient }) => ({
                 id,

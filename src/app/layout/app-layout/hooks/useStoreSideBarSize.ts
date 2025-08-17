@@ -5,7 +5,7 @@ const SIDEBAR_WIDTH = 'SideBar_width';
 
 const getInitialSidebarWidth = () => {
   const saved = localStorage.getItem(SIDEBAR_WIDTH);
-  return saved ? parseFloat(saved) : 60;
+  return saved ? parseFloat(saved) : 15;
 };
 
 export function useStoreSideBarSize() {
