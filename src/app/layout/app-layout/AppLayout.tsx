@@ -5,8 +5,7 @@ import {
 } from '@/design-system/components/ui/resizable';
 import { Toaster } from '@/design-system/components/ui/sonner';
 import { Outlet } from 'react-router';
-import { Header } from './components/header';
-import { Navigation } from './components/navigation';
+
 import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 export function AppLayout() {
@@ -20,11 +19,11 @@ export function AppLayout() {
         className="min-w-[60px]"
         onResize={handleResize}
       >
-        <Navigation currentWidth={currentWidth} />
+        {/* <Navigation currentWidth={currentWidth} /> */}
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel className="flex-col-grow">
-        <Header />
+        {/* <Header /> */}
         <main className="overflow-auto flex-col-grow">
           <Outlet />
           <Toaster position="top-center" />
