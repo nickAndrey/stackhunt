@@ -1,7 +1,6 @@
 import { useAuth } from '@/app/contexts/auth';
 import { useHeader } from '@/app/contexts/header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/design-system/components/ui/avatar';
-import { Button } from '@/design-system/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,13 +10,13 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/design-system/components/ui/dropdown-menu';
-import { Download, Menu } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 
 export function Header() {
   const { member, logout } = useAuth();
-  const { header, toggleMenu } = useHeader();
+  const { header } = useHeader();
   const objectUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -35,22 +34,9 @@ export function Header() {
   const initials = `${member?.first_name?.[0]}${member?.last_name?.[0]}`;
 
   return (
-    <header className="p-4 border-b flex flex-wrap sm:flex-nowrap items-center sm:gap-10">
-      <div className="flex items-center">
-        <Button
-          variant="ghost"
-          className="size-8 rounded-full mr-3 sm:hidden"
-          onClick={() => toggleMenu?.(!header?.isMenuOpened)}
-        >
-          <Menu className="size-6" />
-        </Button>
-        <h2 className="text-xl font-semibold">{header.title}</h2>
-      </div>
-
-      <div className="flex gap-3 items-center order-4 sm:order-0 w-full mt-3 sm:mt-0 m-auto ">
-        {header.actions}
-      </div>
-
+    <header className="sm:p-4 border-b flex items-center sm:gap-10">
+      <h2 className="text-xl font-semibold">{header.title}</h2>
+      <div className="flex gap-3 items-center">{header.actions}</div>
       <div className="ml-auto">
         {member && (
           <DropdownMenu>
