@@ -2,38 +2,18 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/compone
 import type { Appointment } from '@/shared/types/appointment';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
+import type { useAppointmentsCalendar } from './hooks/useAppointmentsCalendar';
 
-type AppointmentsCalendarProps = {
-  appointments: Appointment[];
+type AppointmentsCalendarProps = ReturnType<typeof useAppointmentsCalendar> & {
   onAppointmentClick: (appointment: Appointment) => void;
   onDayClick: (dayObj: { date: dayjs.Dayjs; appointments: Appointment[] }) => void;
 };
 
 export function AppointmentsCalendar({
-  appointments,
+  calendarDays,
   onAppointmentClick,
   onDayClick,
 }: AppointmentsCalendarProps) {
-  const currentMonth = dayjs().month();
-  const currentYear = dayjs().year();
-
-  const firstDayOfMonth = dayjs().year(currentYear).month(currentMonth).date(1);
-  const startDay = firstDayOfMonth.startOf('week');
-
-  const totalCells = 6 * 7;
-
-  const calendarDays = Array.from({ length: totalCells }, (_, i) => {
-    const date = startDay.add(i, 'day');
-    const appointmentsPerDate = appointments.filter((item) => dayjs(item.date).isSame(date, 'day'));
-
-    return {
-      date,
-      isCurrentMonth: date.month() === currentMonth,
-      isCurrentDay: date.date() === dayjs().date(),
-      appointments: appointmentsPerDate,
-    };
-  });
-
   return (
     <div className="grid grid-cols-7 grid-rows-6 h-full">
       {calendarDays.map((dayObj, idx) => (

@@ -1,10 +1,16 @@
 import { useHeader } from '@/app/contexts/header';
-import { AppointmentsCalendar } from '@/shared/components/appointments-calendar';
+
+import {
+  AppointmentsCalendar,
+  MonthToggler,
+  useAppointmentsCalendar,
+} from '@/shared/components/appointments-calendar';
 import {
   ScheduleAppointmentModal,
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
 import type { Appointment } from '@/shared/types/appointment';
+
 import { useEffect, useState } from 'react';
 import { getStaffAppointments } from './services/get-staff-appointments';
 
@@ -13,16 +19,28 @@ type AppointmentsPageProps = {
 };
 
 export function AppointmentsPage({ data }: AppointmentsPageProps) {
-  const { setHeader } = useHeader();
-
-  const scheduleAppointmentModal = useScheduleAppointmentModal();
+  const { updateHeader } = useHeader();
 
   const [appointments, setAppointments] = useState(data);
 
+  const scheduleAppointmentModal = useScheduleAppointmentModal();
+  const appointmentsCalendar = useAppointmentsCalendar({ appointments });
+
   useEffect(() => {
-    setHeader({ title: 'Appointments' });
-    return () => setHeader({});
-  }, [setHeader]);
+    updateHeader?.({
+      title: 'Appointments',
+      actions: (
+        <MonthToggler
+          currentMonth={appointmentsCalendar.currentMonth}
+          currentYear={appointmentsCalendar.currentYear}
+          setPrevMonth={appointmentsCalendar.setPrevMonth}
+          setNextMonth={appointmentsCalendar.setNextMonth}
+        />
+      ),
+    });
+
+    return () => updateHeader?.({});
+  }, [appointmentsCalendar.currentMonth, appointmentsCalendar.currentYear]);
 
   useEffect(() => {
     if (scheduleAppointmentModal.isAppointmentCreated) {
@@ -35,7 +53,7 @@ export function AppointmentsPage({ data }: AppointmentsPageProps) {
   return (
     <div className="flex-col-grow">
       <AppointmentsCalendar
-        appointments={appointments}
+        {...appointmentsCalendar}
         onAppointmentClick={(appointment) => {
           scheduleAppointmentModal.onScheduleAppointmentModalOpen(true, {
             date: appointment.date,

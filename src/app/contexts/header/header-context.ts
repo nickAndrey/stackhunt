@@ -8,6 +8,7 @@ export type HeaderContent = {
 export const HeaderContext = createContext<{
   header: HeaderContent;
   setHeader: React.Dispatch<React.SetStateAction<HeaderContent>>;
+  updateHeader?: (content: HeaderContent) => void;
 }>({
   header: {},
   setHeader: () => {},
