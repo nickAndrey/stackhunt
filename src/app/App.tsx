@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const fallBackElement = (
-    <div className="flex items-center justify-center w-full h-screen">
+    <div className="flex items-center justify-center w-full h-[100dvh]">
       <img src="/logo-big.png" className="w-[300px] h-[150px]" />
     </div>
   );

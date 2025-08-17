@@ -17,7 +17,7 @@ export function AppLayout() {
 
   if (!isDesktop) {
     return (
-      <div className="h-screen flex-col-grow">
+      <div className="h-[100dvh] flex-col-grow">
         <HeaderMobile />
         <main className="overflow-auto flex-col-grow">
           <Outlet />
@@ -28,7 +28,7 @@ export function AppLayout() {
   }
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="h-screen!">
+    <ResizablePanelGroup direction="horizontal" className="h-[100dvh]!">
       <ResizablePanel
         defaultSize={currentWidth}
         maxSize={30}
