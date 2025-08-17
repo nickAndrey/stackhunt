@@ -13,7 +13,7 @@ import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 export function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const isDesktop = useMediaQuery('(width >= 48rem)');
 
   if (!isDesktop) {
     return (

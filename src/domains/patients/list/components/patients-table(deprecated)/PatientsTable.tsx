@@ -26,7 +26,7 @@ export function PatientsTable({ patients }: PatientsTableProps) {
 
               return (
                 <th key={key} className="px-2 py-2">
-                  <div className="relative mr-2">
+                  <div className="relative mr-2 w-full">
                     <Input
                       name={key}
                       placeholder={value}

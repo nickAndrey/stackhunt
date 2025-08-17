@@ -6,7 +6,7 @@ type QuickSearchInputProps = ReturnType<typeof useQuickSearchInput> & {};
 
 export function QuickSearchInput({ searchValue, setSearchValue }: QuickSearchInputProps) {
   return (
-    <div className="relative mr-2">
+    <div className="relative mr-2 w-full">
       <Input
         placeholder="Search for staff ..."
         className="peer block w-full rounded-md border py-[9px] pl-10 text-sm"

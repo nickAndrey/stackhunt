@@ -3,6 +3,7 @@ import { Button } from '@/design-system/components/ui/button';
 import { Card } from '@/design-system/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/design-system/components/ui/tooltip';
 import type { Staff } from '@/shared/types/staff';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { CreateMemberModal, useCreateMemberModal } from './components/create-member-modal';
@@ -16,6 +17,7 @@ type MembersPageProps = {
 
 export function MembersPage(props: MembersPageProps) {
   const { setHeader } = useHeader();
+  const isDesktop = useMediaQuery('(width >= 48rem)');
 
   const createMemberModal = useCreateMemberModal();
   const quickSearchInput = useQuickSearchInput();
@@ -53,10 +55,14 @@ export function MembersPage(props: MembersPageProps) {
   }, [setHeader, quickSearchInput.searchValue]);
 
   return (
-    <div className="px-4 py-3 flex-col-grow h-full">
-      <Card className="max-h-[100%]">
+    <div className="md:px-4 py-3 flex-col-grow h-full">
+      {isDesktop ? (
+        <Card className="max-h-[100%]">
+          <MembersTable staff={quickSearchInput.searchResults ?? initialData} />
+        </Card>
+      ) : (
         <MembersTable staff={quickSearchInput.searchResults ?? initialData} />
-      </Card>
+      )}
 
       <CreateMemberModal {...createMemberModal} />
     </div>

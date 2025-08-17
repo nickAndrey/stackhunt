@@ -45,7 +45,7 @@ export function Modal({
   className,
   onOpenChange,
 }: ModalProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const isDesktop = useMediaQuery('(width >= 48rem)');
 
   if (isDesktop) {
     return (
