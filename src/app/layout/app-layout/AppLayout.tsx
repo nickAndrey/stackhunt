@@ -4,13 +4,28 @@ import {
   ResizablePanelGroup,
 } from '@/design-system/components/ui/resizable';
 import { Toaster } from '@/design-system/components/ui/sonner';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { Outlet } from 'react-router';
 import { Header } from './components/header';
+import { HeaderMobile } from './components/header-mobile';
 import { Navigation } from './components/navigation';
 import { useStoreSideBarSize } from './hooks/useStoreSideBarSize';
 
 export function AppLayout() {
   const { currentWidth, handleResize } = useStoreSideBarSize();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  if (!isDesktop) {
+    return (
+      <div className="h-screen flex-col-grow">
+        <HeaderMobile />
+        <main className="overflow-auto flex-col-grow">
+          <Outlet />
+          <Toaster position="top-center" />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <ResizablePanelGroup direction="horizontal" className="h-screen!">

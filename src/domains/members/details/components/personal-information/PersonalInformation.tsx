@@ -82,6 +82,7 @@ export function PersonalInformation({ staff }: PersonalInformationProps) {
           <Avatar className="w-[80px] h-[80px] self-start">
             <AvatarImage
               src={staff.profile_image ? URL.createObjectURL(staff.profile_image) : ''}
+              className="object-cover"
             />
             <AvatarFallback>{`${staff.first_name[0]}${staff.last_name[0]}`}</AvatarFallback>
           </Avatar>

@@ -13,13 +13,6 @@ const queryClient = new QueryClient({
   },
 });
 
-/**
- * @description
- * ## Create DB and predefine patients, doctors, appointments and settings
- */
-// seedPatients();
-// seedStaff();
-
 function App() {
   const fallBackElement = (
     <div className="flex items-center justify-center w-full h-screen">

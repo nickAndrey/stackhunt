@@ -10,9 +10,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/design-system/components/ui/dropdown-menu';
-import { Download } from 'lucide-react';
+import { Download, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 
 export function Header() {
   const { member, logout } = useAuth();
@@ -42,7 +42,7 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar>
-                <AvatarImage src={objectUrlRef.current || ''} />
+                <AvatarImage src={objectUrlRef.current || ''} className="object-cover" />
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -51,8 +51,14 @@ export function Header() {
               <DropdownMenuSeparator />
 
               <DropdownMenuItem asChild>
-                <Link to="/settings/profile">Profile</Link>
+                <NavLink to="/settings/profile">
+                  Profile
+                  <DropdownMenuShortcut>
+                    <User />
+                  </DropdownMenuShortcut>
+                </NavLink>
               </DropdownMenuItem>
+
               <DropdownMenuItem onClick={logout}>
                 Logout
                 <DropdownMenuShortcut>
