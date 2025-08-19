@@ -1,5 +1,4 @@
-import { createAppointment } from '@/shared/services/create-appointment';
-import { updateAppointment } from '@/shared/services/update-appointment';
+import { createAppointment, updateAppointment } from '@/shared/services/appointments';
 import type { FormStatus } from '@/shared/types/form-status';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -92,7 +91,7 @@ export function useCreateAppointmentForm(params: Params) {
     await new Promise((res) => setTimeout(res, 1000));
 
     try {
-      if (!params.options?.groupId) throw new Error('Field "group_id" was not provided.');
+      if (!params.options?.id) throw new Error('Field "group_id" was not provided.');
 
       const timeFractions = data.time.split(':').map((val) => parseFloat(val));
       const appointmentDate = dayjs(data.date)
@@ -101,7 +100,7 @@ export function useCreateAppointmentForm(params: Params) {
         .set('seconds', timeFractions[2]);
 
       await updateAppointment({
-        groupId: params.options.groupId,
+        id: params.options.id,
         patientId: data.patientId,
         staffId: data.staffId,
         type: data.type,

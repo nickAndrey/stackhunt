@@ -30,7 +30,7 @@ export function ScheduleAppointmentModal(params: ScheduleAppointmentModalProps) 
       title="Schedule an Appointment"
       description="Provide the appointment details to schedule a meeting."
       actionBtn={
-        params.appointmentDefaultValues.groupId ? (
+        params.appointmentDefaultValues.id ? (
           <Button type="button" onClick={formState.handleUpdateAppointment}>
             {formState.formStatus === 'processing' && <LoaderCircle className="animate-spin" />}
             {formState.formStatus === 'processing' ? 'Updating...' : 'Update'}

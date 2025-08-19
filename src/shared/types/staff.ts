@@ -1,5 +1,5 @@
 import type { Address } from './address';
-import type { Appointment } from './appointment';
+import type { Appointment } from './appointment_v2';
 import type { ContactPreference } from './contact-preference';
 import type { FileRecord } from './file-record';
 import type { Gender } from './gender';

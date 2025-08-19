@@ -15,12 +15,8 @@ const personalInfoSchema = z.object({
 });
 
 const jobDetailsSchema = z.object({
-  role: z.enum(['doctor', 'nurse', 'technician', 'admin', 'receptionist', 'lab', 'pharmacist'], {
-    error: 'Role is required',
-  }),
-  status: z.enum(['active', 'inactive', 'terminated', 'on_leave'], {
-    error: 'Employment status is required',
-  }),
+  role: z.enum(['doctor', 'nurse', 'technician', 'admin', 'receptionist', 'lab', 'pharmacist']),
+  status: z.enum(['active', 'inactive', 'terminated', 'on_leave']),
   department: z.string({
     error: 'Department is required',
   }),
@@ -43,21 +39,11 @@ const jobDetailsSchema = z.object({
 });
 
 const addressAndBioSchema = z.object({
-  bio: z.string({
-    error: 'Bio is required',
-  }),
+  bio: z.string().min(1, 'Field is required'),
   address: z.object({
-    street: z.string({
-      error: 'Street address is required',
-    }),
-    city: z.string({
-      error: 'City is required',
-    }),
-    zip_code: z
-      .string({
-        error: 'ZIP code is required',
-      })
-      .min(4, 'ZIP code is too short'),
+    street: z.string().min(1, 'Field is required'),
+    city: z.string().min(1, 'Field is required'),
+    zip_code: z.string().min(1, 'Field is required').min(4, 'ZIP code is too short'),
   }),
 });
 

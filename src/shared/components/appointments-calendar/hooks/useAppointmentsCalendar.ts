@@ -1,9 +1,9 @@
-import type { Appointment } from '@/shared/types/appointment';
+import type { AppointmentWithParticipants } from '@/shared/types/appointment_v2';
 import dayjs from 'dayjs';
 import { useMemo, useState } from 'react';
 
 type Params = {
-  appointments: Appointment[];
+  appointments: AppointmentWithParticipants[];
 };
 
 export function useAppointmentsCalendar({ appointments }: Params) {

@@ -32,9 +32,15 @@ export function Header() {
   const initials = `${member?.first_name?.[0]}${member?.last_name?.[0]}`;
 
   return (
-    <header className="p-4 border-b flex items-center gap-10">
-      <h2 className="text-xl font-semibold">{header.title}</h2>
-      <div className="flex gap-3 items-center">{header.actions}</div>
+    <header className="p-4 border-b flex items-center gap-10" id="header">
+      <h2 className="text-xl font-semibold" id="header-title">
+        {header.title}
+      </h2>
+
+      <div className="flex gap-3 items-center" id="header-actions">
+        {header.actions}
+      </div>
+
       <div className="ml-auto">
         {member && (
           <DropdownMenu>

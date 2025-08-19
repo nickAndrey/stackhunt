@@ -24,7 +24,7 @@ export function MonthToggler({
           <ChevronRight />
         </Button>
       </div>
-      <h4 className="text-xl">
+      <h4 className="text-xl truncate">
         {currentMonth} {currentYear}
       </h4>
     </div>

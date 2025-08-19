@@ -13,15 +13,14 @@ import {
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
 import { TimeLine } from '@/shared/components/time-line';
-import type { Appointment } from '@/shared/types/appointment';
+import { getAppointmentsWithParticipants } from '@/shared/services/appointments';
+import type { AppointmentWithParticipants } from '@/shared/types/appointment_v2';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { enhanceAppointmentsWithAssignedStaff } from '../../utils/enhance-appointments-with-assigned-staff';
-import { getPatientAppointments } from './services/get-patient-appointments';
 
 type PatientAppointmentsCardProps = {
   patientId: string;
-  appointments: Appointment[];
+  appointments: AppointmentWithParticipants[];
 };
 
 export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
@@ -36,13 +35,8 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
     if (isAppointmentCreated) {
       setLoading(true);
 
-      getPatientAppointments(props.patientId)
-        .then(async (data) => {
-          const updatedData = await enhanceAppointmentsWithAssignedStaff({
-            appointments: data,
-          });
-          setAppointmentsList(updatedData);
-        })
+      getAppointmentsWithParticipants({ role: 'patient', participant_id: props.patientId })
+        .then(async (data) => setAppointmentsList(data))
         .finally(() => {
           setIsAppointmentCreated(false);
           setLoading(false);
@@ -74,10 +68,10 @@ export function PatientAppointmentsCard(props: PatientAppointmentsCardProps) {
 
           {!loading && (
             <TimeLine
-              items={appointmentsList.map(({ id, date, type, notes, assignedStaff }) => ({
+              items={appointmentsList.map(({ id, date, type, notes, staff }) => ({
                 id,
                 date,
-                title: `There will be ${type} with a ${assignedStaff?.role} ${assignedStaff?.first_name} ${assignedStaff?.last_name}`,
+                title: `There will be ${type} with a ${staff?.[0].role} ${staff?.[0].first_name} ${staff?.[0].last_name}`,
                 description: notes,
               }))}
             />

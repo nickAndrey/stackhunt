@@ -1,12 +1,12 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/design-system/components/ui/popover';
-import type { Appointment } from '@/shared/types/appointment';
+import type { AppointmentWithParticipants } from '@/shared/types/appointment_v2';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import type { useAppointmentsCalendar } from './hooks/useAppointmentsCalendar';
 
 type AppointmentsCalendarProps = ReturnType<typeof useAppointmentsCalendar> & {
-  onAppointmentClick: (appointment: Appointment) => void;
-  onDayClick: (dayObj: { date: dayjs.Dayjs; appointments: Appointment[] }) => void;
+  onAppointmentClick: (appointment: AppointmentWithParticipants) => void;
+  onDayClick: (dayObj: { date: dayjs.Dayjs; appointments: AppointmentWithParticipants[] }) => void;
 };
 
 export function AppointmentsCalendar({

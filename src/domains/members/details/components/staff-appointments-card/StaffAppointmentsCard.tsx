@@ -13,17 +13,15 @@ import {
   useScheduleAppointmentModal,
 } from '@/shared/components/schedule-appointment-modal';
 import { TimeLine } from '@/shared/components/time-line';
-
-import type { Appointment } from '@/shared/types/appointment';
+import { getAppointmentsWithParticipants } from '@/shared/services/appointments';
+import type { AppointmentWithParticipants } from '@/shared/types/appointment_v2';
 import { getAppointmentLabel } from '@/shared/utils/getAppointmentLabel';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { enhanceAppointmentsWithAssignedPatients } from '../../utils/enhance-appointments-with-assigned-patients';
-import { getStaffAppointments } from './services/get-staff-appointments';
 
 type PatientAppointmentsCardProps = {
   staffId: string;
-  appointments?: Appointment[];
+  appointments?: AppointmentWithParticipants[];
 };
 
 export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
@@ -39,13 +37,8 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
     if (isAppointmentCreated) {
       setLoading(true);
 
-      getStaffAppointments(props.staffId)
-        .then(async (data) => {
-          const updatedData = await enhanceAppointmentsWithAssignedPatients({
-            appointments: data,
-          });
-          setAppointmentsList(updatedData);
-        })
+      getAppointmentsWithParticipants({ role: 'staff', participant_id: props.staffId })
+        .then(async (data) => setAppointmentsList(data))
         .finally(() => {
           setIsAppointmentCreated(false);
           setLoading(false);
@@ -81,10 +74,10 @@ export function StaffAppointmentsCard(props: PatientAppointmentsCardProps) {
 
           {appointmentsList && appointmentsList.length > 0 && !loading && (
             <TimeLine
-              items={appointmentsList.map(({ id, date, type, notes, assignedPatient }) => ({
+              items={appointmentsList.map(({ id, date, type, notes, patients }) => ({
                 id,
                 date,
-                title: `There will be ${getAppointmentLabel(type)} with a ${assignedPatient?.first_name} ${assignedPatient?.last_name}`,
+                title: `There will be ${getAppointmentLabel(type)} with a ${patients?.[0].first_name} ${patients?.[0].last_name}`,
                 description: notes,
               }))}
             />

@@ -1,5 +1,5 @@
 export type ScheduleAppointmentFormOptions = {
-  groupId?: string;
+  id?: string;
   staffId?: string;
   patientId?: string;
   date?: string;

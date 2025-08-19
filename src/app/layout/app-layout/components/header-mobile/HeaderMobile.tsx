@@ -42,9 +42,11 @@ export function HeaderMobile() {
   const initials = `${member?.first_name?.[0]}${member?.last_name?.[0]}`;
 
   return (
-    <header className="px-4 py-3  border-b-1 flex flex-col">
+    <header className="px-4 py-3  border-b-1 flex flex-col" id="header">
       <div className="flex">
-        <h2 className="text-xl font-semibold">{header.title}</h2>
+        <h2 className="text-xl font-semibold" id="header-title">
+          {header.title}
+        </h2>
         <div className="ml-auto">
           {member && (
             <DropdownMenu>
@@ -76,7 +78,9 @@ export function HeaderMobile() {
         </div>
       </div>
 
-      {header.actions && <div className="flex gap-3 mt-3 items-center">{header.actions}</div>}
+      <div className="flex gap-3 mt-3 items-center" id="header-actions">
+        {header.actions}
+      </div>
 
       <Drawer direction="left">
         <DrawerTrigger asChild>
