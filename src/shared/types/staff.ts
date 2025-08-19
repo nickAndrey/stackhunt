@@ -44,9 +44,6 @@ type Staff = {
   patient_staff_assignments?: PatientStaffAssignment[];
 };
 
-type StaffForm = Omit<Staff, 'start_date' | 'end_date'> & {
-  start_date?: string | Date;
-  end_date?: string | Date;
-};
+type StaffForm = Pick<Staff, 'first_name' | 'last_name' | 'email' | 'role'> & { password: string };
 
 export type { Staff, StaffForm, StaffRole, StaffStatus };

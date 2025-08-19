@@ -19,40 +19,42 @@ export function RegisterForm(props: RegisterFormProps) {
   return (
     <Form {...props.form}>
       <form className="flex flex-col gap-3">
-        <FormField
-          control={props.form.control}
-          name="first_name"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Provide a first name..."
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={props.form.control}
-          name="last_name"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Provide a last name..."
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <fieldset className="flex items-start gap-3">
+          <FormField
+            control={props.form.control}
+            name="first_name"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Provide a first name..."
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={props.form.control}
+            name="last_name"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Provide a last name..."
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
         <FormField
           control={props.form.control}
           name="email"

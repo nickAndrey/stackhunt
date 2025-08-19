@@ -1,10 +1,8 @@
 import { db } from '@/shared/db/db';
-import type { Staff } from '@/shared/types/staff';
+import type { StaffForm } from '@/shared/types/staff';
 import bcrypt from 'bcryptjs';
 
-type MemberCreateInput = Pick<Staff, 'first_name' | 'last_name' | 'email' | 'role'> & {
-  password: string;
-};
+type MemberCreateInput = StaffForm & {};
 
 export async function registerNewMember(params: MemberCreateInput) {
   const hashedPassword = await bcrypt.hash(params.password, 8);

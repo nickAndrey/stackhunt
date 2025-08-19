@@ -66,26 +66,29 @@ export function useProfileForm({ staff }: Params) {
 
   const handleSubmit = (files: FileRecord[]) => {
     return form.handleSubmit(async (data) => {
-      try {
-        setFormStatus('processing');
-        await new Promise((res) => setTimeout(res, 1000));
+      setFormStatus('processing');
+      await new Promise((res) => setTimeout(res, 1000));
 
+      try {
         await updateMember({
           fields: data,
           memberId: staff.id,
         });
 
-        uploadFiles({
-          files: files.map((file) => ({ ...file, name: 'profile-image' })),
-          entityType: 'staff',
-          entityId: staff.id,
-        }).then(() => handleUpdateMember('profile_image', files[0].file));
+        if (files.length > 0) {
+          uploadFiles({
+            files: files.map((file) => ({ ...file, name: 'profile-image' })),
+            entityType: 'staff',
+            entityId: staff.id,
+          }).then(() => handleUpdateMember('profile_image', files[0].file));
+        }
 
         setFormStatus('idle');
 
         toast.success('The profile was successfully updated.');
       } catch (err) {
         setFormStatus('error');
+        toast.error((err as Error).message);
         console.error((err as Error).message);
       }
     });

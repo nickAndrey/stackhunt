@@ -27,7 +27,7 @@ export function LoginPage({ isAdminUser }: LoginPageProps) {
   return (
     <div className="flex flex-col gap-3 px-2 py-4 max-w-md w-full max-h-[100dvh] overflow-y-auto">
       {loginErrorMsg && (
-        <Alert variant="destructive" className="w-md">
+        <Alert variant="destructive">
           <AlertCircleIcon />
           <AlertTitle>Unable to login.</AlertTitle>
           <AlertDescription>

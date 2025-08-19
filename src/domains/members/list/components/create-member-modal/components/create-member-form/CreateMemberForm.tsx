@@ -1,20 +1,22 @@
-import { FormSummary } from './components/form-summary';
-import { Step1Form } from './components/step-1-form';
-import { Step2Form } from './components/step-2-form';
-import { Step3Form } from './components/step-3-form';
+import { Label } from '@/design-system/components/ui/label';
+import { Switch } from '@/design-system/components/ui/switch';
+import { RegisterForm } from '@/shared/components/register-form';
 import { useCreateMemberForm } from './hooks/useCreateMemberForm';
 
 type CreateMemberFormProps = ReturnType<typeof useCreateMemberForm>;
 
 export function CreateMemberForm(props: CreateMemberFormProps) {
-  switch (props.step) {
-    case 0:
-      return <Step1Form form={props.forms.step1Form} schema={props.schemas.personalInfoSchema} />;
-    case 1:
-      return <Step2Form form={props.forms.step2Form} schema={props.schemas.jobDetailsSchema} />;
-    case 2:
-      return <Step3Form form={props.forms.step3Form} />;
-    case 3:
-      return <FormSummary {...props.forms} />;
-  }
+  return (
+    <>
+      <div className="flex items-center space-x-2">
+        <Switch
+          checked={props.isGenerateAutomatically}
+          onCheckedChange={props.setIsGenerateAutomatically}
+          id="generate-stub-data"
+        />
+        <Label htmlFor="generate-stub-data">Generate automatically (demo purposes)</Label>
+      </div>
+      {!props.isGenerateAutomatically && <RegisterForm {...props.registerForm} />}
+    </>
+  );
 }

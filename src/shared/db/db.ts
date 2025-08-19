@@ -65,7 +65,7 @@ export class ClinicCRMDatabase extends Dexie {
       tags: `id, tag, entity_type, entity_id, [entity_type+entity_id]`,
       notes: `id, author_id, author_name, content, created_at, updated_at, updated_by, updated_by_name, content_before, entity_type, entity_id, [entity_type+entity_id]`,
       files: `id, name, file, entity_type, entity_id, [id+entity_type+entity_id], [entity_type+entity_id], [name+entity_type+entity_id]`,
-      staff: `id, first_name, last_name, &email, phone, gender, role, status, profile_image, department, specialty, &license_number, &employee_id, start_date, end_date, bio, address, preferred_contact_method, [first_name+last_name]`,
+      staff: `id, first_name, last_name, &email, phone, gender, role, status, profile_image, department, specialty, license_number, employee_id, start_date, end_date, bio, address, preferred_contact_method, [first_name+last_name]`,
       auth_credentials: `id, staff_id, email, hashed_password, role, last_login`,
       patient_staff_assignments: `id, patient_id, staff_id, role, start_date, end_date, [patient_id+staff_id]`,
       appointments: `id, type, date, duration_minutes, location, notes, status`,

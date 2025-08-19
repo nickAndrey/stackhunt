@@ -1,96 +1,26 @@
+import { useRegisterForm } from '@/shared/components/register-form';
+import { registerNewMember } from '@/shared/services/register-new-member';
 import type { FormStatus } from '@/shared/types/form-status';
-import { zodResolver } from '@hookform/resolvers/zod';
+import type { StaffForm } from '@/shared/types/staff';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import z from 'zod';
 import { createDemoStaff } from '../services/create-demo-staff';
-import { createMember } from '../services/create-member';
-import { addressAndBioSchema, jobDetailsSchema, personalInfoSchema } from './schemas';
 
 export function useCreateMemberForm() {
-  const [step, setStep] = useState(0);
+  const registerForm = useRegisterForm();
+
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [isGenerateAutomatically, setIsGenerateAutomatically] = useState(false);
 
-  const step1Form = useForm<z.infer<typeof personalInfoSchema>>({
-    resolver: zodResolver(personalInfoSchema),
-    defaultValues: {
-      isAutoGenerate: false,
-      first_name: '',
-      last_name: '',
-      email: '',
-      phone: '',
-      gender: 'other',
-      preferred_contact_method: 'email',
-    },
-  });
+  const handleSubmit = async (data: StaffForm) => {
+    const isFormValid = await registerForm.form.trigger();
+    if (!isFormValid) return false;
 
-  const step2Form = useForm<z.infer<typeof jobDetailsSchema>>({
-    resolver: zodResolver(jobDetailsSchema),
-    defaultValues: {
-      role: 'doctor',
-      status: 'active',
-      department: '',
-      specialty: '',
-      license_number: '',
-      employee_id: '',
-      start_date: new Date(),
-    },
-  });
-
-  const step3Form = useForm<z.infer<typeof addressAndBioSchema>>({
-    resolver: zodResolver(addressAndBioSchema),
-    defaultValues: {
-      bio: '',
-      address: {
-        street: '',
-        city: '',
-        zip_code: '',
-      },
-    },
-  });
-
-  const forms = {
-    step1Form,
-    step2Form,
-    step3Form,
-  };
-
-  const schemas = {
-    personalInfoSchema,
-    jobDetailsSchema,
-    addressAndBioSchema,
-  };
-
-  const handleNext = async () => {
-    const activeForm = Object.entries(forms)[step][1];
-
-    const isValid = await activeForm.trigger();
-    if (!isValid) return;
-
-    if (step <= Object.keys(forms).length) {
-      setStep((prev) => prev + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (step > 0) {
-      setStep((prev) => prev - 1);
-    }
-  };
-
-  const handleSubmit = async () => {
     setFormStatus('processing');
     await new Promise((res) => setTimeout(res, 1000));
 
-    const data = {
-      ...step1Form.getValues(),
-      ...step2Form.getValues(),
-      ...step3Form.getValues(),
-    };
-
     try {
-      await createMember({ fields: data });
+      await registerNewMember(data);
       toast.success('New member has been successfully created');
       setFormStatus('success');
 
@@ -124,12 +54,10 @@ export function useCreateMemberForm() {
   };
 
   return {
-    step,
-    schemas,
-    forms,
     formStatus,
-    handleNext,
-    handlePrev,
+    registerForm,
+    isGenerateAutomatically,
+    setIsGenerateAutomatically,
     handleSubmit,
     handleAutoGenerate,
   };

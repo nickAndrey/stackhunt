@@ -1,8 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from '@/design-system/components/ui/alert';
 import { Button } from '@/design-system/components/ui/button';
+import { RegisterForm, useRegisterForm } from '@/shared/components/register-form';
 import { AlertCircleIcon, LoaderCircle } from 'lucide-react';
 import { Navigate } from 'react-router';
-import { RegisterForm, useRegisterForm } from './components/register-form';
 
 type RegisterPageProps = {
   isAdminUser: boolean;

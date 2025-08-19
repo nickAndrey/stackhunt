@@ -1,5 +1,5 @@
 import { useAuth } from '@/app/contexts/auth';
-import { registerNewMember } from '@/domains/register/services/register-new-member';
+import { registerNewMember } from '@/shared/services/register-new-member';
 import type { FormStatus } from '@/shared/types/form-status';
 import { passwordSchema } from '@/shared/zod-schemas/password-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
