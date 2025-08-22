@@ -72,16 +72,16 @@ export function Modal({
   }
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
 
-      <DrawerContent>
+      <DrawerContent className="grid grid-rows-[auto_auto_400px_auto]">
         <DrawerHeader className="text-left">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
 
-        <div className="px-4 py-3 max-h-full">{children}</div>
+        <div className="px-4 overflow-auto">{children}</div>
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>{closeBtn || <Button variant="outline">Cancel</Button>}</DrawerClose>

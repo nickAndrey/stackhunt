@@ -1,3 +1,4 @@
+import { Button } from '@/design-system/components/ui/button';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router';
@@ -25,6 +26,15 @@ function App() {
       <AuthProvider>
         <HeaderProvider>
           <QueryClientProvider client={queryClient}>
+            <Button
+              onClick={() => {
+                indexedDB.databases().then((dbs) => {
+                  dbs.forEach((db) => indexedDB.deleteDatabase(db.name!));
+                });
+              }}
+            >
+              clear data
+            </Button>
             <RouterProvider router={router} />
           </QueryClientProvider>
         </HeaderProvider>
