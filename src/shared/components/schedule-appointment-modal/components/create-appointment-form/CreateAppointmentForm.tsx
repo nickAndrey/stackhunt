@@ -154,6 +154,7 @@ export function CreateAppointmentForm(params: CreateAppointmentFormProps) {
                 onChange={field.onChange}
                 value={field.value}
                 placeholder="Provide a note"
+                rows={5}
               />
             </FormItem>
           )}
