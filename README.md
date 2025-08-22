@@ -1,105 +1,19 @@
-# 🚀 React + Vite + TypeScript + Vitest Starter
+# Mounting Medical – Hospital CRM System
 
-A modern and minimal React app starter powered by **Vite**, written in **TypeScript**, and preconfigured with **Tailwind CSS**, **Prettier**, **Vitest**, and useful aliases for clean project structure.
+Mounting Medical is a custom-built CRM designed to streamline hospital operations by centralizing appointment scheduling, patient management, and member coordination. The system offers an intuitive interface and a calendar-driven workflow, making it easy for healthcare professionals to manage daily activities.
 
-## ✨ Features
+## 🔹 Key Features
+- **Appointments Management:** Interactive full-page calendar to create, edit, and manage appointments. Future updates include filtering by member and automatic default view for the logged-in user.  
+- **Members Module:** Data table with search and filtering by name/email, quick actions to view details or schedule appointments, and a dedicated member details page with widgets for personal details, appointments, and assigned patients.  
+- **Patients Module:** Similar to members, with advanced details page including:  
+  - Patient information with avatar and quick messaging.  
+  - Notes section for historical insights.  
+  - File uploads with drag-and-drop support for medical documents (X-rays, reports, etc.).  
+  - Appointment history linked to relevant members.  
+- **Settings:** User profile management with editable personal details, role assignments, and security updates (email, password, role changes). Admin onboarding includes an initial registration flow for the first user.  
+- **Authentication:** Secure login and initial admin registration.  
 
-- ⚡ **Vite** – lightning-fast development environment
-- 🧑‍💻 **TypeScript** – strong typing and developer tooling
-- 🎨 **Tailwind CSS** – utility-first styling framework
-- 🎯 **Vitest** – blazing-fast unit testing with jsdom
-- 💅 **Prettier** – consistent code formatting
-- 🔗 **Alias Support** – import paths using `@/` shorthand
-- 🧪 **Testing Library** – built-in React testing utilities
-
-## 📦 Getting Started
-
-```bash
-pnpm install
-pnpm run dev       # Start development server
-pnpm run test      # Run unit tests
-pnpm run test:ui   # Open Vitest UI test runner
-```
-
-## 📁 Project Structure
-
-```
-my-app/
-├── src/
-│   ├── App.tsx           # Main App component
-│   ├── index.css         # Main App component
-│   └── main.tsx          # Entry point
-├── tests/                # Global test setup and test files
-│   └── setup.ts          # Vitest + Testing Library setup
-├── vite.config.ts        # Vite config with alias support
-├── vitest.config.ts      # Vitest configuration
-├── tsconfig.json         # TypeScript configuration with path aliases
-├── .prettierrc           # Prettier configuration
-└── package.json
-```
-
-## 🎨 Tailwind CSS Setup
-
-- Tailwind is fully configured and ready to use.
-- Utility classes are available out of the box.
-- Add styles in any component using className, like:
-
-```tsx
-<div className="p-4 bg-blue-500 text-white rounded-lg">Hello Tailwind</div>
-```
-
-- Add your project's custom design tokens in `index.css` like:
-
-```css
-@theme {
-  --color-custom: #ccc;
-}
-```
-
-## 🧪 Testing Setup
-
-- Uses **Vitest** with `jsdom` for browser-like testing.
-- Includes **@testing-library/react** and **@testing-library/jest-dom** for declarative testing.
-- Configured with global setup in `tests/setup.ts`.
-
-## 🔧 Custom Aliases
-
-Import components like this:
-
-```ts
-import MyComponent from '@/components/MyComponent';
-```
-
-Configured in both `vite.config.ts` and `tsconfig.json`.
-
-## 🧼 Code Formatting
-
-Prettier ensures consistent code style. Format code with:
-
-```bash
-pnpm prettier --write .
-```
-
-## 📘 VSCode Tips
-
-- Install **Vitest Snippets** extension for fast test scaffolding.
-- Use format-on-save with Prettier for automatic code cleanup.
-- Tailwind IntelliSense extension is highly recommended for class suggestions.
-
-## 🛠️ Scripts
-
-```json
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "test": "vitest",
-  "test:ui": "vitest --ui"
-}
-```
-
----
-
-## 🪪 License
-
-MIT
+## 🔹 Tech Stack
+- **Frontend:** React, TypeScript, TailwindCSS, shadcn/ui  
+- **Database:** Dexie (IndexedDB wrapper)  
+- **UI/UX:** Responsive, widget-based design with focus on usability and modular expansion  
