@@ -17,7 +17,7 @@ export function AppLayout() {
 
   if (!isDesktop) {
     return (
-      <div className="min-h-[100dvh] flex-col-grow">
+      <div className="h-[100dvh] flex-col-grow">
         <HeaderMobile />
         <main className="overflow-y-auto flex-col-grow">
           <Outlet />
