@@ -155,6 +155,7 @@ export function CreateAppointmentForm(params: CreateAppointmentFormProps) {
                 value={field.value}
                 placeholder="Provide a note"
                 rows={5}
+                className="flex-shrink-0"
               />
             </FormItem>
           )}
