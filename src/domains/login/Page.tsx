@@ -65,6 +65,7 @@ export function LoginPage({ isAdminUser }: LoginPageProps) {
                       placeholder="Provide an email..."
                       value={field.value}
                       onChange={field.onChange}
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage />
