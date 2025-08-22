@@ -1,4 +1,5 @@
 import { db } from '@/shared/db/db';
+import { getRandomUUID } from '@/shared/utils';
 import type { Appointment } from '../../types/appointment_v2';
 
 type Params = Pick<Appointment, 'type' | 'date' | 'notes'> & {
@@ -8,7 +9,7 @@ type Params = Pick<Appointment, 'type' | 'date' | 'notes'> & {
 };
 
 export async function createAppointment(params: Params) {
-  const appointmentId = crypto.randomUUID();
+  const appointmentId = getRandomUUID();
 
   await db.appointments.add({
     id: appointmentId,
@@ -20,7 +21,7 @@ export async function createAppointment(params: Params) {
 
   if (params.staffId) {
     await db.appointment_participants.add({
-      id: crypto.randomUUID(),
+      id: getRandomUUID(),
       appointment_id: appointmentId,
       participant_id: params.staffId,
       role: 'staff',
@@ -30,7 +31,7 @@ export async function createAppointment(params: Params) {
 
   if (params.patientId) {
     await db.appointment_participants.add({
-      id: crypto.randomUUID(),
+      id: getRandomUUID(),
       appointment_id: appointmentId,
       participant_id: params.patientId,
       role: 'patient',

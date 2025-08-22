@@ -8,6 +8,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['bcryptjs', 'dayjs'],
   },
+  server: {
+    host: true,
+  },
   plugins: [react(), tailwindcss(), visualizer({ open: true })],
   resolve: {
     alias: [

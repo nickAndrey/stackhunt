@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
+import { getRandomUUID } from '@/shared/utils';
 import patientsJson from '../temp/data/patients.json';
 import { db } from './db';
 
@@ -53,14 +54,14 @@ export async function seedPatients(withDBReset = false) {
     await db.medications.bulkAdd(
       medications.map((m) => ({
         ...m,
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         patient_id: patientId,
       }))
     );
 
     await db.conditions.bulkAdd(
       conditions.map((c) => ({
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         patient_id: patientId,
         condition: c,
       }))
@@ -69,14 +70,14 @@ export async function seedPatients(withDBReset = false) {
     await db.allergies.bulkAdd(
       allergies.map((a) => ({
         ...a,
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         patient_id: patientId,
       }))
     );
 
     await db.tags.bulkAdd(
       tags.map((t) => ({
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         tag: t,
         entity_type: 'patient',
         entity_id: patientId,
@@ -85,7 +86,7 @@ export async function seedPatients(withDBReset = false) {
 
     await db.medical_flags.bulkAdd(
       medical_flags.map((flag) => ({
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         patient_id: patientId,
         flag,
       }))

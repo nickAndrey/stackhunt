@@ -1,11 +1,12 @@
 import type { PatientCore, WithEntity, WithPatientId } from '@/shared/db/db';
 import type { Flag } from '@/shared/types/flag';
 import type { Allergy, Condition, Medication, Tag } from '@/shared/types/patient';
+import { getRandomUUID } from '@/shared/utils';
 import type { CreatePatientForm } from '../components/create-patient-modal/components/patient-create-form';
 
 export function transformCreatePatientFormData(data: CreatePatientForm) {
   const patientCore: PatientCore = {
-    id: crypto.randomUUID(),
+    id: getRandomUUID(),
     first_name: data.first_name,
     last_name: data.last_name,
     email: data.email,
@@ -33,7 +34,7 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
     .map((item: string) => item.trim())
     .filter(Boolean)
     .map((item: string) => ({
-      id: crypto.randomUUID(),
+      id: getRandomUUID(),
       condition: item,
       patient_id: patientCore.id,
     }));
@@ -43,7 +44,7 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
     .map((item: string) => item.trim())
     .filter(Boolean)
     .map((item: string) => ({
-      id: crypto.randomUUID(),
+      id: getRandomUUID(),
       patient_id: patientCore.id,
       flag: item,
     }));
@@ -53,7 +54,7 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
     .map((item: string) => item.trim())
     .filter(Boolean)
     .map((item: string) => ({
-      id: crypto.randomUUID(),
+      id: getRandomUUID(),
       entity_type: 'patient',
       entity_id: patientCore.id,
       tag: item,
@@ -61,7 +62,7 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
 
   const allergies: WithPatientId<Allergy>[] = data.allergies.map((item) => ({
     ...item,
-    id: crypto.randomUUID(),
+    id: getRandomUUID(),
     patient_id: patientCore.id,
     substance: item.substance,
     reaction: item.reaction,
@@ -70,7 +71,7 @@ export function transformCreatePatientFormData(data: CreatePatientForm) {
 
   const medications: WithPatientId<Medication>[] = data.medications.map((item) => ({
     ...item,
-    id: crypto.randomUUID(),
+    id: getRandomUUID(),
     patient_id: patientCore.id,
     start_date: item.start_date.toISOString(),
     end_date: item.end_date.toISOString(),

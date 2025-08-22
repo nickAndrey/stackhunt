@@ -81,7 +81,7 @@ export function Modal({
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
 
-        <div className="px-4 py-3">{children}</div>
+        <div className="px-4 py-3 max-h-full">{children}</div>
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>{closeBtn || <Button variant="outline">Cancel</Button>}</DrawerClose>

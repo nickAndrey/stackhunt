@@ -1,5 +1,6 @@
 import { db } from '@/shared/db/db';
 import type { StaffRole } from '@/shared/types/staff';
+import { getRandomUUID } from '@/shared/utils';
 
 type Params = {
   fields: Record<string, unknown>;
@@ -27,7 +28,7 @@ export async function updateMember({ fields, memberId }: Params) {
 
       await db.tags.bulkPut(
         rawTags.map((tag) => ({
-          id: crypto.randomUUID(),
+          id: getRandomUUID(),
           entity_id: memberId,
           entity_type: 'staff',
           tag,

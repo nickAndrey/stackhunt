@@ -1,5 +1,6 @@
 import type { FileRecord } from '@/shared/types/file-record';
 import { resizeAndCompressImage } from './resize-and-compress-iamge';
+import { getRandomUUID } from '@/shared/utils';
 
 type Params = {
   fileList: FileList | File[];
@@ -27,7 +28,7 @@ export async function processSelectedFiles({
       }
 
       return {
-        id: crypto.randomUUID(),
+        id: getRandomUUID(),
         name: fileObj.name,
         previewUrl: URL.createObjectURL(fileObj),
         file: fileObj,

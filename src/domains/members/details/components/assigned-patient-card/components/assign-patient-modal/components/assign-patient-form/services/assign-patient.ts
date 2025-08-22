@@ -1,5 +1,7 @@
 import { db } from '@/shared/db/db';
 import type { PatientStaffAssignment } from '@/shared/types/patient-staff-assignment';
+import { getRandomUUID } from '@/shared/utils';
+
 import dayjs from 'dayjs';
 
 type Params = {
@@ -13,7 +15,7 @@ type Params = {
 
 export async function assignPatient({ fields }: Params) {
   const DTO: PatientStaffAssignment = {
-    id: crypto.randomUUID(),
+    id: getRandomUUID(),
     patient_id: fields.patient_id,
     staff_id: fields.staff_id,
     role: fields.role,

@@ -3,6 +3,7 @@
 
 import staffJson from '../temp/data/staff.json';
 import { db } from './db';
+import { getRandomUUID } from '@/shared/utils';
 
 export async function seedStaff(withDBReset = false) {
   if (withDBReset) {
@@ -37,7 +38,7 @@ export async function seedStaff(withDBReset = false) {
     if (tags.length > 0) {
       await db.tags.bulkAdd(
         tags.map((t) => ({
-          id: crypto.randomUUID(),
+          id: getRandomUUID(),
           tag: t.tag,
           entity_type: 'staff',
           entity_id: staffId,
