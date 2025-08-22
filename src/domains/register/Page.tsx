@@ -14,7 +14,7 @@ export function RegisterPage({ isAdminUser }: RegisterPageProps) {
   if (isAdminUser) return <Navigate to="/auth/login" />;
 
   return (
-    <div className="flex flex-col gap-3 px-2 py-4 max-w-md w-full max-h-[100dvh] overflow-y-auto">
+    <div className="flex flex-col gap-3 px-2 py-4 max-w-md w-full m-auto">
       <Alert>
         <AlertCircleIcon />
         <AlertTitle>Administrator Setup</AlertTitle>

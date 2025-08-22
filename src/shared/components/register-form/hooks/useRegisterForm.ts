@@ -50,8 +50,15 @@ export function useRegisterForm() {
 
     await new Promise((res) => setTimeout(res, 1000));
 
-    await registerNewMember(data);
-    await login({ email: data.email, password: data.password });
+    await registerNewMember({
+      ...data,
+      email: data.email.toLowerCase(),
+    });
+
+    await login({
+      email: data.email.toLowerCase(),
+      password: data.password,
+    });
 
     setFormStatus('idle');
 

@@ -19,42 +19,40 @@ export function RegisterForm(props: RegisterFormProps) {
   return (
     <Form {...props.form}>
       <form className="flex flex-col gap-3">
-        <fieldset className="flex items-start gap-3">
-          <FormField
-            control={props.form.control}
-            name="first_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Provide a first name..."
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={props.form.control}
-            name="last_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Provide a last name..."
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </fieldset>
+        <FormField
+          control={props.form.control}
+          name="first_name"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Provide a first name..."
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={props.form.control}
+          name="last_name"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Provide a last name..."
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={props.form.control}
           name="email"
@@ -63,6 +61,7 @@ export function RegisterForm(props: RegisterFormProps) {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
+                  type="email"
                   placeholder="Provide an email..."
                   value={field.value}
                   onChange={field.onChange}
@@ -93,6 +92,7 @@ export function RegisterForm(props: RegisterFormProps) {
                   variant="ghost"
                   className="absolute right-2 top-[50%] translate-y-[-50%] rounded-full size-6"
                   onClick={() => setIsPasswordVisible((prev) => !prev)}
+                  tabIndex={-1}
                 >
                   {isPasswordVisible ? (
                     <EyeOff className="w-[18px] h-[18px]" />
@@ -128,6 +128,7 @@ export function RegisterForm(props: RegisterFormProps) {
                   variant="ghost"
                   className="absolute right-2 top-[50%] translate-y-[-50%] rounded-full size-6"
                   onClick={() => setIsPasswordVisible((prev) => !prev)}
+                  tabIndex={-1}
                 >
                   {isPasswordVisible ? (
                     <EyeOff className="w-[18px] h-[18px]" />

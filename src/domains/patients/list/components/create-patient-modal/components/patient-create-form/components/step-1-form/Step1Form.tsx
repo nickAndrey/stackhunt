@@ -35,11 +35,11 @@ export function Step1Form(form: Step1FormProps) {
           control={form.control}
           name="isAutoGenerate"
           render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Generate automatically (demo purposes)</FormLabel>
+            <FormItem className="w-full flex gap-3">
               <FormControl>
                 <Switch checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
+              <FormLabel>Generate automatically (demo purposes)</FormLabel>
             </FormItem>
           )}
         />
