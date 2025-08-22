@@ -19,7 +19,7 @@ export function AppLayout() {
     return (
       <div className="h-[100dvh] flex-col-grow">
         <HeaderMobile />
-        <main className="overflow-auto flex-col-grow">
+        <main className="overflow-y-auto flex-col-grow">
           <Outlet />
           <Toaster position="top-center" />
         </main>
